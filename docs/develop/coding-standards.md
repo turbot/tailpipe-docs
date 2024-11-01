@@ -32,6 +32,7 @@ Along with the following directories
 - `models` (required): Contains go files for models (table row schema) used by the plugin.
 - `sources` (optional): May contain go files for any sources required that aren't provided by the SDK, along with any required configuration schemas.
 - `tables` (required): Contains go files for table definitions `{model_name}_table.go` and table specific configuration `{model_name}_table_config.go`.
+- `docs` (required): Containing documentation, especially table docs.
 
 ### Example: Repo Structure
 
@@ -45,6 +46,11 @@ tailpipe-plugin-example
 ├── go.mod
 ├── go.sum
 ├── main.go
+├── docs
+│   ├── index.md
+│   └── tables
+│       ├── access_log.md
+│       └── audit_log.md
 ├── mappers
 │   ├── access_log_mapper.go
 │   └── audit_log_mapper.go
