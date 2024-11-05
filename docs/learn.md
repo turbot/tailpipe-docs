@@ -41,6 +41,7 @@ This configuration tells Tailpipe to collect NGINX access logs from the specifie
 - The source type "nginx_access_log_file" which reads NGINX formatted logs
 - The path to the log file to collect from
 
+
 ## Collect Data
 
 Now let's collect the logs:
