@@ -5,6 +5,21 @@ sidebar_label: Glossary
 
 # Glossary
 
+Configuration Items
+- [Partition](#partition)
+- [Connection](#connection)
+
+Plugin Components
+- [Source](#source)
+- [Mapper](#mapper)
+- [Row Struct](#row-struct)
+- [Table](#table)
+- [Enrichment](#enrichment)
+
+Miscellaneous
+- [Parquet](#parquet)
+- [DuckDB](#duckdb)
+
 ## Partition
 
 A partition is a HCL configuration item that represents an instance of a table with provided table and source configurations.
