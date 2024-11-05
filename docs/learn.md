@@ -5,13 +5,6 @@ sidebar_label: Learn Tailpipe
 slug: /
 ---
 
----
-id: learn
-title: Learn Tailpipe
-sidebar_label: Learn Tailpipe
-slug: /
----
-
 # Learn Tailpipe
 
 Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
