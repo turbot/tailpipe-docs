@@ -29,7 +29,7 @@ Each plugin should reside in a separate GitHub repository, named `tailpipe-plugi
 Along with the following directories
 - `{plugin name}` (required): This should contain `plugin.go`.
 - `mappers` (optional): May contain go files for any specific mappers required by the plugin in format `{model_name}_mapper.go`.
-- `models` (required): Contains go files for models (table row schema) used by the plugin.
+- `rows` (required): Contains go files which define the table schema(s) used in the plugin.
 - `sources` (optional): May contain go files for any sources required that aren't provided by the SDK, along with any required configuration schemas.
 - `tables` (required): Contains go files for table definitions `{model_name}_table.go` and table specific configuration `{model_name}_table_config.go`.
 - `docs` (required): Containing documentation, especially table docs.
@@ -42,7 +42,7 @@ tailpipe-plugin-example
 ├── Makefile
 ├── README.md
 ├── example
-│   └── plugin.go
+│   └── plugin.go
 ├── go.mod
 ├── go.sum
 ├── main.go
@@ -52,14 +52,14 @@ tailpipe-plugin-example
 │       ├── access_log.md
 │       └── audit_log.md
 ├── mappers
-│   ├── access_log_mapper.go
-│   └── audit_log_mapper.go
-├── models
-│   ├── access_log.go
-│   └── audit_log.go
+│   ├── access_log_mapper.go
+│   └── audit_log_mapper.go
+├── rows
+│   ├── access_log.go
+│   └── audit_log.go
 ├── sources
-│   ├── audit_log_api_source.go
-│   └── audit_log_api_source_config.go
+│   ├── audit_log_api_source.go
+│   └── audit_log_api_source_config.go
 └── tables
     ├── access_log_table.go
     ├── access_log_table_config.go
