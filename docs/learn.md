@@ -95,7 +95,101 @@ This shows us:
 - Success and error counts
 - Average size of GET requests
 
-### Join with External Data
+### Time-Oriented Query
+
+Let's look at some recent log entries:
+
+```sql
+SELECT
+    tp_date,
+    tp_index as server,
+    remote_addr as ip,
+    method,
+    uri,
+    status,
+    bytes_sent
+FROM nginx_access_log
+WHERE tp_date = '2024-11-01'
+LIMIT 10;
+```
+
+```
++--------------------------------------------------------------------------------------+
+¦ tp_date      server           ip             method  uri             status  bytes_sent¦
+¦------------------------------------------------------------------------------------  ¦
+¦ 2024-11-01   web-01.example  220.50.48.32   GET     /profile/user  200     5704     ¦
+¦ 2024-11-01   web-01.example  10.166.12.45   GET     /blog/post/1   200     2341     ¦
+¦ 2024-11-01   web-01.example  203.0.113.10   GET     /dashboard     200     11229    ¦
+¦ 2024-11-01   web-01.example  45.211.16.72   PUT     /favicon.ico   301     2770     ¦
+¦ 2024-11-01   web-01.example  66.171.35.91   POST    /static/main   503     5928     ¦
+¦ 2024-11-01   web-01.example  64.152.79.83   GET     /logout        200     3436     ¦
+¦ 2024-11-01   web-01.example  156.25.84.12   GET     /static/main   200     12490    ¦
+¦ 2024-11-01   web-01.example  78.131.22.45   GET     /static/main   200     8342     ¦
+¦ 2024-11-01   web-01.example  203.0.113.10   POST    /api/v1/user   200     3123     ¦
+¦ 2024-11-01   web-01.example  10.74.127.93   POST    /              200     7210     ¦
++--------------------------------------------------------------------------------------+
+```
+
+Because we specified `tp_date = '2024-11-01'`, Tailpipe only needs to read the parquet files in the corresponding date directories. Similarly, if you wanted to analyze traffic for a specific server, you could add `tp_index = 'web-01.example.com'` to your WHERE clause, and Tailpipe would only read files from that server's directory.
+
+
+## Understanding Data Storage
+
+Tailpipe uses a hive-partitioned storage structure that organizes data for efficient querying. Let's look at how data is stored:
+
+```
++-- default
+    +-- nginx_access_log
+    ¦   +-- tp_partition=nginx_access_log
+    ¦       +-- tp_index=web-01.example.com
+    ¦       ¦   +-- tp_date=2024-11-01
+    ¦       ¦       +-- file_a7d40b4a-0398-46c6-8869-dc5dd87015a0.parquet
+    ¦       +-- tp_index=web-02.example.com
+    ¦       ¦   +-- tp_date=2024-11-01
+    ¦       ¦       +-- file_696946fa-f636-4b54-a8ec-82f64704ff50.parquet
+    ¦       +-- tp_index=web-03.example.com
+    ¦           +-- tp_date=2024-11-01
+    ¦               +-- file_a061d992-eb86-46a5-bc8f-d1a4b2fcce25.parquet
+    +-- pipes_audit_log
+    ¦   +-- tp_partition=pipes_audit_log
+    ¦       +-- tp_index=turbot-ops
+    ¦           +-- tp_date=2024-11-05
+    ¦               +-- file_ebab33de-2dcc-437c-8722-e371316f0b22.parquet
+    +-- tailpipe.db
+```
+
+The structure has several key components:
+- **Partition**: Groups data by source (e.g., `nginx_access_log`)
+- **Index**: Sub-divides data by a meaningful key (e.g., server name for NGINX logs)
+- **Date**: Further partitions data by date
+- Each partition contains parquet files with the actual log data
+
+This hierarchical structure enables efficient querying through partition pruning. When you query with conditions on `tp_partition`, `tp_index`, or `tp_date`, Tailpipe (and DuckDB) can skip reading irrelevant parquet files entirely.
+
+
+### Using DuckDB Directly
+
+Since Tailpipe stores data in standard parquet files using a hive partitioning scheme, you can query the data directly with DuckDB:
+
+```sql
+$ cd ~/.tailpipe/data/default/tailpipe.db
+$ duckdb tailpipe.db
+D SELECT 
+    tp_date,
+    tp_index as server,
+    count(*) as requests
+  FROM nginx_access_log 
+  WHERE tp_date = '2024-11-01'
+  GROUP BY tp_date, tp_index;
+```
+
+This flexibility means you can:
+- Use your favorite DuckDB client to analyze the data
+- Write scripts that process the data directly
+- Import the data into other tools that support parquet files
+- Build automated reporting systems around the collected data
+
+## Join with External Data
 
 One of Tailpipe's powerful features is the ability to join log data with other tables. Here's an example joining with an IP information table to get more context about the traffic:
 
