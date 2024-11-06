@@ -53,6 +53,9 @@ This configuration tells Tailpipe to collect NGINX access logs from the specifie
 Now let's collect the logs:
 
 ```bash
+tailpipe plugin install nginx
+
+```bash
 tailpipe collect nginx_access_log.web_servers
 ```
 
