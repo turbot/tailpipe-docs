@@ -5,5 +5,12 @@
     "label": "Learn Tailpipe",
     "link": "learn",
     "items": []
+  },
+  {
+    "type": "category",
+    "id": "mods",
+    "label": "Mods",
+    "link": "mods",
+    "items": []
   }
 ]
