@@ -99,10 +99,10 @@ For example if we have a `ClientIP` property, this should also be added to `TpIp
 | TpPartition        | tp_partition        | true     | string     | Partition identifier. This is used as a Hive partition key. |
 | TpSourceIP         | tp_source_ip        | false    | *string    | IP address of the source (IPv4 or IPv6). |
 | TpSourceLocation   | tp_source_location  | false    | *string    | Geographic, network, or file path location where the logs are stored, e.g., `/Users/myuser/logs/2024/01/05/data.json`, `AWSLogs/o-abc12345/123456789012/CloudTrail/us-east-2/2024/01/01/342590803134_CloudTrail_us-east-2_20240101T1340Z_3gF7CbvbKlL62JuR.json.gz`. |
-| TpSourceName       | tp_source_name      | false    | string     | Name of the resource where the logs are stored, e.g., AWS CloudWatch log stream name, AWS S3 bucket name, `aws_file_system`, `aws_s3_bucket`. |
-| TpSourceType       | tp_source_type      | true     | string     | Source type name, e.g., `aws_file_system`, `aws_s3_bucket`. |
+| TpSourceName       | tp_source_name      | false    | string     | Name of the resource where the logs are stored, e.g., AWS CloudWatch log stream name, AWS S3 bucket name. |
+| TpSourceType       | tp_source_type      | true     | string     | Source type name, e.g., `file_system`, `aws_s3_bucket`. |
 | TpTags             | tp_tags             | false    | []string   | List of tags or labels associated with the event. |
-| TpTimestamp        | tp_timestamp        | true     | time.Time  | Event time with the format `YYYY-MM-DDTHH:MM:SS.` |
+| TpTimestamp        | tp_timestamp        | true     | time.Time  | Event time with the format `YYYY-MM-DDTHH:MM:SS.ss`. |
 | TpUsernames        | tp_usernames        | false    | []string   | Usernames related to the event. |
 
 ## Step 6: Build, Configure & Test
