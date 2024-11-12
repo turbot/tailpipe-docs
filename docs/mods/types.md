@@ -25,6 +25,23 @@ The detection should have the following tags:
 - type: `detection`
 - mitre_attack_ids: Comma separated string of MITRE ATT&CK IDs, e.g., ``TA0001:T1190,TA0005:T1562``
 
+Example detection:
+
+```hcl
+detection "cloudtrail_logs_cloudtrail_trail_updates" {
+  title       = "Detect CloudTrail Trail Updates in CloudTrail Logs"
+  description = "Detect CloudTrail trail changes to check if logging was stopped."
+  severity    = "medium"
+  query       = query.cloudtrail_logs_cloudtrail_trail_updates
+
+  tags = merge(local.cloudtrail_logs_common_tags, {
+    mitre_attack_ids = "TA0005:T1562:001"
+  })
+}
+```
+
+### Detection Queries
+
 Detection queries should have the following columns in this order:
 
 - `timestamp` - Usually set as `tp_timestamp`
@@ -38,18 +55,74 @@ Detection queries should have the following columns in this order:
 
 The query should also have `*`, which is generally discouraged, but helpful in these queries to make all row data available.
 
-Example detection:
+To make mod writing easier, we also recommend using HCL locals to set query columns. For instance:
 
 ```hcl
-detection "cloudtrail_logs_cloudtrail_trail_updates" {
-  title       = "Detect CloudTrail Trail Updates in CloudTrail Logs"
-  description = "Detect CloudTrail trail changes to check if logging was stopped."
-  severity    = "medium"
-  query       = query.cloudtrail_logs_cloudtrail_trail_updates
+locals {
+  # Local internal variables to build the SQL select clause for common
+  # dimensions. Do not edit directly.
+  common_dimensions_cloudtrail_logs_sql = <<-EOQ
+  epoch_ms(tp_timestamp) as timestamp,
+  string_split(event_source, '.')[1] || ':' || event_name as operation,
+  __RESOURCE_SQL__ as resource,
+  user_identity.arn as actor,
+  tp_source_ip as source_ip,
+  tp_index::varchar as account_id,
+  aws_region as region,
+  tp_id as source_id,
+  *
+  EOQ
+}
 
-  tags = merge(local.cloudtrail_logs_common_tags, {
-    mitre_attack_ids = "TA0005:T1562:001"
-  })
+locals {
+  cloudtrail_logs_cloudtrail_trail_update_detection_sql = replace(local.common_dimensions_cloudtrail_logs_sql, "__RESOURCE_SQL__", "request_parameters::JSON ->> 'name'")
+}
+
+query "cloudtrail_logs_cloudtrail_trail_updates" {
+  sql = <<-EOQ
+    select
+      ${local.cloudtrail_logs_cloudtrail_trail_update_detection_sql}
+    from
+      aws_cloudtrail_log
+    where
+      event_source = 'cloudtrail.amazonaws.com'
+      and event_name in ('DeleteTrail', 'StopLogging', 'UpdateTrail')
+      and error_code is null
+    order by
+      event_time desc;
+  EOQ
+  }
+```
+
+If the `resource` column is static:
+
+```hcl
+locals {
+  common_dimensions_s3_server_access_logs_sql = <<-EOQ
+  epoch_ms(tp_timestamp) as timestamp,
+  operation as operation,
+  bucket as resource,
+  requester as actor, -- TODO: What to use here?
+  tp_source_ip as source_ip,
+  tp_index::varchar as account_id,
+  'us-east-1' as region, -- TODO: Use tp_location when available
+  tp_id as source_id,
+  *
+  EOQ
+}
+
+query "s3_server_access_logs_insecure_access" {
+  sql = <<-EOQ
+    select
+      ${local.common_dimensions_s3_server_access_logs_sql}
+    from
+      aws_s3_server_access_log
+    where
+      operation ilike 'REST.%.OBJECT' -- Ignore S3 initiated events
+      and (cipher_suite is null or tls_version is null)
+    order by
+      timestamp desc
+  EOQ
 }
 ```
 
