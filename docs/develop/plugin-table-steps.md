@@ -85,13 +85,25 @@ Some of these are passed from source as `sourceEnrichmentFields` these can be se
 
 For example if we have a `ClientIP` property, this should also be added to `TpIps` and potentially `TpSourceIP` or `TPDestinationIP`.
 
-At the very least the following fields should be set for all rows:
-- `TpID` should be set to a new `xid`.
-- `TpPartition` should be set to the name of the partition as defined in the HCL configuration. (Note: this needs wiring up at the moment).
-- `TpIndex` should be an accountable Identifier (AWS Account ID, etc).
-- `TpDate` should be a string in the format `YYYY-MM-DD`.
-- `TpTimestamp` should be the timestamp associated with the log entry.
-- `TpIngestTimestamp` should be the current time (ingested into tailpipe).
+| Property           | Column              | Required | Type       | Description |
+|--------------------|---------------------|----------|------------|-------------|
+| TpAkas             | tp_akas             | false    | []string   | Alternate names or aliases related to the event. |
+| TpDate             | tp_date             | true     | string     | Event date with the format `YYYY-MM-DD`. This is used as a Hive partition key. |
+| TpDestinationIP    | tp_destination_ip   | false    | *string    | IP address of the destination (IPv4 or IPv6). |
+| TpDomains          | tp_domains          | false    | []string   | Domains related to the event. |
+| TpEmails           | tp_emails           | false    | []string   | Emails related to the event. |
+| TpID               | tp_id               | true     | string     | Tailpipe generated Unique ID for the row. Normally set to a new [xid](https://github.com/rs/xid). |
+| TpIndex            | tp_index            | true     | string     | Name of the accountable identifier, e.g., AWS account ID, GitHub organization name. This is used as a Hive partition key. |
+| TpIngestTimestamp  | tp_ingest_timestamp | true     | time.Time  | Timestamp indicating when data was ingested with the format `YYYY-MM-DDTHH:MM:SS.` |
+| TpIps              | tp_ips              | false    | []string   | List of IPs associated with the event (source, destination, etc.). |
+| TpPartition        | tp_partition        | true     | string     | Partition identifier. This is used as a Hive partition key. |
+| TpSourceIP         | tp_source_ip        | false    | *string    | IP address of the source (IPv4 or IPv6). |
+| TpSourceLocation   | tp_source_location  | false    | *string    | Geographic, network, or file path location where the logs are stored, e.g., `/Users/myuser/logs/2024/01/05/data.json`, `AWSLogs/o-abc12345/123456789012/CloudTrail/us-east-2/2024/01/01/342590803134_CloudTrail_us-east-2_20240101T1340Z_3gF7CbvbKlL62JuR.json.gz`. |
+| TpSourceName       | tp_source_name      | false    | string     | Name of the resource where the logs are stored, e.g., AWS CloudWatch log stream name, AWS S3 bucket name, `aws_file_system`, `aws_s3_bucket`. |
+| TpSourceType       | tp_source_type      | true     | string     | Source type name, e.g., `aws_file_system`, `aws_s3_bucket`. |
+| TpTags             | tp_tags             | false    | []string   | List of tags or labels associated with the event. |
+| TpTimestamp        | tp_timestamp        | true     | time.Time  | Event time with the format `YYYY-MM-DDTHH:MM:SS.` |
+| TpUsernames        | tp_usernames        | false    | []string   | Usernames related to the event. |
 
 ## Step 6: Build, Configure & Test
 
