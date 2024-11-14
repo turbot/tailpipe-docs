@@ -11,8 +11,9 @@ Each plugin should have a detection mod, e.g., AWS Detections, Azure Detections.
 
 ### Detections
 
-Standards for fields:
+Standards for names/fields:
 
+- name: `<log types>_detect_<detection>`
 - title: `Detect <detection> in <log types>`
 - description: `Detect <detection> to check <impact>.`
 - severity: Select a severity from `critical`, `high`, `medium`, or `low`.
@@ -28,19 +29,28 @@ The detection should have the following tags:
 Example detection:
 
 ```hcl
-detection "cloudtrail_logs_cloudtrail_trail_updates" {
+detection "cloudtrail_logs_detect_cloudtrail_trail_updates" {
   title       = "Detect CloudTrail Trail Updates in CloudTrail Logs"
   description = "Detect CloudTrail trail changes to check if logging was stopped."
   severity    = "medium"
   query       = query.cloudtrail_logs_cloudtrail_trail_updates
 
-  tags = merge(local.cloudtrail_logs_common_tags, {
+  tags = merge(local.cloudtrail_log_detections_common_tags, {
     mitre_attack_ids = "TA0005:T1562:001"
   })
 }
 ```
 
 ### Detection Queries
+
+Standards for names/fields:
+
+- name: `<log types>_detect_<detection>`
+
+Other notes:
+
+- Detection queries should not return rows that resulted in errors or failed
+- Detection queries should order by `timestamp` in descending order to show the most recent logs first
 
 Detection queries should have the following columns in this order:
 
@@ -52,8 +62,7 @@ Detection queries should have the following columns in this order:
 - `tp_index` with an alias, e.g., `tp_index as account_id`, `tp_index as subscription_id`
 - `<additional account context>`, e.g., `region`, `resource_group`
 - `source_id` - Usually set as `tp_id`
-
-The query should also have `*`, which is generally discouraged, but helpful in these queries to make all row data available.
+- `*` - This is generally discouraged, but helpful to make all row data available
 
 To make mod writing easier, we also recommend using HCL locals to set query columns. For instance:
 
@@ -61,8 +70,8 @@ To make mod writing easier, we also recommend using HCL locals to set query colu
 locals {
   # Local internal variables to build the SQL select clause for common
   # dimensions. Do not edit directly.
-  common_dimensions_cloudtrail_logs_sql = <<-EOQ
-  epoch_ms(tp_timestamp) as timestamp,
+  cloudtrail_log_detection_sql_columns = <<-EOQ
+  tp_timestamp as timestamp,
   string_split(event_source, '.')[1] || ':' || event_name as operation,
   __RESOURCE_SQL__ as resource,
   user_identity.arn as actor,
@@ -75,13 +84,13 @@ locals {
 }
 
 locals {
-  cloudtrail_logs_cloudtrail_trail_update_detection_sql = replace(local.common_dimensions_cloudtrail_logs_sql, "__RESOURCE_SQL__", "request_parameters::JSON ->> 'name'")
+  cloudtrail_logs_detect_cloudtrail_trail_updates_sql_columns = replace(local.cloudtrail_log_detection_sql_columns, "__RESOURCE_SQL__", "request_parameters::JSON ->> 'name'")
 }
 
-query "cloudtrail_logs_cloudtrail_trail_updates" {
+query "cloudtrail_logs_detect_cloudtrail_trail_updates" {
   sql = <<-EOQ
     select
-      ${local.cloudtrail_logs_cloudtrail_trail_update_detection_sql}
+      ${local.cloudtrail_logs_detect_cloudtrail_trail_updates_sql_columns}
     from
       aws_cloudtrail_log
     where
@@ -98,11 +107,11 @@ If the `resource` column is static:
 
 ```hcl
 locals {
-  common_dimensions_s3_server_access_logs_sql = <<-EOQ
-  epoch_ms(tp_timestamp) as timestamp,
+  s3_server_access_log_detection_sql_columns = <<-EOQ
+  tp_timestamp as timestamp,
   operation as operation,
   bucket as resource,
-  requester as actor, -- TODO: What to use here?
+  requester as actor,
   tp_source_ip as source_ip,
   tp_index::varchar as account_id,
   'us-east-1' as region, -- TODO: Use tp_location when available
@@ -111,10 +120,10 @@ locals {
   EOQ
 }
 
-query "s3_server_access_logs_insecure_access" {
+query "s3_server_access_logs_detect_insecure_access" {
   sql = <<-EOQ
     select
-      ${local.common_dimensions_s3_server_access_logs_sql}
+      ${local.s3_server_access_log_detection_sql_columns}
     from
       aws_s3_server_access_log
     where
@@ -132,6 +141,7 @@ Contains all detections for a given log type (usually per table).
 
 Standards for fields:
 
+- name: `<log type>_detection`
 - title: `<Log type> Detections`
 - description: `This benchmark contains recommendations when scanning <log types>.`
 - type: `detection`
