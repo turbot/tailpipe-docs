@@ -14,7 +14,7 @@ Each plugin should have a detection mod, e.g., AWS Detections, Azure Detections.
 Standards for names/fields:
 
 - name: `<log types>_detect_<detection>`
-- title: `Detect <detection> in <log types>`
+- title: `Detect <detection>`
 - description: `Detect <detection> to check <impact>.`
 - severity: Select a severity from `critical`, `high`, `medium`, or `low`.
 
@@ -30,7 +30,7 @@ Example detection:
 
 ```hcl
 detection "cloudtrail_logs_detect_cloudtrail_trail_updates" {
-  title       = "Detect CloudTrail Trail Updates in CloudTrail Logs"
+  title       = "Detect CloudTrail Trail Updates"
   description = "Detect CloudTrail trail changes to check if logging was stopped."
   severity    = "medium"
   query       = query.cloudtrail_logs_cloudtrail_trail_updates
