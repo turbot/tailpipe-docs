@@ -1,0 +1,134 @@
+---
+title: Tailpipe CLI
+---
+
+# Tailpipe CLI
+
+## Sub-Commands
+
+| Command | Description
+|-|-
+| [tailpipe help](/docs/reference/cli/help)         | Help about any command
+| [tailpipe collect](/docs/reference/cli/collect)   | Collect from log sources
+| [tailpipe connect](/docs/reference/cli/connect)   | Return a connection string for a database
+| [tailpipe plugin](/docs/reference/cli/plugin)     | Tailpipe plugin management
+| [tailpipe query](/docs/reference/cli/query)       | Query log sources
+
+
+## Global Flags
+
+<table>
+  <tr> 
+    <th> Flag </th> 
+    <th> Description </th> 
+  </tr>
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>--config-path</inlineCode> </td> 
+    <td>  
+    Sets the search path for <a href = "/docs/reference/config-files">configuration files</a>. This argument accepts a colon-separated list of directories.  All configuration files (<inlineCode>*.fpc</inlineCode>) will be loaded from each path, with decreasing precedence.  The default is <inlineCode>.:$TAILPIPE_INSTALL_DIR/config</inlineCode> (<inlineCode>.:~/.tailpipe/config</inlineCode>).  This allows you to manage your <a href="/docs/reference/config-files/workspace"> workspaces </a> and <a href="/docs/reference/config-files/connection">connections</a> centrally in the <inlineCode>~/.tailpipe/config</inlineCode> directory, but override them in the working directory / mod location if desired.
+    </td> 
+  </tr>
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>--data-dir</inlineCode> </td> 
+    <td>  
+    Sets the event store data directory. Tailpipe defaults to the `.tailpipe` directory in the current mod directory. This argument allows you to specify a different directory.
+    </td> 
+  </tr>
+
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>-h</inlineCode>, <inlineCode>--help</inlineCode> </td> 
+    <td>  Help for Tailpipe. </td> 
+  </tr>
+                  
+  <tr> 
+    <td nowrap="true"> <inlineCode>--host</inlineCode> </td> 
+    <td> Run the command against a local or remote server instance.  You may specify the full host and port (e.g. <inlineCode>--host https://tailpipe.my-org.com:7103</inlineCode>), or use the keyword <inlineCode>local</inlineCode> to connect to the local server instance as a shortcut for <inlineCode>https://localhost:7103</inlineCode> (e.g. <inlineCode>--host local</inlineCode>) </td> 
+  </tr>
+
+  <tr> 
+    <td nowrap="true">  <inlineCode>--input</inlineCode> </td>
+    <td> Enable interactive prompts (default <inlineCode>true</inlineCode>). </td>
+  </tr>
+
+
+  <tr> 
+    <td nowrap="true">  <inlineCode>--max-concurrency-container int</inlineCode> </td>
+    <td>Set the maximum number of <inlineCode>container</inlineCode> step instances that can execute concurrently across all pipeline instances (default <inlineCode>25</inlineCode>). </td>
+  </tr>
+  <tr> 
+    <td nowrap="true">  <inlineCode>--max-concurrency-function int</inlineCode> </td>
+    <td> Set the maximum number of <inlineCode>function</inlineCode> step instances that can execute concurrently across all pipeline instances (default <inlineCode>50</inlineCode>). </td>
+  </tr>
+  <tr> 
+    <td nowrap="true">  <inlineCode>--max-concurrency-http int</inlineCode> </td>
+    <td> Set the maximum number of <inlineCode>http</inlineCode> step instances that can execute concurrently across all pipeline instances (default <inlineCode>500</inlineCode>). </td>
+  </tr>
+  <tr> 
+    <td nowrap="true">  <inlineCode>--max-concurrency-query int</inlineCode> </td>
+    <td> Set the maximum number of <inlineCode>query</inlineCode> step instances that can execute concurrently across all pipeline instances (default <inlineCode>50</inlineCode>). </td>
+  </tr>
+
+
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>--mod-location</inlineCode>  </td> 
+    <td> Sets the Tailpipe workspace working directory.  If not specified, the workspace directory will be set to the current working directory.  See <a href="/docs/reference/env-vars/tailpipe_mod_location">TAILPIPE_MOD_LOCATION</a> for details. </td>
+  </tr>
+
+   <tr> 
+    <td nowrap="true">  <inlineCode>--output</inlineCode> </td> 
+    <td>  Select a console output format: <inlineCode>pretty</inlineCode>, <inlineCode>plain</inlineCode>, <inlineCode>yaml</inlineCode> or <inlineCode>json</inlineCode> (default <inlineCode>pretty</inlineCode>). </td>
+  </tr>
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>-v</inlineCode>, <inlineCode>--version</inlineCode>  </td> 
+    <td>  Display Tailpipe version. </td> 
+  </tr>
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>--workspace	</inlineCode>  </td> 
+    <td>  Sets the Tailpipe workspace profile. If not specified, the default workspace will be used if it exists. See <a href="/docs/reference/env-vars/tailpipe_workspace">TAILPIPE_WORKSPACE</a> for details. </td> 
+  </tr>
+
+</table>
+
+
+
+<!--
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>--pipes-host</inlineCode>  </td> 
+    <td>  Sets the host used when connecting to Turbot Pipesworkspaces.  See <a href="/docs/reference/env-vars/pipes_host">PIPES_HOST</a> for details. </td>
+  </tr>
+
+  <tr> 
+    <td nowrap="true"> <inlineCode>--pipes-token</inlineCode>  </td> 
+    <td>  Sets the authentication token used when connecting to Turbot Pipes workspaces.  See <a href="/docs/reference/env-vars/pipes_token">PIPES_TOKEN</a> for details. </td>
+  </tr>
+
+
+-->
+
+
+---
+
+
+## Exit Codes
+
+|  Value  |   Name                                | Description
+|---------|---------------------------------------|----------------------------------------
+|   **0** | `ExitCodeSuccessful`                  | Tailpipe ran successfully
+|   **1** | `ExitCodeExecutionPaused`             | Tailpipe ran without errors but paused waiting input
+|   **2** | `ExitCodeExecutionFailed`             | Tailpipe completed with one or more errors
+|   **3** | `ExitCodeExecutionCancelled`          | The Tailpipe command was canceelled by user request
+|  **61** | `ExitCodeModInitFailed`               | Mod init failed
+|  **62** | `ExitCodeModInstallFailed`            | Mod install failed
+| **250** | `ExitCodeInitializationFailed`        | Initialization failed
+| **251** | `ExitCodeBindPortUnavailable`         | Network port binding failed
+| **252** | `ExitCodeNoModFile`                   | The command requires a mod, but no mod file was found
+| **253** | `ExitCodeFileSystemAccessFailure`     | File system access failed
+| **254** | `ExitCodeInsufficientOrWrongInputs`   | Runtime error - insufficient or incorrect input
+| **255** | `ExitCodeUnknownErrorPanic`           | Runtime error - an unknown panic occurred

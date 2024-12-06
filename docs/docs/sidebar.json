@@ -19,23 +19,30 @@
   },
   {
     "type": "category",
-    "id": "manage-tailpipe",
-    "link": "manage",
+    "id": "collect",
+    "link": "collect",
+    "items": []
+  },
+  {
+    "type": "category",
+    "id": "run",
+    "link": "run",
     "items": [
-      "manage/collect",
-      "manage/plugins",
-      "manage/connections",
-      "manage/workspaces"
+      "run/plugins",
+      "run/connections",
+      "run/workspaces"
     ]
   },
   {
     "type": "category",
     "id": "reference",
+    "label": "Reference",
     "link": "reference",
     "items": [
       {
         "type": "category",
         "id": "cli",
+        "label": "Command Line Arguments",
         "link": "reference/cli",
         "items": [
           "reference/cli/help",
