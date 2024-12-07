@@ -79,29 +79,6 @@ except using an underscore in place of a dash:
 
 
 
-<!--
-| `insecure`         | `TAILPIPE_INSECURE`     | `--insecure` 
-| `event_store`      |                         | `--event-store`
-
-| `mod_location`     | `TAILPIPE_MOD_LOCATION` | `--mod-location`
-
-
-| `pipes_host`       | `PIPES_HOST`            | `--pipes-host`
-| `pipes_token`      | `PIPES_TOKEN`           | `--pipes-token`
-
-| `query_timeout`               | `TAILPIPE_QUERY_TIMEOUT`      | `--query_timeout`     |
-| `workspace_database`          | `TAILPIPE_WORKSPACE_DATABASE` | `--workspace-database`|
-
-
-| `search_path`                 | none                           | `--search-path`       |
-| `search_path_prefix`          | none                           | `--search-path-prefix`|
-
-| `max_parallel`                | `TAILPIPE_MAX_PARALLEL`       | `--max-parallel`      |
-
-
--->
-
-
 ## Examples
 
 

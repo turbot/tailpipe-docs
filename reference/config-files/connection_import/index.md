@@ -104,6 +104,3 @@ If there is a name conflict for any connections, Tailpipe will throw an error wh
 
 At this time, you may only use a single `import_connection` block.
 
-<!--
- of a given type, though we may revisit this restriction in the future.
--->

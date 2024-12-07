@@ -98,25 +98,6 @@ sidebar_label: Tailpipe CLI
 
 
 
-<!--
-
-  <tr> 
-    <td nowrap="true"> <inlineCode>--pipes-host</inlineCode>  </td> 
-    <td>  Sets the host used when connecting to Turbot Pipesworkspaces.  See <a href="/docs/reference/env-vars/pipes_host">PIPES_HOST</a> for details. </td>
-  </tr>
-
-  <tr> 
-    <td nowrap="true"> <inlineCode>--pipes-token</inlineCode>  </td> 
-    <td>  Sets the authentication token used when connecting to Turbot Pipes workspaces.  See <a href="/docs/reference/env-vars/pipes_token">PIPES_TOKEN</a> for details. </td>
-  </tr>
-
-
--->
-
-
----
-
-
 ## Exit Codes
 
 |  Value  |   Name                                | Description

@@ -134,7 +134,3 @@ with.stuff1.rows[*].a
 - if `a` is an array or JSONB array, then `with.stuff1.rows[*].a` is an array of arrays.  
 
 At this time, you cannot pass an entire set (`with.<name>.rows`) to a query - you may pass either a single value (`with.<name>.rows[0].column`) or an array from a single column (`with.<name>.rows[*].column`).
-<!--
-  - You can subsequently flatten it with the HCL `flatten` function if desired: `flatten(with.stuff1.rows[*].a)`
-  - duplicates values are not automatically removed from the array, but you can remove them with the HCL `distinct` function if desired:: `distinct(flatten(with.stuff1.rows[*].a))`
--->
