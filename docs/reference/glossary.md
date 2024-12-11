@@ -3,26 +3,36 @@ title: Glossary
 ---
 
 >[!NOTE]
-> This glossary covers dev-oriented advanced topics. We don't have an analog for that elsewhere.
-> It's counterpart in Guardrails, also under reference/docs, is conceptual overview for users not devs.
-> Arguably this one should appear under Develops and the one here should focus on user-oriented stuff
+> I have now moved this under reference to match other sites.
+
+>[!NOTE]
+> This glossary from graze initially covered dev-oriented advanced topics. We don't have an analog for that elsewhere. It's counterpart in Guardrails, also under reference/docs, is conceptual overview for users not devs. Maybe this should serve both audiences. We don't have prior art for that, but here's a sketch.
+
 # Glossary
 
+## Basic topics for everyone
 
-Configuration Items
-- [Partition](#partition)
-- [Connection](#connection)
+## Connection
 
-Plugin Components
-- [Source](#source)
-- [Mapper](#mapper)
-- [Row Struct](#row-struct)
-- [Table](#table)
-- [Enrichment](#enrichment)
+A connection is a HCL configuration item that represents a reusable connection to a service, i.e. AWS access keys, region, etc.
 
-Miscellaneous
-- [Parquet](#parquet)
-- [DuckDB](#duckdb)
+## DuckDB
+
+Tailpipe uses DuckDB, an embeddable column-oriented database.
+
+## Source
+
+>[!NOTE]
+> basic discussion
+
+`source` is an argument that appears in .tpc files. Example values: `source "aws_s3_bucket"`, `source "file_system"`, `source "pipes_audit_log_api"`.
+
+## Partition
+
+`partition` is an argument that appears in .tpc files. Example values: `partition "cloudtrail" "aws_cloudtrail_log"`, `partition "nginx_access_log" "dev"`.
+
+
+## Advanced topics for developers
 
 
 ## Partition
@@ -30,12 +40,6 @@ Miscellaneous
 A partition is a HCL configuration item that represents an instance of a table with provided table and source configurations.
 
 Partitions are defined in a `.tpc` file in the Tailpipe installations config directory (`~/.tailpipe/config`).
-
-## Connection
-
-A connection is a HCL configuration item that represents a reusable connection to a service, i.e. AWS access keys, region, etc.
-
-Connections are defined in a `.tpc` file in the Tailpipe installations config directory (`~/.tailpipe/config`).
 
 ## Source
 
@@ -62,7 +66,6 @@ Tables reside in the `tables` package of the plugin and are responsible for the 
 
 This is done by utilising a configured source, mapper(s) and row struct along with performing the Enrichment.
 
-
 ## Enrichment
 
 Enrichment is the process of populating additional fields of a log entry, in Tailpipe this refers to the common `tp_*` fields.
@@ -73,6 +76,3 @@ Parquet is a columnar storage file format that is optimized for reading and writ
 
 Parquet is the backing file format of the logs collected via Tailpipe, these are exposed by DuckDB.
 
-## DuckDB
-
-DuckDB is an embeddable SQL OLAP database management system that is optimized for read-heavy workloads.
