@@ -48,34 +48,37 @@
       {
         "type": "category",
         "id": "env-vars",
-        "label": "Environment Variables",
         "link": "reference/env-vars",
-        "items": []
+        "items": [
+          "reference/env-vars/tailpipe_log_level"
+        ]
       },
       {
         "type": "category",
         "id": "config-files",
-        "label": "Configuration Files",
         "link": "reference/config-files",
-        "items": []
+        "items": [
+          "reference/config-files/connection",
+          "reference/config-files/workspace"
+        ]
       },
       {
         "type": "category",
-        "id": "developers",
-        "label": "Developers",
-        "link": "reference/developers",
-        "items": []
+        "id": "develop",
+        "link": "reference/develop",
+        "items": [
+          "reference/develop/coding-standards",
+          "reference/develop/plugin-tables"
+        ]
       },
       "reference/glossary"
     ]
   },
   {
     "type": "category",
-    "id": "develop",
-    "link": "develop",
-    "items": [
-      "develop/plugin-tables"
-    ]
+    "id": "guides",
+    "link": "guides",
+    "items": []
   },
   {
     "type": "category",
