@@ -1,9 +1,8 @@
 ---
 title: Collect Logs
-sidebar_label: Collect Logs
 ---
 
-# Collecting logs
+# Collect Logs
 
 You run collection on the command line.
 

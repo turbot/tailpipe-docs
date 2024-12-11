@@ -1,9 +1,8 @@
 ---
-title: Managing Workspaces
-sidebar_label: Workspaces
+title: Manage Workspaces
 ---
 
-# Managing Workspaces
+# Manage Workspaces
 
 A Tailpipe workspace is a profile that defines the environment in which Tailpipe operates.
 

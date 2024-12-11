@@ -1,8 +1,8 @@
 ---
-title: Managing Connections
+title: Manage Connections
 ---
 
-# Managing Connections
+# Manage Connections
 
 Tailpipe **Connections** provide a mechanism for defining credentials and options for interacting with external systems.
 
