@@ -6,7 +6,7 @@ title: Glossary
 > I have now moved this under reference to match other sites.
 
 >[!NOTE]
-> This glossary from graze initially covered dev-oriented advanced topics. We don't have an analog for that elsewhere. It's counterpart in Guardrails, also under reference/docs, is conceptual overview for users not devs. Maybe this should serve both audiences. We don't have prior art for that, but here's a sketch.
+> This glossary from graza initially covered dev-oriented advanced topics. We don't have an analog for that elsewhere. It's counterpart in Guardrails, also under reference/docs, is conceptual overview for users not devs. Maybe this should serve both audiences. We don't have prior art for that, but here's a sketch.
 
 # Glossary
 
