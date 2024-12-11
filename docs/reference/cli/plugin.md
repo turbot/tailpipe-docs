@@ -14,6 +14,15 @@ Plugins extend Tailpipe to work with many different log sources. Find plugins us
 tailpipe plugin [command]
 ```
 
+## Argument Reference
+| Argument |Type | Required? | Description
+|-|-|-|-
+| `children` | List |  Optional| An ordered list of `control` and/or `benchmark` references that are members (direct descendants) of the benchmark.
+| `description` | String |  Optional| A description of the benchmark
+| `documentation` | String (Markdown)| Optional | A markdown string containing a long form description, used as documentation for the mod on hub.powerpipe.io. 
+| `tags` | Map | Optional | A map of key:value metadata for the benchmark, used to categorize, search, and filter.  The structure is up to the mod author and varies by benchmark and provider. 
+| `title` | String | Optional | A display title for the benchmark
+
 ## Available Commands:
 
 | Command | Description

@@ -11,8 +11,8 @@ slug: /
 Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
 
 > [!NOTE]
-> this list is provisional, needs discussion, it's the first thing people see
-> second two items may be too advanced for this context?
+> this list is provisional, needs discussion, it's the first thing people see.
+> the second two items may be too advanced for this context?
 > if so, what are more basic things to call out here?
 
 - Collect logs from various sources and store them efficiently in parquet files

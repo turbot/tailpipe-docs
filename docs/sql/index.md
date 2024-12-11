@@ -4,9 +4,12 @@ title: It's Just SQL!
 
 # It's Just SQL!
 
-Tailpipe leverages DuckDB to provide a SQL interface to your Nginx access logs. You can use standard SQL syntax to analyze your web server traffic data.
+Tailpipe leverages DuckDB to provide a SQL interface to logs source from files, APIs, or S3 buckets.
 
 ## Basic SQL
+
+>![NOTE]
+> We'll switch to an aws example if the setup can be sufficiently simplied.
 
 Like most popular databases, DuckDB supports standard SQL syntax - If you know SQL, you already know how to query your logs!
 
