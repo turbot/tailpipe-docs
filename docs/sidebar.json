@@ -40,7 +40,7 @@
         "items": [
           "reference/cli/help",
           "reference/cli/connect",
-          "reference/cli/collect",
+          "reference/cli/compact",
           "reference/cli/plugin",
           "reference/cli/query"
         ]
