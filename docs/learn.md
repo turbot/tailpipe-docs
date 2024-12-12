@@ -23,7 +23,7 @@ Tailpipe is a high-performance data collection and querying tool that makes it e
 ## Install the NGINX Plugin
 
 >[!NOTE]
-> Will switch to cloudtrail if setup can be sufficiently simplified
+> Will switch to a cloudtrail example now that I have collection working (thanks @cody)
 > This is a placeholder to demo expected structure
 
 This tutorial uses the NGINX plugin to demonstrate collecting and analyzing web server access logs. First, [download and install Tailpipe](/downloads), and then install the plugin:
