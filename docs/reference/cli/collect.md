@@ -1,42 +1,28 @@
 ---
 title: tailpipe collect
-sidebar_label: tailpipe collect
 ---
 
 # tailpipe collect
 
-Run a [collection](/docs/reference/config-files/integration).
+Run a [collection](TBD).
 
 
 ## Usage
 ```bash
-tailpipe integration [command] [flags]
+tailpipe collect [table.partition] [flags]
 ```
+### Arguments
 
-## Sub-Commands
-
-| Command | Description
+| Flag | Description
 |-|-
-| `list` | List integrations.
-| `show` | Show details for an integration.
-
+|  `--help`      | Help for collect
+|  `--compact`   | Compact the parquet files after collection (default true)
 
 ## Examples
 
-List integrations:
+Collect the `trail2` partition of the `aws_cloudtrail_log` table.
 
-```bash
-tailpipe integration list
+```
+tailpipe collect aws_cloudtrail_log.trail2
 ```
 
-View integration details:
-
-```bash
-tailpipe integration show slack.default
-```
-
-List integrations in JSON format:
-
-```bash
-tailpipe integration list --output json
-```

@@ -1,17 +1,14 @@
 ---
-title: tailpipe mod
-sidebar_label: tailpipe mod
+title: tailpipe query
 ---
 
-# tailpipe mod
-Tailpipe mod management.
+# tailpipe query
 
-Mods provide an easy way to share Tailpipe pipelines.  Find mods using the public registry at [hub.tailpipe.io](https://hub.tailpipe.io/).
-
+Query a Tailpipe table
 
 ## Usage
 ```bash
-tailpipe mod [command]
+tailpipe query [sql] [flags]
 ```
 
 ## Sub-Commands
