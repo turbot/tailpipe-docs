@@ -12,55 +12,59 @@ title: Glossary
 
 ## Basic topics for everyone
 
-## Connection
+### Connection
 
 A connection is a HCL configuration item that represents a reusable connection to a service, i.e. AWS access keys, region, etc.
 
-## DuckDB
+### DuckDB
 
 Tailpipe uses DuckDB, an embeddable column-oriented database.
 
-## Source
+### Hive
+
+A tree of parquet files in ~/.tailpipe/data/default' rooted at, e.g., `tp_table=aws_cloudtrail_log`. The `tailpipe.db` in ~/.tailpipe/data/default' (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`), are thin wrappers that materialize views over the parquet data.
+
+### Source
 
 >[!NOTE]
 > basic discussion
 
 `source` is an argument that appears in .tpc files. Example values: `source "aws_s3_bucket"`, `source "file_system"`, `source "pipes_audit_log_api"`.
 
-## Partition
+### Partition
 
 `partition` is an argument that appears in .tpc files. Example values: `partition "cloudtrail" "aws_cloudtrail_log"`, `partition "nginx_access_log" "dev"`.
 
 
 ## Advanced topics for developers
 
-## Enrichment
+### Enrichment
 
 Enrichment is the process of populating additional fields of a log entry, in Tailpipe this refers to the common `tp_*` fields.
 
-## Mapper
+### Mapper
 
 Mappers reside in the `mappers` package of the plugin, they take in data from a source and return a collection of the associated row struct.
 
-## Parquet
+### Parquet
 
 Parquet is a columnar storage file format that is optimized for reading and writing large datasets.
 
 Parquet is the backing file format of the logs collected via Tailpipe, these are exposed by DuckDB.
 
-## Partition
+### Partition
 
 A partition is a HCL configuration item that represents an instance of a table with provided table and source configurations.
 
 Partitions are defined in a `.tpc` file in the Tailpipe installations config directory (`~/.tailpipe/config`).
 
-## Row Struct
+### Row Struct
 
 A row struct is a codified representation of a table schema, these reside in the `rows` package of the plugin. 
 
 Incorporating required fields with `json` tags to define column namings and optionality, including the common fields for enrichment by embedding the `enrichment.CommonFields` struct.
 
-## Source
+### Source
 
 Sources reside in the `sources` package of the plugin and are responsible for the acquisition of log data, there are two main types of sources:
 
@@ -69,7 +73,7 @@ Sources reside in the `sources` package of the plugin and are responsible for th
 
 Sources should return a stream of log entries in the native format of acquisition, these could be predefined structs, strings (log lines), etc.
 
-## Table
+### Table
 
 Tables reside in the `tables` package of the plugin and are responsible for the collection of log entries in the format of the schema.
 
