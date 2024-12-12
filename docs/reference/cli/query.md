@@ -4,6 +4,9 @@ title: tailpipe query
 
 # tailpipe query
 
+>[!NOTE]
+> Cloned from Steampipe with minor variation: show is new, no service mode
+
 Query a Tailpipe table
 
 ## Usage
@@ -11,107 +14,109 @@ Query a Tailpipe table
 tailpipe query [sql] [flags]
 ```
 
-## Sub-Commands
+Execute SQL queries interactively, or by a query argument.
 
-| Command | Description
-|-|-
-| `init`        | Initialize the current directory with a `mod.fp` file 
-| `install`     | Install one or more mods and their dependencies
-| `list`        | List currently installed mods
-| `uninstall`   | Uninstall a mod and its dependencies
-| `update`      | Update one or more mods and their dependencies
+To open the interactive query shell, run `tailpipe query` with no arguments.  The query shell provides a way to explore your data and run multiple queries. 
+
+If a query string is passed on the command line then it will be run immediately and the command will exit.  Alternatively, you may specify one or more files containing SQL statements.  You can run multiple SQL files by passing a glob or a space-separated list of file names.
+
+## Usage
+Run Tailpipe [interactive query shell](/docs/query/query-shell):
+```bash
+tailpipe query [flags]
+```
+
+Run a [batch query](/docs/query/batch-query):
+```bash
+tailpipe query {query} [flags]
+```
 
 
 ## Flags
 
-| Flag | Description
-|-|-
-|` --dry-run` | Show which mods would be installed/updated/uninstalled without modifying them (default `false`).
-| `--force` | Install mods even if plugin/cli version requirements are not met (cannot be used with `--dry-run`).
-| `--prune` | Remove unused dependencies after installation is complete (default `true`).
-| `--pull string` | Specify an [update strategy](#update-strategy): `full`, `latest`, `development`, `minimal` (default `latest`)
+| Argument  |Description  
+|--|
+| `--export string`              | Export query output to a file. You may export multiple output formats by entering multiple `--export` arguments. If a file path is specified as an argument, its type will be inferred by the suffix. Supported export formats are `sps` (`snapshot`). 
+| `--header string`              | Specify whether to include column headers in csv and table output (default true`)|
+| `--help`                       | Help for `tailpipe query`.
+| `--output string`              | Select the console output format. Possible values are `line, csv, json, table, snapshot` (default `table`).
+| `--pipes-host`                 | Sets the Turbot Pipes host used when connecting to Turbot Pipes workspaces. See [PIPES_HOST](reference/env-vars/pipes_host) for details. 
+  `--pipes-token`                | Sets the Turbot Pipes authentication token used when connecting to Turbot Pipes workspaces. See [PIPES_TOKEN](reference/env-vars/pipes_token) for details.
+| `--progress`                   | Enable or disable progress information. By default, progress information is shown - set `--progress=false` to hide the progress bar.
+| `--query-timeout int`          | The query timeout, in seconds. The default is `0` (no timeout).
+| `--search-path strings`        | Set a comma-separated list of connections to use as a custom [search path](managing/connections#setting-the-search-path) for the query session.
+| `--search-path-prefix strings` | Set a comma-separated list of connections to use as a prefix to the current [search path](managing/connections#setting-the-search-path) for the query session.
+| `--separator string`           | A single character to use as a separator string for csv output (defaults to `","`).
+| `--share`                      | Create snapshot in Turbot Pipes with `anyone_with_link` visibility.
+| `--snapshot`                   | Create snapshot in Turbot Pipes with the default (`workspace`) visibility.
+| `--snapshot-location string`   | The location to write snapshots - either a local file path or a Turbot Pipes workspace.
+| `--snapshot-tag string=string` | Specify tags to set on the snapshot. Multiple `--snapshot-tag` arguments may be passed.
+| `--snapshot-title string`      | The title to give a snapshot when uploading to Turbot Pipes.
+| `--timing=string`              | Enable or disable query execution timing: `off` (default), `on`, or `verbose`.
+| `--workspace-database`         | Sets the database that Tailpipe will connect to. This can be `local` (the default) or a remote Turbot Pipes database. See [STEAMPIPE_WORKSPACE_DATABASE](/docs/reference/env-vars/steampipe_workspace_database) for details. 
 
-## Update Strategy
-
-It is also possible to have more granular control of the update behavior - e.g. when to check for new commits. The -`-pull` argument can be used to specify the update strategy when running `powerpipe update` or `powerpipe install`:
-
-| Strategy | Description
-|----------|---------------------------------------------------
-| `full`   | Check branches and tags for both latest and accuracy
-| `latest` | Update everything to latest, but only branches (not tags) are commit checked
-| `development` | Update branches and broken constraints to latest, leave satisfied constraints unchanged
-| `minimal`| Only update broken constraints. Do not check branches for new commits
-
-## Git URLs & Private Repos
-
-Tailpipe uses `git` to install and update mods. When you run `tailpipe mod install` or `tailpipe mod update`, Tailpipe will first try using `https` and if that does not work it will try `ssh`.  If your SSH keys are configured properly for `git`, you should be able to pull from private repos that you have access to, as well as public ones.
-
-When publishing mods, you should usually only depend on public mods (hosted in public repos) so that users of your mod don't encounter permissions issues.
 
 
 ## Examples
-List installed mods:
+
+Open an interactive query console:
 ```bash
-tailpipe mod list
+tailpipe query
 ```
 
-Install a mod and add the `require` statement to your `mod.fp`:
+Run a specific query directly:
 ```bash
-tailpipe mod install github.com/turbot/tailpipe-mod-aws
+tailpipe query "select * from aws_cloudtrail_log"
 ```
 
-Install an exact version of a mod and update the `require` statement to your `mod.fp`.  This may upgrade or downgrade the mod if it is already installed:
+Run a query and save a [snapshot](/docs/snapshots/batch-snapshots):
 ```bash
-tailpipe mod install github.com/turbot/tailpipe-mod-aws@0.1.0
+tailpipe query --snapshot "select * from aws_cloudtrail_log"
 ```
 
-Install a version of a mod using a semver constraint and update the `require` statement to your `mod.fp`.  This may upgrade or downgrade the mod if it is already installed:
+Run a query and share a [snapshot](/docs/snapshots/batch-snapshots):
 ```bash
-tailpipe mod install github.com/turbot/tailpipe-mod-aws@'^1'
+tailpipe query --share "select * from aws_cloudtrail_log"
 ```
 
-Install a mod from a GitHub tag:
+Run the SQL command in the `my_queries/my_query.sql` file:
 ```bash
-tailpipe mod install github.com/turbot/tailpipe-mod-aws@my-tag
+tailpipe query my_queries/my_query.sql
 ```
 
-Install a mod from a GitHub branch:
+Run the SQL commands in all `.sql` files in the `my_queries` directory and concatenate the results:
 ```bash
-tailpipe mod install github.com/turbot/tailpipe-mod-aws#main
+tailpipe query my_queries/*.sql
 ```
 
-Install a mod from a local directory:
+Run a query and report the query execution time:
 ```bash
-tailpipe  mod install ../tailpipe-mod-aws
+tailpipe query "select * from aws_cloudtrail_log" --timing
 ```
 
-Install all mods specified in the `mod.fp` and their dependencies:
+Run a query and report the query execution time and details for each scan:
 ```bash
-tailpipe mod install
+tailpipe query "select * from aws_cloudtrail_log" --timing=verbose
 ```
 
-Preview what `tailpipe mod install` will do, without actually installing anything:
+Run a query and return output in json format:
 ```bash
-tailpipe mod install --dry-run
+tailpipe query "select * from aws_cloudtrail_log" --output json
 ```
 
-Update a mod to the latest version allowed by its current constraint:
+Run a query and return output in CSV format:
 ```bash
-tailpipe mod update github.com/turbot/tailpipe-mod-aws
+tailpipe query "select * from aws_cloudtrail_log" --output csv
 ```
 
-Update all mods specified in the `mod.fp` and their dependencies to the latest versions that meet their constraints, and install any that are missing:
+Run a query and return output in pipe-separated format:
 ```bash
-tailpipe mod update
+tailpipe query "select * from aws_cloudtrail_log" --output csv --separator '|'
+```
+
+Run a query with a specific search_path:
+```bash
+tailpipe query --search-path="aws,github" "select * from aws_cloudtrail_log"
 ```
 
 
-Uninstall a mod:
-```bash
-tailpipe mod uninstall github.com/turbot/tailpipe-mod-azure
-```
-
-Preview uninstalling a mod, but don't uninstall it:
-```bash
-tailpipe mod uninstall github.com/turbot/tailpipe-mod-gcp --dry-run
-```
