@@ -1,7 +1,11 @@
 ---
 title: Querying IP Addresses
-sidebar_label: Querying IP Addresses
 ---
+
+>[!NOTE]
+> will switch to cloudtrail for example
+> i gather there will be an inet type?
+
 
 # Querying IP Addresses
 

@@ -6,7 +6,7 @@ slug: /
 ---
 
 
-## Learn Tailpipe
+# Learn Tailpipe
 
 Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
 
@@ -142,65 +142,11 @@ LIMIT 10;
 
 Because we specified `tp_date = '2024-11-01'`, Tailpipe only needs to read the parquet files in the corresponding date directories. Similarly, if you wanted to analyze traffic for a specific server, you could add `tp_index = 'web-01.example.com'` to your WHERE clause, and Tailpipe would only read files from that server's directory.
 
-
-## Understanding Data Storage
-
 > [!NOTE]
-> Will move to an advanced topic section elsewhere, location tbd, or drop
-
-
-Tailpipe uses a hive-partitioned storage structure that organizes data for efficient querying. Let's look at how data is stored:
-
-```
-tp_table=nginx_access_log
-└── tp_partition=dev
-    ├── tp_index=dev1
-    │   ├── tp_date=2024-11-12
-    │   │   ├── file_2b8c5008-09d6-4ada-9065-32263a4f5539.parquet
-    │   │   ├── file_4ccaaed5-0c2b-46c6-9c07-75cd4d086051.parquet
-    │   │   ├── file_6252d495-dae3-43f1-a77f-14d1408af2f8.parquet
-    │   │   ├── file_c50479b6-0684-43a5-917a-95b1e003358e.parquet
-```
-
-The structure has several key components:
-- **Partition**: Groups data by source (e.g., `nginx_access_log`)
-- **Index**: Sub-divides data by a meaningful key (e.g., server name for NGINX logs)
-- **Date**: Further partitions data by date
-- Each partition contains parquet files with the actual log data
-
-This hierarchical structure enables efficient querying through partition pruning. When you query with conditions on `tp_partition`, `tp_index`, or `tp_date`, Tailpipe (and DuckDB) can skip reading irrelevant parquet files entirely.
-
-
-### Using DuckDB Directly
-
-> [!NOTE]
-> Will move to an advanced topic section elsewhere, location tbd, or drop
-
-Since Tailpipe stores data in standard parquet files using a hive partitioning scheme, you can query the data directly with DuckDB:
-
-```sql
-$ cd ~/.tailpipe/data/default/tailpipe.db
-$ duckdb tailpipe.db
-D SELECT 
-    tp_date,
-    tp_index as server,
-    count(*) as requests
-  FROM nginx_access_log 
-  WHERE tp_date = '2024-11-01'
-  GROUP BY tp_date, tp_index;
-```
-
-This flexibility means you can:
-- Use your favorite DuckDB client to analyze the data
-- Write scripts that process the data directly
-- Import the data into other tools that support parquet files
-- Build automated reporting systems around the collected data
+> maybe elsewhere, but where?
+> or just drop because a) implicit for anyone who care, b) maybe few will care
 
 ## Join with External Data
-
-> [!NOTE]
-> Will move to an advanced topic section elsewhere, location tbd, or drop
-
 
 One of Tailpipe's powerful features is the ability to join log data with other tables. Here's an example joining with an IP information table to get more context about the traffic:
 
@@ -234,6 +180,7 @@ This enriched query shows:
 - Average response sizes
 - HTTP methods used
 - Error counts
+
 
 ## What's Next?
 

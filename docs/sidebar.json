@@ -19,6 +19,16 @@
   },
   {
     "type": "category",
+    "id": "query",
+    "link": "query",
+    "items": [
+      "query/query-shell",
+      "query/batch-query",
+      "query/snapshots"
+    ]
+  },
+  {
+    "type": "category",
     "id": "manage-tailpipe",
     "link": "manage",
     "items": [
@@ -67,8 +77,9 @@
         "id": "develop",
         "link": "reference/develop",
         "items": [
-          "reference/develop/coding-standards",
-          "reference/develop/plugin-tables"
+          "reference/develop/data-storage",
+          "reference/develop/plugin-tables",
+          "reference/develop/coding-standards"
         ]
       },
       "reference/glossary"

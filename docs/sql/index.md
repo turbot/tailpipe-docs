@@ -8,8 +8,8 @@ Tailpipe leverages DuckDB to provide a SQL interface to logs source from files, 
 
 ## Basic SQL
 
->![NOTE]
-> We'll switch to an aws example if the setup can be sufficiently simplied.
+>[!NOTE]
+> Will switch to an aws example now that i can collect aws_cloudtrail_log
 
 Like most popular databases, DuckDB supports standard SQL syntax - If you know SQL, you already know how to query your logs!
 

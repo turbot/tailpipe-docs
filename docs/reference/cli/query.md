@@ -6,6 +6,8 @@ title: tailpipe query
 
 >[!NOTE]
 > Cloned from Steampipe with minor variation: show is new, no service mode
+> snapshot stuff out of scope?
+> pipes also? currently i can snap to pipes but nothing to see there with no engine behind
 
 Query a Tailpipe table
 
@@ -35,7 +37,7 @@ tailpipe query {query} [flags]
 ## Flags
 
 | Argument  |Description  
-|--|
+|--|--
 | `--export string`              | Export query output to a file. You may export multiple output formats by entering multiple `--export` arguments. If a file path is specified as an argument, its type will be inferred by the suffix. Supported export formats are `sps` (`snapshot`). 
 | `--header string`              | Specify whether to include column headers in csv and table output (default true`)|
 | `--help`                       | Help for `tailpipe query`.

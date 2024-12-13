@@ -1,7 +1,9 @@
 ---
 title: Tips and Tricks
-sidebar_label: Tips and Tricks
 ---
+
+>[!NOTE]
+> needs tp redo
 
 # Tips and Tricks
 

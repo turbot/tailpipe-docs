@@ -2,6 +2,9 @@
 title: Manage Connections
 ---
 
+>[!NOTE]
+> goes away?
+
 # Manage Connections
 
 Tailpipe **Connections** provide a mechanism for defining credentials and options for interacting with external systems.

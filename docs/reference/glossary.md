@@ -22,7 +22,7 @@ Tailpipe uses DuckDB, an embeddable column-oriented database.
 
 ### Hive
 
-A tree of parquet files in ~/.tailpipe/data/default' rooted at, e.g., `tp_table=aws_cloudtrail_log`. The `tailpipe.db` in ~/.tailpipe/data/default' (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`), are thin wrappers that materialize views over the parquet data.
+A tree of parquet files in `~/.tailpipe/data/default` rooted at, e.g., `tp_table=aws_cloudtrail_log`. The `tailpipe.db` in `~/.tailpipe/data/default` (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`), are thin wrappers that materialize views over the parquet data.
 
 ### Source
 

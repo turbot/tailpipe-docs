@@ -2,8 +2,13 @@
 title: tailpipe plugin
 ---
 
+>[!NOTE]
+> Cloned from Steampipe with minor variation: show is new, no service mode
+> how much of the rest is applicable?
+
+
 # tailpipe plugin
-tailpipe plugin management.
+tailpipe plugin management
 
 Plugins extend tailpipe to work with many different services and providers. Find plugins using the public registry at [hub.tailpipe.io](https://hub.tailpipe.io).
 
