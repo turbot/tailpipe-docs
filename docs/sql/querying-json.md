@@ -2,7 +2,7 @@
 title: Querying JSON and STRUCT
 ---
 
-# Querying JSON and STRUCT Columns in DuckDB
+# Querying JSON and STRUCT Columns
 
 ## JSON Columns
 - Represent data as key-value pairs in a flexible format.
