@@ -10,8 +10,6 @@ title: Querying JSON
 - Represent data as key-value pairs in a flexible format.
 - Values can be extracted as JSON or plain strings.
 - DuckDB supports JSON-specific operators like `->`, `->>`, and functions like `json_extract` or `json_extract_string`.
-- Access a JSON array element as JSON: 'key_with_array'->0
-- Access a JSON array element as string: 'key_with_array'->>0
 - Tailpipe plugins produce JSON columns for irregularly-shaped data.
 
 
@@ -30,33 +28,41 @@ select typeof(request_parameters) from aws_cloudtrail_log limit 1;
 JSON  
 ```
 
-1. **Accessing Values**:
-   - `->`: Extracts a field as JSON. Use this when you want to retain the JSON type.
-   - `->>`: Extracts a field as a plain string. Use this when you need a direct value for comparisons or display.
-   - `json_extract` or `json_extract_string`: Use these for more complex extractions, including nested paths or computed keys.
-   - `json_objct->'key'->0->>'value' extracts the string value of the zeroth element
+**Accessing Values**:
+- `->`: Extracts a field as JSON. Use this when you want to retain the JSON type.
+- `->>`: Extracts a field as a plain string. Use this when you need a direct value for comparisons or display.
+- `json_extract` or `json_extract_string`: Use these for more complex extractions, including nested paths or computed keys.
+- `json_object->'key'->0->>'value' extracts the string value of the zeroth element
+- Access a JSON array element as JSON: 'key_with_array'->0
+- Access a JSON array element as string: 'key_with_array'->>0
 
-2. **Comparisons**:
-   - Always use `->>` or `json_extract_string` for comparisons with plain strings because `->` returns a JSON object that cannot be directly compared to strings.
+**Comparisons**:
+- Always use `->>` or `json_extract_string` for comparisons with plain strings because `->` returns a JSON object that cannot be directly compared to strings.
 
-   Example:
-   ```sql
-   -- This works because it accesses `Host` as a string
-   select count(*)
-   from aws_cloudtrail_log
-   where request_parameters->>'Host' = 'example.com';
+Example:
+```sql
+-- This works because it accesses `Host` as a string
+select count(*)
+from aws_cloudtrail_log
+where request_parameters->>'Host' = 'example.com';
+```
+
+```sql
+-- This fails because it accesses `Host` as a JSON value
+select count(*)
+from aws_cloudtrail_log
+where request_parameters->'Host' = 'example.com';
    ```
 
-   ```sql
-   -- This fails because it accesses `Host` as a JSON value
-   select count(*)
-   from aws_cloudtrail_log
-   where request_parameters->'Host' = 'example.com';
-   ```
+**Dot Notation**:
+- For JSON columns, Tailpipe will allow an expression like `request_parameters.Host`, it generally behaves like `->` (returns JSON) and requires an explicit conversion for string comparisons.
 
-3. **Dot Notation**:
-   - For JSON columns, Tailpipe will allow an expression like `request_parameters.Host`, it generally behaves like `->` (returns JSON) and requires an explicit conversion for string comparisons.
+Example:
 
+```sql
+select count(*) from aws_cloudtrail log 
+where request_parameters->>'Host' = 'aws-cloudtrail-logs-605491513981-2755fe67.s3.us-east-1.amazonaws.com'
+```
 
 ### For Struct Columns
 
@@ -68,24 +74,23 @@ STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR,
 account_id VARCHAR, access_key_id VARCHAR, ...
 ```
 
-1. **Accessing Values**:
-   - Dot notation (`.key`) is the default and most intuitive way to access fields within a struct.
-   - Dot notation directly extracts the value in its native type (e.g., string, number).
+**Accessing Values**:
+- Dot notation (`.key`) is the default and most intuitive way to access fields within a struct.
+- Dot notation directly extracts the value in its native type (e.g., string, number).
 
 Example:
-
    
 ```
 select count(user_identity.invoked_by) from aws_cloudtrail_log 
 where user_identity->>'invoked_by' = 'AWS Internal';
 ```
 
-2. **Comparisons**:
-   - Struct fields are directly comparable without additional casting.
-   - Dot notation simplifies field access for both selection and comparison.
+**Comparisons**:
+- Struct fields are directly comparable without additional casting.
+- Dot notation simplifies field access for both selection and comparison.
 
-3. **JSON-Like Operators**:
-   - Applicable to struct fields in DuckDB. You can use `->` to extract a field as its native type or `->>` to extract it as a plain string, just like with JSON columns. Structs, however, enforce stricter typing than JSON.
+**JSON-Like Operators**:
+- Applicable to struct fields in DuckDB. You can use `->` to extract a field as its native type or `->>` to extract it as a plain string, just like with JSON columns. Structs, however, enforce stricter typing than JSON.
 
 Example:
 ```sql
