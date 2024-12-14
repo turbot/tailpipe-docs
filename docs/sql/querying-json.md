@@ -32,9 +32,9 @@ JSON
 - `->`: Extracts a field as JSON. Use this when you want to retain the JSON type.
 - `->>`: Extracts a field as a plain string. Use this when you need a direct value for comparisons or display.
 - `json_extract` or `json_extract_string`: Use these for more complex extractions, including nested paths or computed keys.
-- `json_object->'key'->0->>'value' extracts the string value of the zeroth element
-- Access a JSON array element as JSON: 'key_with_array'->0
-- Access a JSON array element as string: 'key_with_array'->>0
+- `json_object`->`key`->0->>`value` extracts the string value of the zeroth element
+- Access a JSON array element as JSON: `key_with_array`->0
+- Access a JSON array element as string: `key_with_array`->>0
 
 **Comparisons**:
 - Always use `->>` or `json_extract_string` for comparisons with plain strings because `->` returns a JSON object that cannot be directly compared to strings.
