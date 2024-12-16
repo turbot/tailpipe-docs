@@ -51,6 +51,7 @@
           "reference/cli/help",
           "reference/cli/connect",
           "reference/cli/compact",
+          "reference/cli/partition",
           "reference/cli/plugin",
           "reference/cli/query"
         ]
