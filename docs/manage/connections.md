@@ -2,14 +2,9 @@
 title: Manage Connections
 ---
 
->[!NOTE]
-> goes away?
+## Manage Connections
 
-# Manage Connections
-
-Tailpipe **Connections** provide a mechanism for defining credentials and options for interacting with external systems.
-
-**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.
+**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.  Tailpipe connections should use the Powerpipe/Flowpipe format (with a type label), not the Steampipe format:
 
 ```hcl
 connection "aws" "aws_01" {
@@ -27,12 +22,11 @@ connection "gcp" "gcp_my_other_project" {
 }
 ```
 
-For Steampipe users, there is also a *connection import*.
-
+For Steampipe users, there is also a "connection import".
 ```hcl
 connection_import "steampipe" {
   source      = "~/.steampipe/config/*.spc"
   connections = ["*"]
   prefix      = "sp1_"
 }
-```
+

@@ -12,9 +12,7 @@ Return a connection string for a database, with a schema determined by the provi
  ```
 
 >[!NOTE]
-> What is this for?
-> Powerpipe uses it automatically. I could use it manually to avoid conflict,
-> if querying with DuckDB (or Tailpipe), is there another purpose?
+> Powerpipe does this automatically. I could use it manually to avoid conflict, if querying with DuckDB (or Tailpipe), is there another purpose?
 
 
 ### Arguments
@@ -31,17 +29,10 @@ Return a connection string for a database, with a schema determined by the provi
 Connect to the Tailpipe database, filtered to records after the start time:
 
 ```bash
-tailpipe connect --from '2024-11-15'
+tailpipe connect --from 15/11/2024
 ```
 
->[!NOTE]
-> What is the format?
-> Error: error building filters: invalid date format for 'from': 2024-11-15
->jon@Indigo:~/tailpipe$ tailpipe connect --from '2024/11/15'
->Error: error building filters: invalid date format for 'from': 2024/11/15
-```
-
-Show the filepath for the connected database.
+Show the filepath for the connected database:
 
 ```bash
 tailpipe connect --output json
@@ -51,7 +42,7 @@ tailpipe connect --output json
 { 'database_filepath":"/home/jon/.tailpipe/data/default/tailpipe_20241212134120.db"}
 ```
 
-Use Tailpipe to query the connect database:
+Use Tailpipe to query the connected database:
 
 >[!NOTE]
 > Not a `tailpipe query` option, yet, will it be?

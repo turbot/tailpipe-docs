@@ -1,11 +1,10 @@
 ---
 title:  workspace
-sidebar_label: workspace
 ---
 # workspace 
 
 >[!NOTE]
->Cloned from steampipe. Changes?
+>Cloned from steampipe, review for change
 
 A Tailpipe `workspace` is a "profile" that allows you to define options for running Tailpipe.  
 

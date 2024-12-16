@@ -32,7 +32,6 @@
     "id": "manage-tailpipe",
     "link": "manage",
     "items": [
-      "manage/collect",
       "manage/plugins",
       "manage/connections",
       "manage/workspaces"
@@ -58,6 +57,20 @@
           "reference/cli/table"
         ]
       },
+      {
+        "type": "category",
+        "id": "concepts",
+        "link": "reference/concepts",
+        "items": [
+          "reference/concepts/collection",
+          "reference/concepts/hive",
+          "reference/concepts/partition",
+          "reference/concepts/plugin",
+          "reference/concepts/source",
+          "reference/concepts/table"
+        ]
+      },
+            
       {
         "type": "category",
         "id": "env-vars",
@@ -87,12 +100,6 @@
       },
       "reference/glossary"
     ]
-  },
-  {
-    "type": "category",
-    "id": "guides",
-    "link": "guides",
-    "items": []
   },
   {
     "type": "category",
