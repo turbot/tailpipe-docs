@@ -12,13 +12,13 @@ You can collect everything:
 tailpipe collect
 ```
 
-or table:
+or just table:
 
 ```bash
 tailpipe collect aws_cloudtrail_log
 ```
 
-or just a partition:
+or just a partition within a table:
 
 ```bash
 tailpipe collect aws_cloudtrail_log.prod

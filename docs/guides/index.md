@@ -1,5 +1,6 @@
 ---
-title: Guides
+title: Understanding Collection
 ---
 
-# Guides
+# Understanding Collection
+

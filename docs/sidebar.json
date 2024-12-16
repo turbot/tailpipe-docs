@@ -49,6 +49,7 @@
         "link": "reference/cli",
         "items": [
           "reference/cli/help",
+          "reference/cli/collect",
           "reference/cli/connect",
           "reference/cli/compact",
           "reference/cli/partition",
