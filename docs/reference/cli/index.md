@@ -15,7 +15,12 @@ title: Tailpipe CLI
 | [tailpipe query](/docs/reference/cli/query)       | Query log sources
 
 
+
+
 ## Global Flags
+
+>[!NOTE]
+>Copied from steampipe, needs review
 
 <table>
   <tr> 
