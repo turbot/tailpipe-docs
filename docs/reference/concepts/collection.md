@@ -4,14 +4,14 @@ title: Collection
 
 # Collection
 
-The [tailipe collect](/docs/reference/cli/collect) command runs a [plugin](/docs/concepts/plugin) that reads from a [source](/docs/concepts/source) and writes to [the hive](/docs/concepts/hive). Every time you run `tailpipe collect` Tailpipe refreshes its views over all collected parquet files. Those views are the tables you query with `tailpipe query` (or with DuckDB, or another client).
+The [tailipe collect](/docs/reference/cli/collect) command runs a [plugin](/docs/reference/concepts/plugin) that reads from a [source](/docs/reference/concepts/source) and writes to the [hive](/docs/reference/concepts/hive). Every time you run `tailpipe collect`, Tailpipe refreshes its views over all collected parquet files. Those views are the tables you query with `tailpipe query` (or with DuckDB, or another client).
 
-The collection process always writes to a local **workspace**, and does so on a per-partition basis.  While the user may specify multiple partitions on the command line, `partition` is the unit of collection.  A partition day is atomic unit of work; the partition collection succeeds or fails for all sources for a given day, and if it fails its is rolled back.
+The collection process always writes to a local **workspace**, and does so on a per-partition basis.  While you may specify multiple partitions on the command line, `partition` is the unit of collection.  A partition day is the atomic unit of work; the partition collection succeeds or fails for all sources for a given day, and if it fails, rolls everything back for that day.
 
 When a partition is collected, each source resumes from the last time it was collected.  Source data is ingested, standardized, then written to parquet files in the **standard hive structure**.  
 
 >[NOTE]
-> manifest explanation omitted, out of scope right?
+> manifest explanation omitted, related to push/pull, out of scope for lw7?
 
  {/*
 
