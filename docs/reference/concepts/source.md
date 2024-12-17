@@ -2,7 +2,7 @@
 title: Sources
 ---
 
-## About Sources
+# Sources
 A partition has one or more **sources**.  
  
 

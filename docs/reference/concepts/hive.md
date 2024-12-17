@@ -1,8 +1,8 @@
 ---
-title: The Hive
+title: Hive
 ---
 
-# The Hive
+# Hive
 
 Tailpipe uses [hive partitioning](https://duckdb.org/docs/data/partitioning/hive_partitioning.html) to leverage automatic [filter pushdown](https://duckdb.org/docs/data/partitioning/hive_partitioning.html#filter-pushdown) and tailpipe is opinionated on the layout:
   - The data is written in parquet files the workspace directory, with a prescribed directory and filename structure.  Other than **index** the layout is dictated by tailpipe core.
