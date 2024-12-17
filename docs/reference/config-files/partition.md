@@ -4,5 +4,5 @@ title:  partition
 
 # partition
 
-The `connection` block ...
+The `partition` block ...
 
