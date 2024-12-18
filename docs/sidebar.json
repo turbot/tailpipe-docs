@@ -39,6 +39,17 @@
   },
   {
     "type": "category",
+    "id": "pipes-ecosystem",
+    "link": "pipes-ecosystem",
+    "items": [
+      "pipes-ecosystem/steampipe",
+      "pipes-ecosystem/powerpipe",
+      "pipes-ecosystem/flowpipe",
+      "pipes-ecosystem/pipes"
+    ]
+  },  
+  {
+    "type": "category",
     "id": "guides",
     "link": "guides",
     "items": [
