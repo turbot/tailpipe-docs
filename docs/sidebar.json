@@ -39,6 +39,21 @@
   },
   {
     "type": "category",
+    "id": "guides",
+    "link": "guides",
+    "items": [
+      "guides/collecting",
+      "guides/testdata"
+    ]
+  },
+  {
+    "type": "category",
+    "id": "faq",
+    "link": "faq",
+    "items": []
+  },
+  {
+    "type": "category",
     "id": "reference",
     "link": "reference",
     "items": [
@@ -70,7 +85,6 @@
           "reference/concepts/table"
         ]
       },
-            
       {
         "type": "category",
         "id": "env-vars",
@@ -101,20 +115,5 @@
       },
       "reference/glossary"
     ]
-  },
-  {
-    "type": "category",
-    "id": "guides",
-    "link": "guides",
-    "items": [
-      "guides/collecting",
-      "guides/testdata"
-    ]
-  },
-  {
-    "type": "category",
-    "id": "faq",
-    "link": "faq",
-    "items": []
   }
 ]
