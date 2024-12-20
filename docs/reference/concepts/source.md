@@ -6,7 +6,7 @@ title: Sources
 A partition has one or more **sources**.  
  
 
-**Sources** are the mechanism for getting logs.  Usually, a source will connect to a resource via a **connection** -- the connection specifies the credentials and account scope.   The source is usually more specific than the connection though;  a *connection* provides the ability to interact with an AWS account, and you may have several *sources* that use that connection but provide logs from different services and locations - perhaps an aws s3 source in one bucket, another aws s3 source in another bucket, and a 3rd source that get logs from a Cloudwatch Logs log group.
+**Sources** are the mechanism for getting logs.  Usually, a source will connect to a resource via a **connection**  the connection specifies the credentials and account scope.   The source is usually more specific than the connection though;  a *connection* provides the ability to interact with an AWS account, and you may have several *sources* that use that connection but provide logs from different services and locations - perhaps an aws s3 source in one bucket, another aws s3 source in another bucket, and a 3rd source that get logs from a Cloudwatch Logs log group.
 
 
 The source is responsible for:
@@ -20,9 +20,9 @@ The source is responsible for:
 
 The source does NOT:
   - modify or standardize the data (the partition does that)
-  - generalized filtering based on row contents (the partition does that, though the SDK may provide tools for this)
+  - provide generalized filtering based on row contents [[ (the partition does that, though the SDK may provide tools for this) ]]
 
-Sources are defined as sub blocks in a *partition*. 
+Sources are defined as sub-blocks in a *partition*. 
 
 ```hcl
 partition "aws_cloudtrail_log" "test" {
