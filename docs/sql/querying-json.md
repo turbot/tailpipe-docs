@@ -52,7 +52,7 @@ select count(*)
 from aws_cloudtrail_log
 where json_extract_string(request_parameters, 'Host') = 'example.com'
 
--- Fails with a binder error because it accesses `Host` as JSON
+-- Fails with a binder error
 -- Binder Error: No function matches the given name and argument types 'json_extract(JSON, BOOLEAN)'
 -- That's because DuckDB internally maps `->` to `json_extract` 
 -- Why BOOLEAN? Apparently a type inference failure.
