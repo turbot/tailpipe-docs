@@ -39,25 +39,35 @@ JSON
 
 Examples:
 ```sql
--- Fails because it accesses `Host` as JSON
-select count(*)
-from aws_cloudtrail_log
-where request_parameters->'Host' = 'example.com';
 
 -- Works because it accesses `Host` as a string
+
 select count(*)
 from aws_cloudtrail_log
 where request_parameters->>'Host' = 'example.com';
 
--- Fails with conversion error because it access `Host` as JSON
+-- Works because it accesses `Host` as a string
+
+select count(*) 
+from aws_cloudtrail_log
+where json_extract_string(request_parameters, 'Host') = 'example.com'
+
+-- Fails with a binder error because it accesses `Host` as JSON
+-- Binder Error: No function matches the given name and argument types 'json_extract(JSON, BOOLEAN)'
+-- That's because DuckDB internally maps `->` to `json_extract` 
+-- Why BOOLEAN? Apparently a type inference failure.
+
+select count(*)
+from aws_cloudtrail_log
+where request_parameters->'Host' = 'example.com';
+
+-- Fails with a conversion error because it access `Host` as JSON
+
 select request_parameters.Host = 'example.com'
 from aws_cloudtrail_log
 limit 1;
 
 -- Fails with no error but matches zero rows
-select request_parameters.Host::string = 'example.com'
-from aws_cloudtrail_log
-limit 1;
 -- Why? Internal representations do not match
 -- If you select the types of these expressions:
 -- select typeof(req.Host::string), typeof(req->>'Host')
@@ -66,6 +76,11 @@ limit 1;
 -- select req.Host::string, req->>'Host'
 -- then DuckDB reports:
 -- "s3.amazonaws.com", s3.amazonaws.com
+
+select request_parameters.Host::string = 'example.com'
+from aws_cloudtrail_log
+limit 1;
+
 ```
 
 ### For Struct Columns
