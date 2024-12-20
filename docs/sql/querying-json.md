@@ -49,10 +49,23 @@ select count(*)
 from aws_cloudtrail_log
 where request_parameters->>'Host' = 'example.com';
 
--- Fails because it access `Host` as JSON
+-- Fails with conversion error because it access `Host` as JSON
 select request_parameters.Host = 'example.com'
 from aws_cloudtrail_log
 limit 1;
+
+-- Fails with no error but matches zero rows
+select request_parameters.Host::string = 'example.com'
+from aws_cloudtrail_log
+limit 1;
+-- Why? Internal representations do not match
+-- If you select the types of these expressions:
+-- select typeof(req.Host::string), typeof(req->>'Host')
+-- then DuckDB reports VARCHAR for both.
+-- But if you select the values:
+-- select req.Host::string, req->>'Host'
+-- then DuckDB reports:
+-- "s3.amazonaws.com", s3.amazonaws.com
 ```
 
 ### For Struct Columns
