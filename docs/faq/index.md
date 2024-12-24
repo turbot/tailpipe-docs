@@ -4,6 +4,104 @@ title:  FAQ
 
 # FAQ
 
-## Collection reports fewer rows than expected
+## Why does collection report fewer rows than expected?
 
-Tailpipe maintains collection state, so you'll only see new rows. If you want to reset and collect everything, you can delete `~/.internal/collection/default/collection_state.db`. You might want to do this if you've built your own plugin, and if it's practical to recollect all the data.
+Tailpipe maintains collection state, so you'll only see new rows. 
+
+## How do I reset a table?
+
+If you want to reset and collect everything, you can delete `~/.internal/collection/default/collection_state.db`. You might want to do this if you're building your own plugin and changing the schema.
+
+>[!NOTE]
+> What's the story for published plugins that change schema?
+
+## Can I use DuckDB to query my Tailpipe tables?
+
+Yes. Use `tailpipe connect` to acquire a unique connection string. For example:
+
+```
+$ tailpipe connect
+/home/jon/.tailpipe/data/default/tailpipe_20241224111847.db
+```
+
+Then connect to it:
+
+```
+$ duckdb /home/jon/.tailpipe/data/default/tailpipe_20241224111847.db
+D .tables
+aws_cloudtrail_log  github_audit_log    nginx_access_log    pipes_audit_log
+```
+
+## Can I define more than one partition per table?
+
+Yes. In this example, the `aws_cloudtrail_log` table has two partitions, one for each of two AWS accounts.
+
+```hcl
+ connection "aws" "12345" {
+  profile = "SSO-12345"
+  regions = ["*"]
+}
+
+ connection "aws" "6789" {
+  profile = "SSO-6789"
+  regions = ["*"]
+}
+
+partition "aws_cloudtrail_log" "12345" {
+  source "aws_s3_bucket" {
+    connection = connection.aws.12345
+    bucket     = "aws-cloudtrail-logs-12345-2755fe67"
+    prefix     = "AWSLogs/12345/CloudTrail/us-east-1/2025"
+    region     = "us-east-1"
+    extensions = [".gz"]
+  }
+
+partition "aws_cloudtrail_log" "6789" {
+  source "aws_s3_bucket" {
+    connection = connection.aws.6789
+    bucket     = "aws-cloudtrail-logs-6789-2755fe67"
+    prefix     = "AWSLogs/6789/CloudTrail/us-east-1/2025"
+    region     = "us-east-1"
+    extensions = [".gz"]
+  }
+```
+
+## Can I define multiple sources for a table?
+
+Yes. In this example, the `aws_cloudtrail_log` table has one partition that encompasses two AWS accounts.
+
+```hcl
+ connection "aws" "12345" {
+  profile = "SSO-12345"
+  regions = ["*"]
+}
+
+ connection "aws" "6789" {
+  profile = "SSO-6789"
+  regions = ["*"]
+}
+
+partition "aws_cloudtrail_log" "cloudtrail_all" {
+  source "aws_s3_bucket" {
+    connection = connection.aws.12345
+    bucket     = "aws-cloudtrail-logs-12345-2755fe67"
+    prefix     = "AWSLogs/12345/CloudTrail/us-east-1/2025"
+    region     = "us-east-1"
+    extensions = [".gz"]
+  }
+
+  source "aws_s3_bucket" {
+    connection = connection.aws.6789
+    bucket     = "aws-cloudtrail-logs-6789-2755fe67"
+    prefix     = "AWSLogs/6789/CloudTrail/us-east-1/2025"
+    region     = "us-east-1"
+    extensions = [".gz"]
+  }
+```
+
+## What partition indexes are available for a table?
+
+That depends on how the plugin author has defined the common `tp_index` field. For AWS tables, it's the `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (`but `tp_partition` will aways be the same). 
+
+
+
