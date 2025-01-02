@@ -12,7 +12,7 @@ Like most popular databases, DuckDB supports standard SQL syntax. If you know SQ
 
 You can **query all the columns** in a table:
 ```sql
-select * from aws_cloudtrail_log;
+select * from aws_cloudtrail_log limit 1000;
 ```
 
 You can **filter** rows where columns only have a specific value: 
@@ -25,7 +25,7 @@ select
 from
   aws_cloudtrail_log
 where
-  event_type = 'AwsApiCCall'
+  event_type = 'AwsApiCCall';
 ```
 
 or a **range** of values:
@@ -39,7 +39,7 @@ select
 from
   aws_cloudtrail_log
 where
-  aws_region in ('us-east-1', 'us-west-1')
+  aws_region in ('us-east-1', 'us-west-1');
 ```
 
 or match a **pattern**: 
@@ -70,7 +70,7 @@ from
   aws_cloudtrail_log
 where
   event_name = 'UpdateTrail'
-  and tp_date > date '2024-11-06'
+  and tp_date > date '2024-11-06';
 ```
 
 You can **sort** your results:
@@ -85,7 +85,7 @@ select
 from
   aws_cloudtrail_log
 order by
-  aws_region
+  aws_region;
 ```
 
 You can **sort on multiple columns, ascending or descending**:
@@ -101,10 +101,11 @@ from
   aws_cloudtrail_log
 order by
   aws_region asc,
-  tp_date desc
+  tp_date desc;
 ```
 
 You can group and use standard aggregate functions. You can **count** results:
+
 ```sql
 select
   event_name,
@@ -138,7 +139,7 @@ select
 from
   nginx_access_log
 group by
-  method
+  method;
 ```
 
 You can **exclude duplicate rows**:
