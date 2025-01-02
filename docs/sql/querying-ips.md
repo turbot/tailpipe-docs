@@ -3,7 +3,7 @@ title: Querying IP Addresses
 ---
 
 >[!NOTE]
-> for these examples i have the inet extension loaded. i assume it'll be included with tailpipe. in that case, plugins could the INET db type to make casting unnecessary? 
+> for these examples i have the inet extension loaded. i assume it'll be included with tailpipe. in that case, plugins could use the INET db type to make casting unnecessary? 
 
 
 # Querying IP Addresses
