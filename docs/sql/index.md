@@ -8,103 +8,111 @@ Tailpipe leverages DuckDB to provide a SQL interface to logs source from files, 
 
 ## Basic SQL
 
->[!NOTE]
-> Will switch to an aws example now that i can collect aws_cloudtrail_log
-
-Like most popular databases, DuckDB supports standard SQL syntax - If you know SQL, you already know how to query your logs!
+Like most popular databases, DuckDB supports standard SQL syntax. If you know SQL, you already know how to query your logs!
 
 You can **query all the columns** in a table:
 ```sql
-select * from nginx_access_log;
+select * from aws_cloudtrail_log;
 ```
 
 You can **filter** rows where columns only have a specific value: 
 ```sql
 select
-  remote_addr,
-  method,
-  path,
-  status
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type
 from
-  nginx_access_log
+  aws_cloudtrail_log
 where
-  method = 'GET';
+  event_type = 'AwsApiCCall'
 ```
 
 or a **range** of values:
+
 ```sql
 select
-  remote_addr,
-  method,
-  path,
-  status
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type
 from
-  nginx_access_log
+  aws_cloudtrail_log
 where
-  status in (404, 500);
+  aws_region in ('us-east-1', 'us-west-1')
 ```
 
 or match a **pattern**: 
+
 ```sql
 select
-  remote_addr,
-  method,
-  path,
-  status
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type,
+  event_name
 from
-  nginx_access_log
+  aws_cloudtrail_log
 where
-  path like '/api/%';
+  event_name ilike '%update%';
 ```
 
 You can **filter on multiple columns**, joined by `and` or `or`:
+
 ```sql
 select
-  remote_addr,
-  method,
-  path,
-  status
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type,
+  event_name
 from
-  nginx_access_log
+  aws_cloudtrail_log
 where
-  method = 'POST'
-  and status >= 400;
+  event_name = 'UpdateTrail'
+  and tp_date > date '2024-11-06'
 ```
 
 You can **sort** your results:
+
 ```sql
 select
-  remote_addr,
-  body_bytes_sent,
-  timestamp
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type,
+  event_name
 from
-  nginx_access_log
+  aws_cloudtrail_log
 order by
-  body_bytes_sent;
+  aws_region
 ```
 
 You can **sort on multiple columns, ascending or descending**:
+
 ```sql
 select
-  remote_addr,
-  body_bytes_sent,
-  timestamp
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type,
+  event_name
 from
-  nginx_access_log
+  aws_cloudtrail_log
 order by
-  body_bytes_sent desc,
-  timestamp asc;
+  aws_region asc,
+  tp_date desc
 ```
 
 You can group and use standard aggregate functions. You can **count** results:
 ```sql
 select
-  method,
+  event_name,
   count(*) as count
 from
-  nginx_access_log
+  aws_cloudtrail_log
 group by
-  method
+  event_name
 order by
   count desc;
 ```
@@ -112,42 +120,44 @@ order by
 or **sum** them:
 ```sql
 select
-  path,
+  method,
   sum(body_bytes_sent) as total_bytes
 from
   nginx_access_log
 group by
-  path;
+  method;
 ```
 
 or find **min**, **max**, and **average**:
 ```sql
 select
-  path,
+  method,
   min(body_bytes_sent) as min_bytes,
   max(body_bytes_sent) as max_bytes,
   avg(body_bytes_sent) as avg_bytes
 from
   nginx_access_log
 group by
-  path;
+  method
 ```
 
 You can **exclude duplicate rows**:
 ```sql
 select distinct
-  remote_addr
+  event_name
 from
-  nginx_access_log;
+  aws_cloudtrail_log;
 ```
 
 or exclude **all but one matching row**:
 ```sql
-select distinct on (remote_addr)
-  remote_addr,
-  timestamp,
-  request
+select distinct on (event_type)
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type,
+  event_name
 from
-  nginx_access_log;
+  aws_cloudtrail_log;
 ```
 
