@@ -1,7 +1,6 @@
 ---
 id: learn
 title: Learn Tailpipe
-sidebar_label: Learn Tailpipe
 slug: /
 ---
 
