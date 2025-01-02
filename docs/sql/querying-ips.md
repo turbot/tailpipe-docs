@@ -3,29 +3,29 @@ title: Querying IP Addresses
 ---
 
 >[!NOTE]
-> will switch to cloudtrail for example
-> i gather there will be an inet type?
+> for these examples i have the inet extension loaded. i assume it'll be included with tailpipe. in that case, plugins could the INET db type to make casting unnecessary? 
 
 
 # Querying IP Addresses
 
-One of the primary uses of analyzing Nginx logs is understanding your web traffic patterns and identifying potential security issues. The `remote_addr` field in Nginx logs contains IP addresses of clients accessing your web server.
+IP addresses are fundamental to security-oriented log analysis. 
 
 You can **find traffic from specific IP addresses**:
+
 ```sql
 select
-  remote_addr,
-  method,
-  path,
-  status,
-  timestamp
+  tp_partition,
+  tp_date,
+  aws_region,
+  event_type
 from
-  nginx_access_log
+  aws_cloudtrail_log
 where
-  remote_addr = '192.168.1.100';
+  tp_source_ip = '114.33.107.149';
 ```
 
 You can find requests from IPs that are **within a specific network range**:
+
 ```sql
 select
   remote_addr,
@@ -34,7 +34,7 @@ select
 from
   nginx_access_log
 where
-  remote_addr <<= '10.0.0.0/8'
+  remote_addr::inet <<= '114.33.0.0/16'::inet
 group by
   remote_addr
 order by
@@ -42,6 +42,7 @@ order by
 ```
 
 You can find traffic that's **not from internal networks**:
+
 ```sql
 select
   remote_addr,
