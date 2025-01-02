@@ -52,85 +52,14 @@ The query shell supports standard emacs-style key bindings:
 
 
 
-## Exploring Tables & Connections
+## Exploring Tables & Columns
 
-### Connections
-
-A Tailpipe **Connection** represents a set of tables for a single data source. Each connection is represented as a distinct Postgres schema.
-
-A connection is associated with a single instance of a single [plugin](/docs/managing/plugins) type. The boundary and scope of the connection varies by plugin, but is typically aligned with the vendor's CLI tool or API:
-
-- An `azure` connection contains tables for a single Azure subscription
-- An `aws` connection contains tables for a single AWS account
-
-To view the installed connections, you can use the `.connections` :
-
-```
-> .connections
-+------------+--------------------------------------------------+
-| Connection |                      Plugin                      |
-+------------+--------------------------------------------------+
-| aws        | hub.tailpipe.io/plugins/turbot/aws@latest       |
-| github     | hub.tailpipe.io/plugins/turbot/github@latest    |
-| tailpipe  | hub.tailpipe.io/plugins/turbot/tailpipe@latest |
-+------------+--------------------------------------------------+
-
-To get information about the tables in a connection, run '.inspect {connection}'
-To get information about the columns in a table, run '.inspect {connection}.{table}'
-
-```
-
-Alternately, you can use `.inspect` command with no arguments.  The output is the same:
-```
-> .inspect
-+------------+--------------------------------------------------+
-| Connection |                      Plugin                      |
-+------------+--------------------------------------------------+
-| aws        | hub.tailpipe.io/plugins/turbot/aws@latest       |
-| github     | hub.tailpipe.io/plugins/turbot/github@latest    |
-| tailpipe  | hub.tailpipe.io/plugins/turbot/tailpipe@latest |
-+------------+--------------------------------------------------+
-
-To get information about the tables in a connection, run '.inspect {connection}'
-To get information about the columns in a table, run '.inspect {connection}.{table}'
-
-```
-
-### Tables
 Tailpipe **tables** provide an interface for querying logc data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
 
->[!NOTE]
-> will this stuff work the same as sp?
+### Tables
 
-
-To view the tables provided by a plugin,  in all active connections, you can use the `.tables` command:
-
-```
-> .tables
- ==> aws
-+----------------------------------------+--------------------------------+
-|                 Table                  |          Description           |
-+----------------------------------------+--------------------------------+
-| aws_cloudtrail_log                     | AWS Cloudtrail logs            |
-+----------------------------------------+--------------------------------+
-
- ==> github
-+----------------------------------------+--------------------------------+
-|                 Table                  |          Description           |
-+----------------------------------------+--------------------------------+
-| github_audit_log                       | GitHub audit logs              |
-+----------------------------------------+--------------------------------+
-...
-
+TBD
 
 ### Columns
-To get information about the **columns** in a table, run `.inspect {connection}.{table}`:
 
-```
-> .inspect aws_cloudtrail_log
-+----------------------+-----------------------------+--------------------------------+
-|        Column        |            Type             |          Description           |
-+----------------------+-----------------------------+--------------------------------+
-| partition            | text                        | The name of a [partition](TBD) |
-+----------------------+-----------------------------+--------------------------------+
-```
+TBD
