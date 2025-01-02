@@ -39,53 +39,64 @@ JSON
 
 Examples:
 ```sql
-
--- Works because it accesses `Host` as a string
-
 select count(*)
 from aws_cloudtrail_log
 where request_parameters->>'Host' = 'example.com';
 
 -- Works because it accesses `Host` as a string
+```
 
+---
+
+```sql
 select count(*) 
 from aws_cloudtrail_log
 where json_extract_string(request_parameters, 'Host') = 'example.com'
+
+-- Works because it accesses `Host` as a string
+```
+---
+
+```sql
+select count(*)
+from aws_cloudtrail_log
+where request_parameters->'Host' = 'example.com';
 
 -- Fails with a binder error
 -- Binder Error: No function matches the given name and argument types 'json_extract(JSON, BOOLEAN)'
 -- That's because DuckDB internally maps `->` to `json_extract` 
 -- Why BOOLEAN? Apparently a type inference failure.
+```
 
-select count(*)
-from aws_cloudtrail_log
-where request_parameters->'Host' = 'example.com';
+---
 
--- Fails with a conversion error because it access `Host` as JSON
-
+```sql
 select request_parameters.Host = 'example.com'
 from aws_cloudtrail_log
 limit 1;
 
--- Fails with no error but matches zero rows
--- Why? Internal representations do not match
--- If you select the types of these expressions:
--- select typeof(req.Host::string), typeof(req->>'Host')
--- then DuckDB reports VARCHAR for both.
--- But if you select the values:
--- select req.Host::string, req->>'Host'
--- then DuckDB reports:
--- "s3.amazonaws.com", s3.amazonaws.com
+-- Fails with a conversion error because it access `Host` as JSON
+```
 
+---
+
+```sql
 select request_parameters.Host::string = 'example.com'
 from aws_cloudtrail_log
 limit 1;
 
+-- Fails because although DuckDB reports VARCHAR as the
+-- type of both expressions, the internal representations
+-- don't match:
+-- "s3.amazonaws.com" vs s3.amazonaws.com
 ```
+
+
 
 ### For Struct Columns
 
 Example of a STRUCT column's type:
+
 ```sql
 select typeof(user_identity) from aws_cloudtrail_log limit 1;
 typeof(user_identity) = STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR, account_id VARCHAR, access_key_id VARCHAR, user_name VARCHAR, session_context STRUCT(attributes STRUCT(mfa_authenticated VARCHAR, creation_date BIGINT), 
@@ -99,23 +110,33 @@ typeof(user_identity) = STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR
 
 Examples:
 ```sql
--- Comparing to a string field with dot notation
 select user_identity.invoked_by
 from aws_cloudtrail_log
 where user_identity.invoked_by = 'AWS Internal'
 limit 1;
 
--- Comparing to a string field with a JSON operator
+-- Works because the native type of `invoked_by` is string.
+```
+
+---
+
+```sql
 select user_identity.invoked_by
 from aws_cloudtrail_log
 where user_identity->>'invoked_by' = 'AWS Internal'
 limit 1;
 
--- This fails because the left expression is JSON, not string
+-- Works because the JSON `->>` operator returns a string.
+```
+---
+
+```sql
 select user_identity.invoked_by
 from aws_cloudtrail_log
 where user_identity->'invoked_by' = 'AWS Internal'
 limit 1;
+
+-- Fails because the `->` operator returns JSON, not string
 ```
 
 **Comparisons**:
@@ -127,24 +148,31 @@ limit 1;
 
 ## Key Distinction: Typing vs. Flexibility
 
-**Struct Columns**: These are strongly typed. Each field in the struct has a defined type (e.g., VARCHAR, INTEGER), and operations on these fields respect that type. Using dot notation (field.key) provides straightforward access with clear typing.
+**Struct Columns**: These are strongly typed. Each field in the struct has a defined type (e.g., VARCHAR, INTEGER), and operations on these fields respect that type. Using dot notation (`field.key`) provides straightforward access with clear typing.
 
 Example:
 
 STRUCT
 
 ```sql
--- Direct comparison of a numeric field in a struct
 select count(*)
 from aws_cloudtrail_log
 where user_identity.account_id = 123456789012;
 
+-- Direct comparison of a numeric field in a struct
+```
+
 JSON
 
--- JSON requires casting the value to a number for comparison
+
+
+
+```sql
 select count(*)
 from aws_cloudtrail_log
 where request_parameters->>'account_id'::BIGINT = 123456789012;
+
+-- JSON requires casting the value to a number for comparison
 ```
 
 **JSON Columns**: These are flexible and loosely typed. A JSON column stores raw JSON data, and fields must be interpreted at runtime. JSON operators (`->`, `->>`) are the native way to extract and transform this data, but dot notation also works for convenience in many cases.
@@ -154,18 +182,20 @@ Example:
 JSON
 
 ```sql
--- Access a field that may or may not exist
 select request_parameters->>'optional_field'
 from aws_cloudtrail_log;
+
+-- Access a field that may or may not exist
 ```
 
 STRUCT
 
 ```sql
--- Structs require the field to exist in the schema
--- This query fails if 'optional_field' is missing from the struct
 select user_identity.optional_field
 from aws_cloudtrail_log;
+
+-- Structs require the field to exist in the schema
+-- This query fails if 'optional_field' is missing from the struct
 ```
 
 
