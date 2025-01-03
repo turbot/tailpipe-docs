@@ -4,6 +4,9 @@ title: Plugins
 
 # Plugins
 
+> [!NOTE]
+> How will this change for tailpipe?
+
 Tailpipe provides an integrated, standardized SQL interface for querying various sources of log data. It relies on plugins to define and implement tables for those logs. This approach decouples the Tailpipe core from provider-specific implementations, providing flexibility and extensibility.
 
 Tailpipe plugins are packaged as Open Container Images (OCI) and stored in the [Tailpipe Hub registry](https://hub.tailpipe.io).  This registry contains a curated set of plugins developed by and/or vetted by Turbot.  To install the latest version of a standard plugin, you can simply install it by name.
@@ -15,7 +18,12 @@ $ tailpipe plugin install aws
 
 This will download the latest aws plugin from the hub registry, and will set up a default connection named `aws`.
 
-> Note: If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/managing/connections) configuration file in order to use the additional versions of the plugin. 
+> [!NOTE]
+> If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/managing/connections) configuration file in order to use the additional versions of the plugin. 
+
+> [!WARNING]
+> ^ Will this apply to tailpipe?
+
 
 ## Installing a Specific Version
 To install a specific version, simply specify the version tag after the plugin name, separated by `@` or `:`
@@ -102,6 +110,10 @@ For example, consider a `myplugin` plugin that you have developed.  To install i
     }
     ```
 
+> [!WARNING]
+> ^ Keep? If so, change how?
+
+
 ## Installing Missing Plugins
 
 You can install all missing plugins that are referenced in your configuration files:
@@ -116,6 +128,10 @@ Running `tailpipe plugin install` with no arguments will cause Tailpipe to read 
 $ tailpipe plugin install --skip-config
 ```
 
+> [!WARNING]
+> ^ Keep? If so, change how?
+
+tail
 
 ## Viewing Installed Plugins
 You can list the installed plugins with the `tailpipe plugin list` command:
@@ -125,12 +141,10 @@ $ tailpipe plugin list
 ┌─────────────────────────────────────────────────────┬─────────┬────────────────────────────────────────────┐
 │ NAME                                                │ VERSION │ CONNECTIONS                                │
 ├─────────────────────────────────────────────────────┼─────────┼────────────────────────────────────────────┤
-│ hub.tailpipe.io/plugins/turbot/aws@latest          │ 0.4.0   │ aws,aws_account_aaa,aws_account_aab         │
-│ hub.tailpipe.io/plugins/turbot/digitalocean@latest │ 0.1.0   │ digitalocean                                │
-│ hub.tailpipe.io/plugins/turbot/gcp@latest          │ 0.0.6   │ gcp_project_a,gcp,gcp_project_b             │
-│ hub.tailpipe.io/plugins/turbot/github@latest       │ 0.0.5   │ github                                      │
-│ hub.tailpipe.io/plugins/turbot/tailpipe@latest     │ 0.0.2   │ tailpipe                                    │
-└────────────────────────────────────────────────────┴─────────┴─────────────────────────────────────────────┘
+│ hub.tailpipe.io/plugins/turbot/aws@latest           │ 0.1.0   │ aws,aws_account_aaa,aws_account_aab         │
+│ hub.tailpipe.io/plugins/turbot/gcp@latest           │ 0.0.6   │ gcp_project_a,gcp,gcp_project_b             │
+│ hub.tailpipe.io/plugins/turbot/github@latest        │ 0.0.5   │ github                                      │
+└─────────────────────────────────────────────────────┴─────────┴─────────────────────────────────────────────┘
 ```
 
 ## Updating Plugins
