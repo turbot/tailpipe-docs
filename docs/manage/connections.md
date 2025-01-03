@@ -22,6 +22,9 @@ connection "gcp" "gcp_my_other_project" {
 }
 ```
 
+>[!NOTE]
+> out of scope for lw7?
+
 For Steampipe users, there is also a "connection import".
 ```hcl
 connection_import "steampipe" {
@@ -29,4 +32,7 @@ connection_import "steampipe" {
   connections = ["*"]
   prefix      = "sp1_"
 }
+```
+
+A default connection, e.g. `connection.aws.default` always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. For AWS, credentials resolve in the SDK's order.
 
