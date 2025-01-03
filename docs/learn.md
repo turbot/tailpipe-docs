@@ -1,21 +1,29 @@
 ---
 id: learn
 title: Learn Tailpipe
-sidebar_label: Learn Tailpipe
 slug: /
 ---
 
+
 # Learn Tailpipe
 
-Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can-
+Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
+
+> [!NOTE]
+> this list is provisional, needs discussion, it's the first thing people see.
+> the second two items may be too advanced for this context?
+> if so, what are more basic things to call out here?
 
 - Collect logs from various sources and store them efficiently in parquet files
-- Query your data using familiar SQL syntax through DuckDB
-- Share collected data with your team using remote object storage
+- Query your data using familiar SQL syntax using DuckDB
 - Create filtered views of your data using schemas
 - Join log data with other data sources for enriched analysis
 
 ## Install the NGINX Plugin
+
+>[!NOTE]
+> Will switch to a cloudtrail example now that I have collection working (thanks @cody)
+> This is a placeholder to demo expected structure
 
 This tutorial uses the NGINX plugin to demonstrate collecting and analyzing web server access logs. First, [download and install Tailpipe](/downloads), and then install the plugin:
 
@@ -133,62 +141,9 @@ LIMIT 10;
 
 Because we specified `tp_date = '2024-11-01'`, Tailpipe only needs to read the parquet files in the corresponding date directories. Similarly, if you wanted to analyze traffic for a specific server, you could add `tp_index = 'web-01.example.com'` to your WHERE clause, and Tailpipe would only read files from that server's directory.
 
-
-## Understanding Data Storage
-
-Tailpipe uses a hive-partitioned storage structure that organizes data for efficient querying. Let's look at how data is stored:
-
-```
-+-- default
-    +-- nginx_access_log
-    ¦   +-- tp_partition=nginx_access_log
-    ¦       +-- tp_index=web-01.example.com
-    ¦       ¦   +-- tp_date=2024-11-01
-    ¦       ¦       +-- file_a7d40b4a-0398-46c6-8869-dc5dd87015a0.parquet
-    ¦       +-- tp_index=web-02.example.com
-    ¦       ¦   +-- tp_date=2024-11-01
-    ¦       ¦       +-- file_696946fa-f636-4b54-a8ec-82f64704ff50.parquet
-    ¦       +-- tp_index=web-03.example.com
-    ¦           +-- tp_date=2024-11-01
-    ¦               +-- file_a061d992-eb86-46a5-bc8f-d1a4b2fcce25.parquet
-    +-- pipes_audit_log
-    ¦   +-- tp_partition=pipes_audit_log
-    ¦       +-- tp_index=turbot-ops
-    ¦           +-- tp_date=2024-11-05
-    ¦               +-- file_ebab33de-2dcc-437c-8722-e371316f0b22.parquet
-    +-- tailpipe.db
-```
-
-The structure has several key components:
-- **Partition**: Groups data by source (e.g., `nginx_access_log`)
-- **Index**: Sub-divides data by a meaningful key (e.g., server name for NGINX logs)
-- **Date**: Further partitions data by date
-- Each partition contains parquet files with the actual log data
-
-This hierarchical structure enables efficient querying through partition pruning. When you query with conditions on `tp_partition`, `tp_index`, or `tp_date`, Tailpipe (and DuckDB) can skip reading irrelevant parquet files entirely.
-
-
-### Using DuckDB Directly
-
-Since Tailpipe stores data in standard parquet files using a hive partitioning scheme, you can query the data directly with DuckDB:
-
-```sql
-$ cd ~/.tailpipe/data/default/tailpipe.db
-$ duckdb tailpipe.db
-D SELECT 
-    tp_date,
-    tp_index as server,
-    count(*) as requests
-  FROM nginx_access_log 
-  WHERE tp_date = '2024-11-01'
-  GROUP BY tp_date, tp_index;
-```
-
-This flexibility means you can:
-- Use your favorite DuckDB client to analyze the data
-- Write scripts that process the data directly
-- Import the data into other tools that support parquet files
-- Build automated reporting systems around the collected data
+> [!NOTE]
+> maybe elsewhere, but where?
+> or just drop because a) implicit for anyone who care, b) maybe few will care
 
 ## Join with External Data
 
@@ -225,12 +180,13 @@ This enriched query shows:
 - HTTP methods used
 - Error counts
 
+
 ## What's Next?
 
 We've demonstrated basic log collection and analysis with Tailpipe. Here's what to explore next:
 
 - [Discover more plugins on the Hub →](https://hub.steampipe.io/plugins)
 - [Learn about data compaction and optimization →](https://tailpipe.io/docs/managing/compaction)
-- [Share data with your team using remotes →](https://tailpipe.io/docs/sharing/remotes)
 - [Create schemas for filtered views →](https://tailpipe.io/docs/schemas)
 - [Join #tailpipe on Slack →](https://turbot.com/community/join)
+

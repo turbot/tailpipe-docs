@@ -2,8 +2,129 @@
   {
     "type": "category",
     "id": "learn",
-    "label": "Learn Tailpipe",
     "link": "learn",
+    "items": [
+      {
+        "type": "category",
+        "id": "sql",
+        "label": "It's Just SQL!",
+        "link": "sql",
+        "items": [
+          "sql/querying-json",
+          "sql/querying-ips",
+          "sql/tips"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "id": "query",
+    "link": "query",
+    "items": [
+      "query/query-shell",
+      "query/batch-query",
+      "query/snapshots"
+    ]
+  },
+  {
+    "type": "category",
+    "id": "manage-tailpipe",
+    "link": "manage",
+    "items": [
+      "manage/plugins",
+      "manage/connections",
+      "manage/workspaces"
+    ]
+  },
+  {
+    "type": "category",
+    "id": "pipes-ecosystem",
+    "link": "pipes-ecosystem",
+    "items": [
+      "pipes-ecosystem/steampipe",
+      "pipes-ecosystem/powerpipe",
+      "pipes-ecosystem/flowpipe",
+      "pipes-ecosystem/pipes"
+    ]
+  },  
+  {
+    "type": "category",
+    "id": "guides",
+    "link": "guides",
+    "items": [
+      "guides/collecting",
+      "guides/testdata"
+    ]
+  },
+  {
+    "type": "category",
+    "id": "faq",
+    "link": "faq",
     "items": []
+  },
+  {
+    "type": "category",
+    "id": "reference",
+    "link": "reference",
+    "items": [
+      {
+        "type": "category",
+        "id": "cli",
+        "link": "reference/cli",
+        "items": [
+          "reference/cli/help",
+          "reference/cli/collect",
+          "reference/cli/connect",
+          "reference/cli/compact",
+          "reference/cli/partition",
+          "reference/cli/plugin",
+          "reference/cli/query",
+          "reference/cli/table"
+        ]
+      },
+      {
+        "type": "category",
+        "id": "concepts",
+        "link": "reference/concepts",
+        "items": [
+          "reference/concepts/collection",
+          "reference/concepts/hive",
+          "reference/concepts/partition",
+          "reference/concepts/plugin",
+          "reference/concepts/source",
+          "reference/concepts/table"
+        ]
+      },
+      {
+        "type": "category",
+        "id": "env-vars",
+        "link": "reference/env-vars",
+        "items": [
+          "reference/env-vars/tailpipe_log_level"
+        ]
+      },
+      {
+        "type": "category",
+        "id": "config-files",
+        "link": "reference/config-files",
+        "items": [
+          "reference/config-files/connection",
+          "reference/config-files/partition",
+          "reference/config-files/workspace"
+        ]
+      },
+      {
+        "type": "category",
+        "id": "develop",
+        "link": "reference/develop",
+        "items": [
+          "reference/develop/data-storage",
+          "reference/develop/plugin-tables",
+          "reference/develop/coding-standards"
+        ]
+      },
+      "reference/glossary"
+    ]
   }
 ]

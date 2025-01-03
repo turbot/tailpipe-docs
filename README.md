@@ -1,7 +1,5 @@
 ![image](https://tailpipe.io/images/open_graph_preview.png)
 
-<!-- # Tailpipe docs format & structure -->
-
 Docs are written in Markdown format and are located in the `docs` folder. The entry-point document will contain front-matter with `slug: /`.
 
 Each document requires the following frontmatter, adjust the values as per your requirement:
@@ -23,7 +21,6 @@ Any images required by docs must be placed in `/images/docs/...` and must be ref
 
 # Guidelines for contribution
 
-<!-- Thank you for your interest in contributing to Tailpipe documentation! We greatly value feedback and contributions from our community. -->
 
 Please read through this document before you submit any pull requests or issues. It will help us to collaborate more effectively.
 

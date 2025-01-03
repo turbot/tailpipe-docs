@@ -1,6 +1,5 @@
 ---
-title: Plugin Table Steps
-sidebar_label: Plugin Table Steps
+title: Plugin Tables
 ---
 
 # Plugin Table Steps
