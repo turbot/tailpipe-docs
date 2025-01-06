@@ -4,7 +4,7 @@ title: It's Just SQL!
 
 # It's Just SQL!
 
-Tailpipe leverages DuckDB to provide a SQL interface to logs source from files, APIs, or S3 buckets.
+Tailpipe leverages DuckDB to provide a SQL interface to the tables built from your log data.
 
 ## Basic SQL
 
