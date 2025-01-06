@@ -9,18 +9,11 @@ slug: /
 
 Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe you can:
 
-- Collect logs from various sources and store them efficiently in parquet files
-- Query your data using familiar SQL syntax using Tailpipe (or DuckDB!)
-- Create filtered views of your data
-- Join log data with other data sources for enriched analysis
+- Collect logs from various sources and store them efficiently
+- Query your data with familiar SQL syntax using Tailpipe (or DuckDB!)
+- Use [Powerpipe](https://powerpipe.io) to visualize your logs and run detections 
 
-> [!NOTE]
-> this list is provisional, needs discussion, it's the first thing people see.
-> the second two items may be too advanced for this context?
-> if so, what are more basic things to call out here?
-## Install the AWS Plugin
-
-This tutorial uses the AWS plugin to demonstrate collecting and analyzing Cloudtrail logs. First, [download and install Tailpipe](/downloads).
+This tutorial uses the AWS plugin to demonstrate collection and analysis of Cloudtrail logs. First, [download and install Tailpipe](/downloads).
 
 ```bash+macos
 brew install turbot/tap/tailpipe
@@ -36,76 +29,88 @@ Then install the plugin:
 tailpipe plugin install aws
 ```
 
-Out of the box, Tailpipe will use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ec2 describe-vpcs`, for example, then you should be able to run the examples. 
-
-The AWS plugin documentation provides additional examples to [configure your credentials](https://hub.tailpipe.io/plugins/turbot/aws#configuring-aws-credentials), and you can even configure Tailpipe to query [multiple accounts](https://tailpipe.io/docs#:~:text=tailpipe%20to%20query-,multiple%20accounts,-and%20multiple%20regions) and [multiple regions](https://tailpipe.io/docs#:~:text=multiple%20accounts%20and-,multiple%20regions).
-
-> [!NOTE]
-> Should we provide a file-source alternative for those who don't have a live AWS account or lack access to cloudtrail logs in one? 
-> We could provide some dummy data in a tailpipe-samples repo.
-
 ## Configure Data Collection
 
-Tailpipe uses HCL configuration files to define what data to collect. Here's a configuration that uses the `aws_s3_bucket` source.
+Tailpipe uses HCL configuration files to define what data to collect. Here's a configuration that collects Cloudtrail logs. 
 
 ```
- connection "aws" "dev" {
+connection "aws" "sample" {
   profile = "SSO-Admin-605...13981"
-  regions = ["*"]
 }
 
-partition "aws_cloudtrail_log" "dev" {
+partition "aws_cloudtrail_log" "sample" {
   source "aws_s3_bucket" {
     connection = connection.aws.dev
     bucket     = "aws-cloudtrail-logs-6054...81-fe67"
-    prefix     = "AWSLogs/6054...81/CloudTrail/us-east-1/2024/12"
-    region     = "us-east-1"
-    extensions = [".gz"]
   }
 }
 ```
 
-Put this in a file, e.g. `aws.tpc`, and save it to `~/.tailpipe/config`.
+The `connection` governs how Tailpipe accesses logs. Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to run the examples. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
 
-This configuration tells Tailpipe to collect Cloudtrail logs from the specified S3 bucket. The configuration defines:
 
-- A connection that enables Tailpipe to access the logs
+The `partition` refers to a plugin-defined table, `aws_cloudtrail_log`, with a schema that describes the data found in each line of a Cloudtrail log. 
 
-- A plugin-defined table, `aws_cloudtrail_log`
+Put this HCL code in a file, e.g. `aws.tpc`, and save it to `~/.tailpipe/config`.
 
-- A partition within the table, `dev`
+Note: If you don't have any access to live Cloudtrail logs, you can use the [flaws.cloud](http://flaws.cloud/) sample logs. To get them:
+
+```
+mkdir ~/flaws
+cd ~/flaws
+wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
+tar xvf flaws_cloudtrail_logs.tar
+```
+
+To configure:
+
+```
+partition "aws_cloudtrail_log" "sample" {
+ source "file_system" {
+    paths = ["~/flaws"]
+    extensions = ["*.gz"]
+  }
+}
+```
 
 ## Collect Data
 
 Now let's collect the logs:
 
 ```bash
-tailpipe collect aws_cloudtrail_log
+tailpipe collect aws_cloudtrail_log.sample
 ```
 
 This command will:
 
-- Acquire compressed (.gz) logs files from the bucket
+- Acquire compressed (.gz) log files
 
 - Uncompress them
 
 - Parse all the .json log files and map fields of each line to the plugin-defined schema
 
-- Store the data in parquet files organized by date
+- Store the data in files organized by date
+
+By default, Tailpipe collects only the most recent 7 days of log data.
+
+## View the table
+
+>[!NOTE]
+> use .inspect here if available, else tailpipe table list
 
 ## Query Your Data
 
-Tailpipe provides an interactive SQL shell for analyzing your collected data. Let's look at some examples of what you can do.
+Tailpipe provides an interactive SQL shell for analyzing your collected data. You can count the records in the table.
 
-### Check the range of the data
+```bash
+tailpipe query "count(*) from aws_cloudtrail_log"
+```
 
-This query finds the oldest and newest log lines.
+or find the oldest and newest records.
 
 ```bash
 tailpipe query "select min(tp_date), max(tp_date) from aws_cloudtrail_log"
 ```
-
-### List most common source IP addresses
 
 This query finds the top 10 IPs.
 
@@ -113,21 +118,19 @@ This query finds the top 10 IPs.
 tailpipe query "select tp_source_ip, count(*) as count from aws_cloudtrail_log group by tp_source_ip order by count desc"
 ```
 
-### List event types for one day
-
 This query lists Cloudtrail event types for a specified day.
 
 ```bash
 tailpipe query "select distinct event_type from aws_cloudtrail_log where tp_date = '2024-11-07'"
 ```
 
-Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read the a small subset of the parquet files created by the collection process. Similarly, if you define another partition (e.g. `prod`), you can use the partition name to scope queries to just the subset of files for that partition.
+Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read the a small subset of the files created by the collection process. 
 
 ## What's Next?
 
 We've demonstrated basic log collection and analysis with Tailpipe. Here's what to explore next:
 
 - [Discover more plugins on the Hub →](https://hub.tailpipe.io/plugins)
-- [Discover pre-built benchmarks and dashboard for popular log formats →](https://hub.tailpipe.io/mods)
+- [Discover pre-built benchmarks and dashboard for popular log formats →](https://hub.powerpipe.io/?engines=tailpipe)
 - [Join #tailpipe on Slack →](https://turbot.com/community/join)
 
