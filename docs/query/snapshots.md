@@ -4,6 +4,10 @@ title: Snapshots
 
 # Snapshots
 
+>[!NOTE]
+> i think essentially all of this applies?
+
+
 Tailpipe enables you to take **snapshots**.  A snapshot is a saved view of a benchmark run or dashboard that you can view as a [dashboard in Powerpipe](https://powerpipe.io/docs/run/dashboard)  All data and metadata for a snapshot is contained in a JSON file which can be saved and viewed locally in the Powerpipe dashboard or uploaded to [Turbot Pipes](https://turbot.com/pipes/docs).  Snapshots in Turbot Pipes may be shared with other Turbot Pipes users or made public (shared with anyone that has the link).
 
 You can create Turbot Pipes snapshots directly from the Powerpipe CLI, however if you wish to subsequently [modify](https://turbot.com/pipes/docs/dashboards#managing-snapshots) them (add/remove tags, change visibility) or delete them, you must do so from the Turbot Pipes console. You may [browse the snapshot list](https://turbot.com/pipes/docs/dashboards#browsing-snapshots) in Turbot Pipes by clicking the **Snapshots** button on the top of your workspace's **Dashboards** page.

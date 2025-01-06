@@ -7,186 +7,127 @@ slug: /
 
 # Learn Tailpipe
 
-Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
+Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe you can:
+
+- Collect logs from various sources and store them efficiently in parquet files
+- Query your data using familiar SQL syntax using Tailpipe (or DuckDB!)
+- Create filtered views of your data
+- Join log data with other data sources for enriched analysis
 
 > [!NOTE]
 > this list is provisional, needs discussion, it's the first thing people see.
 > the second two items may be too advanced for this context?
 > if so, what are more basic things to call out here?
+## Install the AWS Plugin
 
-- Collect logs from various sources and store them efficiently in parquet files
-- Query your data using familiar SQL syntax using DuckDB
-- Create filtered views of your data using schemas
-- Join log data with other data sources for enriched analysis
+This tutorial uses the AWS plugin to demonstrate collecting and analyzing Cloudtrail logs. First, [download and install Tailpipe](/downloads).
 
-## Install the NGINX Plugin
+```bash+macos
+brew install turbot/tap/tailpipe
+```
 
->[!NOTE]
-> Will switch to a cloudtrail example now that I have collection working (thanks @cody)
-> This is a placeholder to demo expected structure
+```bash+linux
+sudo /bin/sh -c "$(curl -fsSL https://tailpipe.io/install/tailpipe.sh)"
+```
 
-This tutorial uses the NGINX plugin to demonstrate collecting and analyzing web server access logs. First, [download and install Tailpipe](/downloads), and then install the plugin:
+Then install the plugin:
 
 ```bash
-tailpipe plugin install nginx
+tailpipe plugin install aws
 ```
+
+Out of the box, Tailpipe will use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ec2 describe-vpcs`, for example, then you should be able to run the examples. 
+
+The AWS plugin documentation provides additional examples to [configure your credentials](https://hub.tailpipe.io/plugins/turbot/aws#configuring-aws-credentials), and you can even configure Tailpipe to query [multiple accounts](https://tailpipe.io/docs#:~:text=tailpipe%20to%20query-,multiple%20accounts,-and%20multiple%20regions) and [multiple regions](https://tailpipe.io/docs#:~:text=multiple%20accounts%20and-,multiple%20regions).
+
+> [!NOTE]
+> Should we provide a file-source alternative for those who don't have a live AWS account or lack access to cloudtrail logs in one? 
+> We could provide some dummy data in a tailpipe-samples repo.
 
 ## Configure Data Collection
 
-Tailpipe uses HCL configuration files to define what data to collect. Create a file named `nginx.tpc` with the following content:
+Tailpipe uses HCL configuration files to define what data to collect. Here's a configuration that uses the `aws_s3_bucket` source.
 
-```hcl
-partition "nginx_access_log" "web_servers" {
-    plugin = "nginx"
-    source "nginx_access_log_file" {
-        log_path = "/var/log/nginx/access.log"
-    }
+```
+ connection "aws" "dev" {
+  profile = "SSO-Admin-605...13981"
+  regions = ["*"]
+}
+
+partition "aws_cloudtrail_log" "dev" {
+  source "aws_s3_bucket" {
+    connection = connection.aws.dev
+    bucket     = "aws-cloudtrail-logs-6054...81-fe67"
+    prefix     = "AWSLogs/6054...81/CloudTrail/us-east-1/2024/12"
+    region     = "us-east-1"
+    extensions = [".gz"]
+  }
 }
 ```
 
-This configuration tells Tailpipe to collect NGINX access logs from the specified log file. The configuration defines:
-- A partition named "web_servers" for the "nginx_access_log" table
-- The source type "nginx_access_log_file" which reads NGINX formatted logs
-- The path to the log file to collect from
+Put this in a file, e.g. `aws.tpc`, and save it to `~/.tailpipe/config`.
 
+This configuration tells Tailpipe to collect Cloudtrail logs from the specified S3 bucket. The configuration defines:
+
+- A connection that enables Tailpipe to access the logs
+
+- A plugin-defined table, `aws_cloudtrail_log`
+
+- A partition within the table, `dev`
 
 ## Collect Data
 
 Now let's collect the logs:
 
 ```bash
-tailpipe collect nginx_access_log.web_servers
+tailpipe collect aws_cloudtrail_log
 ```
 
 This command will:
-1. Read the NGINX access logs from the specified file
-2. Parse and standardize the log entries
-3. Store the data in parquet files organized by date
-4. Update the local database with table definitions
+
+- Acquire compressed (.gz) logs files from the bucket
+
+- Uncompress them
+
+- Parse all the .json log files and map fields of each line to the plugin-defined schema
+
+- Store the data in parquet files organized by date
 
 ## Query Your Data
 
 Tailpipe provides an interactive SQL shell for analyzing your collected data. Let's look at some examples of what you can do.
 
-### Analyze Traffic by Server
+### Check the range of the data
 
-This query shows a summary of traffic for each server for a specific date:
+This query finds the oldest and newest log lines.
 
-```sql
-SELECT
-    tp_index as server,
-    count(*) as requests,
-    count(distinct remote_addr) as unique_ips,
-    round(avg(bytes_sent)) as avg_bytes,
-    count(CASE WHEN status = 200 THEN 1 END) as success_count,
-    count(CASE WHEN status >= 500 THEN 1 END) as error_count,
-    round(avg(CASE WHEN method = 'GET' THEN bytes_sent END)) as avg_get_bytes
-FROM nginx_access_log
-WHERE tp_date = '2024-11-01'
-GROUP BY tp_index
-ORDER BY requests DESC;
+```bash
+tailpipe query "select min(tp_date), max(tp_date) from aws_cloudtrail_log"
 ```
 
-```
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│ server      requests    unique_ips  avg_bytes   success_c…  error_cou…  avg_get_b…   │
-│────────────────────────────────────────────────────────────────────────────────────  │
-│ web-01.ex…  349         346         7036        267         7           7158        │
-│ web-02.ex…  327         327         6792        246         11          6815        │
-│ web-03.ex…  324         322         7001        254         8           6855        │
-└──────────────────────────────────────────────────────────────────────────────────────┘
+### List most common source IP addresses
+
+This query finds the top 10 IPs.
+
+```bash
+tailpipe query "select tp_source_ip, count(*) as count from aws_cloudtrail_log group by tp_source_ip order by count desc"
 ```
 
-This shows us:
-- Number of requests per server
-- Count of unique IP addresses
-- Average response size
-- Success and error counts
-- Average size of GET requests
+### List event types for one day
 
-### Time-Oriented Query
+This query lists Cloudtrail event types for a specified day.
 
-Let's look at some recent log entries:
-
-```sql
-SELECT
-    tp_date,
-    tp_index as server,
-    remote_addr as ip,
-    method,
-    uri,
-    status,
-    bytes_sent
-FROM nginx_access_log
-WHERE tp_date = '2024-11-01'
-LIMIT 10;
+```bash
+tailpipe query "select distinct event_type from aws_cloudtrail_log where tp_date = '2024-11-07'"
 ```
 
-```
-+--------------------------------------------------------------------------------------+
-¦ tp_date      server           ip             method  uri             status  bytes_sent¦
-¦------------------------------------------------------------------------------------  ¦
-¦ 2024-11-01   web-01.example  220.50.48.32   GET     /profile/user  200     5704     ¦
-¦ 2024-11-01   web-01.example  10.166.12.45   GET     /blog/post/1   200     2341     ¦
-¦ 2024-11-01   web-01.example  203.0.113.10   GET     /dashboard     200     11229    ¦
-¦ 2024-11-01   web-01.example  45.211.16.72   PUT     /favicon.ico   301     2770     ¦
-¦ 2024-11-01   web-01.example  66.171.35.91   POST    /static/main   503     5928     ¦
-¦ 2024-11-01   web-01.example  64.152.79.83   GET     /logout        200     3436     ¦
-¦ 2024-11-01   web-01.example  156.25.84.12   GET     /static/main   200     12490    ¦
-¦ 2024-11-01   web-01.example  78.131.22.45   GET     /static/main   200     8342     ¦
-¦ 2024-11-01   web-01.example  203.0.113.10   POST    /api/v1/user   200     3123     ¦
-¦ 2024-11-01   web-01.example  10.74.127.93   POST    /              200     7210     ¦
-+--------------------------------------------------------------------------------------+
-```
-
-Because we specified `tp_date = '2024-11-01'`, Tailpipe only needs to read the parquet files in the corresponding date directories. Similarly, if you wanted to analyze traffic for a specific server, you could add `tp_index = 'web-01.example.com'` to your WHERE clause, and Tailpipe would only read files from that server's directory.
-
-> [!NOTE]
-> maybe elsewhere, but where?
-> or just drop because a) implicit for anyone who care, b) maybe few will care
-
-## Join with External Data
-
-One of Tailpipe's powerful features is the ability to join log data with other tables. Here's an example joining with an IP information table to get more context about the traffic:
-
-```sql
-SELECT
-    n.remote_addr as ip,
-    i.description,
-    count(*) as requests,
-    count(distinct n.server_name) as servers_accessed,
-    round(avg(n.bytes_sent)) as avg_bytes,
-    string_agg(distinct n.method, ', ') as methods_used,
-    count(CASE WHEN n.status >= 400 THEN 1 END) as errors
-FROM nginx_access_log n
-LEFT JOIN ip_info i ON n.remote_addr = i.ip_address
-WHERE i.description IS NOT NULL
-GROUP BY n.remote_addr, i.description
-ORDER BY requests DESC;
-```
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│ ip          descripti…  requests    servers_a…  avg_bytes   methods_u…  errors       │
-│────────────────────────────────────────────────────────────────────────────────────  │
-│ 203.0.113…  Test Netw…  1           1           1860        GET         0           │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-This enriched query shows:
-- IP addresses and their descriptions
-- How many servers each IP accessed
-- Average response sizes
-- HTTP methods used
-- Error counts
-
+Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read the a small subset of the parquet files created by the collection process. Similarly, if you define another partition (e.g. `prod`), you can use the partition name to scope queries to just the subset of files for that partition.
 
 ## What's Next?
 
 We've demonstrated basic log collection and analysis with Tailpipe. Here's what to explore next:
 
-- [Discover more plugins on the Hub →](https://hub.steampipe.io/plugins)
-- [Learn about data compaction and optimization →](https://tailpipe.io/docs/managing/compaction)
-- [Create schemas for filtered views →](https://tailpipe.io/docs/schemas)
+- [Discover more plugins on the Hub →](https://hub.tailpipe.io/plugins)
+- [Discover pre-built benchmarks and dashboard for popular log formats →](https://hub.tailpipe.io/mods)
 - [Join #tailpipe on Slack →](https://turbot.com/community/join)
 
