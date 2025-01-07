@@ -1,10 +1,10 @@
 ---
-title: Connections
+title: Manage Connections
 ---
 
-## Connections
+## Manage Connections
 
-**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.  Tailpipe connections should use the Powerpipe/Flowpipe format (with a type label), not the Steampipe format:
+**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.  Tailpipe connections use the Powerpipe/Flowpipe format (with a type label), not the Steampipe format:
 
 ```hcl
 connection "aws" "aws_01" {

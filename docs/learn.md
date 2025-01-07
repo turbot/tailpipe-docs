@@ -124,7 +124,7 @@ This query lists Cloudtrail event types for a specified day.
 tailpipe query "select distinct event_type from aws_cloudtrail_log where tp_date = '2024-11-07'"
 ```
 
-Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read the a small subset of the files created by the collection process. 
+Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read one of many files created by the collection process. 
 
 ## What's Next?
 
