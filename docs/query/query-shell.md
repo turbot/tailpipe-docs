@@ -2,14 +2,10 @@
 title: Interactive Queries
 ---
 
->[!NOTE]
-> cloned from steampipe, with minor variation. how much is applicable?
-
-
 # Interactive Query Shell
 Tailpipe provides an interactive query shell that provides features like auto-complete, syntax highlighting, and command history to assist you in [writing queries](/docs/sql/tailpipe-sql).
 
-To open the query shell, run `tailpipe query` with no arguments:
+To open the query shell, run `tailpipe query`:
 
 ```bash
 $ tailpipe query
@@ -17,6 +13,13 @@ $ tailpipe query
 ```
 
 Notice that the prompt changes, indicating that you are in the Tailpipe shell.
+
+If you've collected a lot of data and want to optimize your queries for a subset of it, you can pre-filter the database using the `--from` and/or `--to` arguments. 
+
+```bash
+$ tailpipe query --from T-45d
+$ tailpipe query --from 2024-12-01 --to 2025-01-01
+```
 
 You can exit the query shell by pressing `Ctrl+d` on a blank line, or using the `.exit` command.
 
@@ -54,7 +57,7 @@ The query shell supports standard emacs-style key bindings:
 
 ## Exploring Tables & Columns
 
-Tailpipe **tables** provide an interface for querying logc data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
+Tailpipe **tables** provide an interface for querying log data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
 
 ### Tables
 
