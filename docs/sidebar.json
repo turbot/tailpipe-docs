@@ -12,7 +12,8 @@
         "items": [
           "sql/querying-json",
           "sql/querying-ips",
-          "sql/tips"
+          "sql/tips",
+          "sql/tipsqq"
         ]
       }
     ]
@@ -47,7 +48,7 @@
       "pipes-ecosystem/flowpipe",
       "pipes-ecosystem/pipes"
     ]
-  },  
+  },
   {
     "type": "category",
     "id": "guides",
