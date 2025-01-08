@@ -32,8 +32,8 @@
     "id": "manage-tailpipe",
     "link": "manage",
     "items": [
-      "manage/collect",
-      "manage/connect",
+      "manage/collection",
+      "manage/connection",
       "manage/source",
       "manage/table",
       "manage/partition",
@@ -51,7 +51,7 @@
       "pipes-ecosystem/flowpipe",
       "pipes-ecosystem/pipes"
     ]
-  },  
+  },
   {
     "type": "category",
     "id": "guides",

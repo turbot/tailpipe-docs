@@ -1,8 +1,8 @@
 ---
-title: Manage Collection
+title: Collection
 ---
 
-# Manage Collection
+# Collection
 
 The [tailpipe collect](/docs/reference/cli/collect) command runs a [plugin](/docs/manage/plugin) that reads from a [source](/docs/manage/source) and writes to the [hive](/docs/manage/hive). Every time you run `tailpipe collect`, Tailpipe refreshes its views over all collected parquet files. Those views are the tables you query with `tailpipe query` (or directly with DuckDB).
 
