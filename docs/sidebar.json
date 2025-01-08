@@ -12,7 +12,8 @@
         "items": [
           "sql/querying-json",
           "sql/querying-ips",
-          "sql/tips"
+          "sql/tips",
+          "sql/tipsqq"
         ]
       }
     ]
