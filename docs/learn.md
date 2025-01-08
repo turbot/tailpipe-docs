@@ -7,7 +7,7 @@ slug: /
 
 # Learn Tailpipe
 
-AAAAAAA is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe you can:
+Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe you can:
 
 - Collect logs from various sources and store them efficiently
 - Query your data with familiar SQL syntax using Tailpipe (or DuckDB!)
