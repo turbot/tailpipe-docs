@@ -55,7 +55,7 @@ Parquet is a columnar storage file format that is optimized for reading and writ
 
 ## Partition
 
-A partition is a subset of a table. The `partition` block in a `.tpc` defines a named partition and includes one or more `source` blocks used to populate he partition. You can use the partition name to filter a query, e.g. `select count(*) from aws_cloudtrail_log where partition = 'prod'`. 
+A partition is a subset of a table. The `partition` block in a `.tpc` defines a named partition and includes one or more `source` blocks used to populate the partition. You can use the partition name to filter a query, e.g. `select count(*) from aws_cloudtrail_log where partition = 'prod'`.
 
 ## Table
 
