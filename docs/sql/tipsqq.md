@@ -1,5 +1,5 @@
 ---
-title: Tips and Tricks
+title: Tips and Tricksqq
 ---
 
 >[!NOTE]
