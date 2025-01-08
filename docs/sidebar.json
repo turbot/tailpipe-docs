@@ -14,7 +14,8 @@
           "sql/querying-ips",
           "sql/tips",
           "sql/tipsqqcopy",
-          "sql/tipsqq"
+          "sql/tipsqq",
+          "sql/tipsqqa"
         ]
       }
     ]
