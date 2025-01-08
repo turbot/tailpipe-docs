@@ -14,12 +14,22 @@ $ tailpipe query
 
 Notice that the prompt changes, indicating that you are in the Tailpipe shell.
 
-If you've collected a lot of data and want to optimize your queries for a subset of it, you can pre-filter the database using the `--from`, `--to` arguments. 
+If you've collected a lot of data and want to optimize your queries for a subset of it, you can pre-filter the database. You can restrict to the most recent 45 days:
 
 ```bash
 $ tailpipe query --from T-45d
+```
 
+Or to a range:
+
+```
 $ tailpipe query --from 2024-12-01 --to 2025-01-01
+```
+
+Or to a specific index in a partition:
+
+```
+$ tailpipe query --partition aws_cloudtrail_log.prod --index 123456789
 ```
 
 You can exit the query shell by pressing `Ctrl+d` on a blank line, or using the `.exit` command.
