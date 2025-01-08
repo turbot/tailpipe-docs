@@ -7,7 +7,7 @@ slug: /
 
 # Learn Tailpipe
 
-Tailpipeaaaxa is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
+AAAAAAAAAA is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe, you can:
 
 > [!NOTE]
 > this list is provisional, needs discussion, it's the first thing people see.
