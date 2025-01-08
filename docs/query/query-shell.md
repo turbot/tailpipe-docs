@@ -14,10 +14,11 @@ $ tailpipe query
 
 Notice that the prompt changes, indicating that you are in the Tailpipe shell.
 
-If you've collected a lot of data and want to optimize your queries for a subset of it, you can pre-filter the database using the `--from` and/or `--to` arguments. 
+If you've collected a lot of data and want to optimize your queries for a subset of it, you can pre-filter the database using the `--from`, `--to` arguments. 
 
 ```bash
 $ tailpipe query --from T-45d
+
 $ tailpipe query --from 2024-12-01 --to 2025-01-01
 ```
 
