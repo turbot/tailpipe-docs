@@ -13,7 +13,7 @@ The partition has two labels:
 
 2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
 
-```h
+```hcl
 partition "aws_cloudtrail_log" "test" {
 
   source "aws_s3" {
