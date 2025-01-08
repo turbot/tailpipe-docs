@@ -1,8 +1,8 @@
 ---
-title: Manage Connections
+title: Connections
 ---
 
-## Manage Connections
+## Connections
 
 **Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.  Tailpipe connections use the Powerpipe/Flowpipe format (with a type label), not the Steampipe format:
 
