@@ -11,5 +11,4 @@ jobs:
     steps:
       - name: Trigger Vercel deploy
         run: |
-          curl -X GET https://tailpipe-io.vercel.app/api/service/revalidate-paths \
-            -H "Authorization: Bearer ${{ secrets.TAILPIPE_API_KEY }}"
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_LINK_PROD }}
