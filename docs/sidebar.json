@@ -32,9 +32,13 @@
     "id": "manage-tailpipe",
     "link": "manage",
     "items": [
-      "manage/plugins",
-      "manage/connections",
-      "manage/workspaces"
+      "manage/collection",
+      "manage/connection",
+      "manage/source",
+      "manage/table",
+      "manage/partition",
+      "manage/plugin",
+      "manage/workspace"
     ]
   },
   {
@@ -47,7 +51,7 @@
       "pipes-ecosystem/flowpipe",
       "pipes-ecosystem/pipes"
     ]
-  },  
+  },
   {
     "type": "category",
     "id": "guides",
@@ -81,19 +85,6 @@
           "reference/cli/plugin",
           "reference/cli/query",
           "reference/cli/table"
-        ]
-      },
-      {
-        "type": "category",
-        "id": "concepts",
-        "link": "reference/concepts",
-        "items": [
-          "reference/concepts/collection",
-          "reference/concepts/hive",
-          "reference/concepts/partition",
-          "reference/concepts/plugin",
-          "reference/concepts/source",
-          "reference/concepts/table"
         ]
       },
       {

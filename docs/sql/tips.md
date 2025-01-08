@@ -2,85 +2,77 @@
 title: Tips and Tricks
 ---
 
->[!NOTE]
-> needs tp redo
-
 # Tips and Tricks
 
-## Select only the columns that you need.  
-This is a common recommendation for any SQL database, but it is especially important for Steampipe, as it can avoid making API calls to gather data that you don't want anyway.  The difference in execution time varies by table and environment, but can be quite significant. For example, in a test account: `select *  from aws_iam_policy;` took 14 seconds to execute, but this call took less than a second:
+## Take advantage of hive partitioning
+
+You can speed up a query by using a `where` or `join` clause to restrict the number of files Tailpipe will read to satisfy the query. This restriction operates at three levels.
+
+*Partition*. When a table defines more than one partition, you can filter to include only files belonging to other partitions.
 
 ```sql
-select 
-  name, 
-  arn, 
-  is_aws_managed 
-from 
-  aws_iam_policy;
+select count(*) from aws_cloudtrail_log where partition = 'prod'
 ```
 
-The exception to this rule is the `count` aggregate function - Steampipe will optimize it, thus this call is very efficient (and also takes less than a second):
+*Index*. When a partition defines more than one index, you can filter to include  all files belonging to other indexes.
+
 ```sql
-select 
-  count(*)
-from
-  aws_iam_policy;
+select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789
 ```
 
-## Limit results with a `where =` clause on key columns when possible.
-The Steampipe FDW can be more efficient if your query specifies the key columns exactly in a `where` clause.  
+*Date*. Each file contains log data for one day. You can filter to include only files for that day.
 
-For example:
 ```sql
-select 
-  * 
-from 
-  aws_ec2_instance 
-where 
-  instance_id = 'i-0f16e4805caddfd44';
+select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
 ```
 
-For non-key columns, data for all rows must be collected, and then filtered.  Currently, the only way to know definitively which columns are key columns is in the plugin source file.
+## Use pre-filtering
 
-## Some tables ***require*** a where or join clause
-The Steampipe database doesn't store data, it makes API calls to get data dynamically.  There are times when listing ALL the elements represented by a table is impossible or prohibitively slow.  In such cases, a table may require you to specify a qualifier in a `where =` (or `join...on`) clause.  For example, the Github `ListUsers` API will enumerate ALL Github users.  It is not reasonable to page through hundreds of thousands of users to find what you are looking for.  Instead, Steampipe requires that you specify `where login =` to find the user directly, for example:
+The `tailpipe connect` command can optionally restrict the set of files that Tailpipe reads to satisfy queries. For example, `tailpipe connect --from T-45d` yields a database connection that includes only the most recent 45 days of log data. Note that this restriction applies to all tables visible through that connections. You can further restrict the files read by Tailpipe using `where` or `join` filters in queries against that connection.
+
+> [!NOTE]
+> i'm aware that powerpipe uses this under the covers. it's unclear how i'd use it directly. i can do this
+> tailpipe connect --from 2024-12-01
+> /home/jon/.tailpipe/data/default/tailpipe_20250108123401.db
+> and i can connect duckdb to that thing and query it
+> how would i do so with tailpipe?
+
+## Use JSON functions vs operators
+
+In DuckDB, AND and OR have a higher precedence than `->` and `->>` (and other keywords), so they’re evaluated first.
+So this query will result in an error: *Conversion Error: Failed to cast value to numerical: …*.
 
 ```sql
 select
   *
 from
-  github_user
+  aws_cloudtrail_log
 where
-  login = 'torvalds';
+  event_name = 'AddUserToGroup'
+  and request_parameters ->> 'groupName' ilike '%admin%'
+order by
+  event_time desc;
 ```
 
-Alternatively, you join on the key column (`login`) in a `where` or `join` clause:
+You can work around the problem by parenthesizing the JSON expression.
+
+```sql
+  and ( request_parameters ->> 'groupName' ) ilike '%admin%'
+```
+
+But you may prefer to avoid the problem by using a JSON function.
 
 ```sql
 select
-  u.login,
-  o.login as organization,
-  u.name,
-  u.company,
-  u.location
+  *
 from
-  github_user as u,
-  github_my_organization as o,
-  jsonb_array_elements_text(o.member_logins) as member_login
+  aws_cloudtrail_log
 where
-  u.login = member_login;
+  event_name = 'AddUserToGroup'
+  and json_extract_string(request_parameters, '$.groupName') ilike '%admin%'
+order by
+  event_time desc;
 ```
-or 
 
-```sql
-select
-  u.login,
-  o.login as organization,
-  u.name,
-  u.company,
-  u.location
-from
-  github_my_organization as o,
-  jsonb_array_elements_text(o.member_logins) as member_login
-  join github_user as u on u.login = member_login;
-```
+
+

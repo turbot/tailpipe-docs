@@ -9,8 +9,8 @@ slug: /
 
 Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe you can:
 
-- Collect logs from various sources and store them efficiently
-- Query your data with familiar SQL syntax using Tailpipe (or DuckDB!)
+- [Collect](/docs/manage/collection) logs from various sources and store them efficiently
+- [Query](/docs/query) your data with familiar SQL syntax using Tailpipe (or DuckDB!)
 - Use [Powerpipe](https://powerpipe.io) to visualize your logs and run detections 
 
 This tutorial uses the AWS plugin to demonstrate collection and analysis of Cloudtrail logs. First, [download and install Tailpipe](/downloads).
@@ -31,13 +31,19 @@ tailpipe plugin install aws
 
 ## Configure Data Collection
 
-Tailpipe uses HCL configuration files to define what data to collect. Here's a configuration that collects Cloudtrail logs. 
+Tailpipe uses HCL configuration files to define what data to collect. You will need to define a [connection](/docs/manage/connection) that governs how Tailpipe accesses logs. 
 
 ```
 connection "aws" "sample" {
   profile = "SSO-Admin-605...13981"
 }
+```
 
+Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to run the examples. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
+
+You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition. Tailpipe knows the structure of a bucket that contains Cloudtrail logs so you only need to specify the bucket name.
+
+```
 partition "aws_cloudtrail_log" "sample" {
   source "aws_s3_bucket" {
     connection = connection.aws.dev
@@ -46,12 +52,7 @@ partition "aws_cloudtrail_log" "sample" {
 }
 ```
 
-The `connection` governs how Tailpipe accesses logs. Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to run the examples. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
-
-
-The `partition` refers to a plugin-defined table, `aws_cloudtrail_log`, with a schema that describes the data found in each line of a Cloudtrail log. 
-
-Put this HCL code in a file, e.g. `aws.tpc`, and save it to `~/.tailpipe/config`.
+Create a file, `~/.tailpipe/config`, with a `connection` and `partition` block similar to these examples.  
 
 Note: If you don't have any access to live Cloudtrail logs, you can use the [flaws.cloud](http://flaws.cloud/) sample logs. To get them:
 
@@ -62,7 +63,7 @@ wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
 tar xvf flaws_cloudtrail_logs.tar
 ```
 
-To configure:
+To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. It's `partition` block will follow this format:
 
 ```
 partition "aws_cloudtrail_log" "sample" {
@@ -100,31 +101,31 @@ By default, Tailpipe collects only the most recent 7 days of log data.
 
 ## Query Your Data
 
-Tailpipe provides an interactive SQL shell for analyzing your collected data. You can count the records in the table.
+Tailpipe provides an interactive SQL shell for analyzing your collected data. You can count the records in the table:
 
 ```bash
 tailpipe query "count(*) from aws_cloudtrail_log"
 ```
 
-or find the oldest and newest records.
+or find the oldest and newest records:
 
 ```bash
 tailpipe query "select min(tp_date), max(tp_date) from aws_cloudtrail_log"
 ```
 
-This query finds the top 10 IPs.
+This query finds the top 10 IPs:
 
 ```bash
 tailpipe query "select tp_source_ip, count(*) as count from aws_cloudtrail_log group by tp_source_ip order by count desc"
 ```
 
-This query lists Cloudtrail event types for a specified day.
+This query lists Cloudtrail event types for a specified day:
 
 ```bash
 tailpipe query "select distinct event_type from aws_cloudtrail_log where tp_date = '2024-11-07'"
 ```
 
-Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read the a small subset of the files created by the collection process. 
+Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read one of many files created by the collection process. 
 
 ## What's Next?
 

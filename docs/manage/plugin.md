@@ -4,14 +4,12 @@ title: Plugins
 
 # Plugins
 
-> [!NOTE]
-> How will this change for tailpipe?
-
 Tailpipe provides an integrated, standardized SQL interface for querying various sources of log data. It relies on plugins to define and implement tables for those logs. This approach decouples the Tailpipe core from provider-specific implementations, providing flexibility and extensibility.
 
 Tailpipe plugins are packaged as Open Container Images (OCI) and stored in the [Tailpipe Hub registry](https://hub.tailpipe.io).  This registry contains a curated set of plugins developed by and/or vetted by Turbot.  To install the latest version of a standard plugin, you can simply install it by name.
 
 For example, to install the latest `aws` plugin:
+
 ```
 $ tailpipe plugin install aws
 ```
@@ -21,14 +19,14 @@ This will download the latest aws plugin from the hub registry, and will set up 
 > [!NOTE]
 > If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/managing/connections) configuration file in order to use the additional versions of the plugin. 
 
-> [!WARNING]
 > ^ Will this apply to tailpipe?
 
-
 ## Installing a Specific Version
+
 To install a specific version, simply specify the version tag after the plugin name, separated by `@` or `:`
 
 For example, to install the 0.118.0 version of the aws plugin:
+
 ```
 $ tailpipe plugin install aws@0.118.0
 ```
@@ -93,7 +91,7 @@ Tailpipe plugins are packaged in OCI format and can be hosted and installed from
 $ tailpipe plugin install us-docker.pkg.dev/myproject/myrepo/myplugin@mytag
 ```
 
-## Installing from a File
+## Installing from a file
 
 A plugin binary can be installed manually, and this is often convenient when developing the plugin. Tailpipe will attempt to load any plugin that is referred to in a `connection` configuration:
 - The plugin binary file must have a `.plugin` extension
