@@ -1,94 +1,100 @@
 ---
-title: Querying JSON and STRUCT
+title: Querying JSON
 ---
 
-# Querying STRUCT and JSON Columns
+# Querying JSON Columns
 
-Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: STRUCT or JSON.
+Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: JSON or STRUCT. Learn about JSON idioms here, see [Querying STRUCT Columns](/docs/sql/querying-struct) for STRUCT idioms.
 
-When all instances of the object have a regular shape, a plugin uses DuckDB's STRUCT type. The `user_identity` column of the `aws_cloudtrail_log` table is a STRUCT column, as you can verify using the `typeof` function.
-
-```sql
-select typeof(user_identity) from aws_cloudtrail_log limit 1;
-typeof(user_identity) = STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR, account_id VARCHAR, access_key_id VARCHAR, user_name VARCHAR, session_context STRUCT(attributes STRUCT(mfa_authenticated VARCHAR, creation_date BIGINT), ...
-```
-
->[!NOTE]
-> if .inspect is available, that'll be the preferred way to observe the type
-
-Dot notation is the native method for accessing STRUCT fields. An element extracted by the `.` operator has the type defined by the STRUCT. Because the `invoked_by` field is of type VARCHAR, you can compare it to a string.
-
-```sql
-select user_identity.invoked_by
-from aws_cloudtrail_log
-where user_identity.invoked_by = 'AWS Internal'
-limit 1;
-```
-
-When an object's instances have irregular shape, a plugin uses DuckDB's JSON type. The `request_parameters` column of the `aws_cloudtrail_log` table is a JSON column, as you can again verify using the `typeof` function.
+When an object's instances have irregular shape, a plugin uses DuckDB's JSON type. The `request_parameters` column of the `aws_cloudtrail_log` table is a JSON column, as you can verify using the `typeof` function.
 
 ```sql
 select typeof(request_parameters) from aws_cloudtrail_log limit 1;
 JSON
 ```
 
-The `->` and `->>` operators work with JSON columns. To compare the `Host` field to a string, use `->>` which returns a stringified representation of the JSON value.
-
-Use 1-based indexing for STRUCT arrays and 0-based for JSON arrays. For example, here are two equivalent columns.
-
+You can list the keys of a JSON object:
 
 ```sql
-CREATE TABLE example (
-    struct_col STRUCT(
-        num DOUBLE,
-        text STRING,
-        string_array STRING[]
-    ),
-    json_col JSON
-);
-
-INSERT INTO example VALUES
-(
-    {num: 42.0, text: 'Hello', string_array: ['one', 'two', 'three']},
-    '{"num": 42.0, "text": "Hello", "string_array": ["one", "two", "three"]}'
-);
+select json_keys(request_parameters) from aws_cloudtrail_log limit 1;
 ```
 
-To access the first element of the STRUCT's array:
+The request_parameters` column contains a JSON object that includes a `Host` key whose value you can extract with a function:
 
 ```sql
-select struct_col.string_array[1] from example;
-+----------------------------+
-| one                        |
-+----------------------------+
+select json_extract(request_parameters, '$.Host') from aws_cloudtrail_log;
 ```
 
-To access the first element of the JSON array:
+Or with the JSON operator that returns a stringified representation of an element:
 
 ```sql
-select json_col->'string_array'->>0 from example;
-+----------------------------+
-| one                        |
-+----------------------------+
+select request_parameters ->> 'Host' from aws_cloudtrail_log;
 ```
 
-Note the distinction between the `->` and `->>` operators. The type of `json_col->'string_array'` is JSON. If we instead accessed `json_col->>'string_array'` the type would be VARCHAR, and the result would be a string that we cannot index into. Similarly the type of `json_col->'string_array'->>0` is VARCHAR, and the result is a string we can compare to another string. If we instead accessed `json_col->'string_array'->>0` the type would be JSON. The printed value would look the same (*one*), but this result would not be comparable to a string.
+Both methods return a string that you can compare.
 
-For JSON columns you can alternatively extract elements using functions.
+```sql
+select json_extract(request_parameters, '$.Host') ilike '%aws%' from aws_cloudtrail_log;
 
+select ( request_parameters ->> 'Host' ) ilike '%aws%' from aws_cloudtrail_log;
 ```
-select json_extract(json_col, '$.text') from example;
-+----------------------------------+
-| "Hello"                          |
-+----------------------------------+
 
-select json_extract_string(json_col, '$.num') from example;
-+----------------------------------------+
-| 42.0                                   |
-+----------------------------------------+
+In this case, DuckDB's precedence rules require you to parenthesize the `->>` expression. To avoid confusion we prefer functions over operators in Tailpipe mods.
 
-select json_extract(json_col, '$.string_array')[0] from example;
-+---------------------------------------------+
-| "one"                                       |
-+---------------------------------------------+
+
+The `resource` column of `aws_cloudtrail_log` is a JSON array of objects. You use 0-based indexing to access elements of an array. To access the first element:
+
+```sql
+select resources[0] from aws_cloudtrail_log;
 ```
+
+Alternatively you can use the JSON `->` operator:
+
+```sql
+select resources -> 0 from aws_cloudtrail_log;
+```
+
+Either approach returns a JSON object that you can drill into.
+
+While this is also possible:
+
+```sql
+select resources ->> 0 from aws_cloudtrail_log;
+```
+
+it's probably not you want because `->>` returns a string, not a JSON object.
+
+To access an element of the zeroth object in the array:
+
+```sql
+select json_extract(resources[0], '$.ARN') from aws_cloudtrail_log;
+```
+
+Or:
+
+```sql
+select resources -> 0 ->> 'ARN' from aws_cloudtrail_log;
+```
+
+Either method returns a string suitable for comparison with another string, or evaluation by a string-oriented operator such as `ilike`.
+
+While this is also possible:
+
+```sql
+select resources -> 0 -> 'ARN' from aws_cloudtrail_log;
+```
+
+The JSON object it returns has type JSON, not string, so this comparison fails:
+
+```sql
+select resources -> 0 -> 'ARN' ilike '%aws%' from aws_cloudtrail_log;
+```
+
+You can parenthesize to enable the comparison:
+
+```sql
+select ( resources -> 0 -> 'ARN' ) ilike '%aws%' from aws_cloudtrail_log;
+```
+
+But again, to avoid confusion, you may want to prefer JSON functions over operators.
+
