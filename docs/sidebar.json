@@ -11,6 +11,7 @@
         "link": "sql",
         "items": [
           "sql/querying-json",
+          "sql/querying-struct",
           "sql/querying-ips",
           "sql/tips"
         ]
