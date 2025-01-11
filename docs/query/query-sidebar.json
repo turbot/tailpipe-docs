@@ -1,0 +1,10 @@
+{
+  "type": "category",
+  "id": "query",
+  "link": "query",
+  "items": [
+    "query/query-shell",
+    "query/batch-query",
+    "query/snapshots"
+  ]
+}

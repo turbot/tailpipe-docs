@@ -19,39 +19,16 @@
     ]
   },
   {
-    "type": "category",
-    "id": "query",
-    "link": "query",
-    "items": [
-      "query/query-shell",
-      "query/batch-query",
-      "query/snapshots"
-    ]
+    "type": "placeholder",
+    "file": "/query/query-sidebar.json"
   },
   {
-    "type": "category",
-    "id": "manage-tailpipe",
-    "link": "manage",
-    "items": [
-      "manage/collection",
-      "manage/connection",
-      "manage/source",
-      "manage/table",
-      "manage/partition",
-      "manage/plugin",
-      "manage/workspace"
-    ]
+    "type": "placeholder",
+    "file": "/manage/manage-sidebar.json"
   },
   {
-    "type": "category",
-    "id": "pipes-ecosystem",
-    "link": "pipes-ecosystem",
-    "items": [
-      "pipes-ecosystem/steampipe",
-      "pipes-ecosystem/powerpipe",
-      "pipes-ecosystem/flowpipe",
-      "pipes-ecosystem/pipes"
-    ]
+    "type": "placeholder",
+    "file": "/pipes-ecosystem/pipes-ecosystem-sidebar.json"
   },
   {
     "type": "category",
@@ -69,54 +46,7 @@
     "items": []
   },
   {
-    "type": "category",
-    "id": "reference",
-    "link": "reference",
-    "items": [
-      {
-        "type": "category",
-        "id": "cli",
-        "link": "reference/cli",
-        "items": [
-          "reference/cli/help",
-          "reference/cli/collect",
-          "reference/cli/connect",
-          "reference/cli/compact",
-          "reference/cli/partition",
-          "reference/cli/plugin",
-          "reference/cli/query",
-          "reference/cli/table"
-        ]
-      },
-      {
-        "type": "category",
-        "id": "env-vars",
-        "link": "reference/env-vars",
-        "items": [
-          "reference/env-vars/tailpipe_log_level"
-        ]
-      },
-      {
-        "type": "category",
-        "id": "config-files",
-        "link": "reference/config-files",
-        "items": [
-          "reference/config-files/connection",
-          "reference/config-files/partition",
-          "reference/config-files/workspace"
-        ]
-      },
-      {
-        "type": "category",
-        "id": "develop",
-        "link": "reference/develop",
-        "items": [
-          "reference/develop/data-storage",
-          "reference/develop/plugin-tables",
-          "reference/develop/coding-standards"
-        ]
-      },
-      "reference/glossary"
-    ]
+    "type": "placeholder",
+    "file": "/reference/reference-sidebar.json"
   }
 ]
