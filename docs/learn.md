@@ -29,7 +29,7 @@ Then install the plugin:
 tailpipe plugin install aws
 ```
 
-## Configure Data Collection
+## Configure data collection
 
 Tailpipe uses HCL configuration files to define what data to collect. You will need to define a [connection](/docs/manage/connection) that governs how Tailpipe accesses logs. 
 
@@ -63,7 +63,7 @@ wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
 tar xvf flaws_cloudtrail_logs.tar
 ```
 
-To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. It's `partition` block will follow this format:
+To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
 
 ```
 partition "aws_cloudtrail_log" "sample" {
@@ -74,7 +74,7 @@ partition "aws_cloudtrail_log" "sample" {
 }
 ```
 
-## Collect Data
+## Collect log data
 
 Now let's collect the logs:
 
@@ -99,7 +99,7 @@ By default, Tailpipe collects only the most recent 7 days of log data.
 >[!NOTE]
 > use .inspect here if available, else tailpipe table list
 
-## Query Your Data
+## Query your logs
 
 Tailpipe provides an interactive SQL shell for analyzing your collected data. You can count the records in the table:
 
@@ -127,7 +127,7 @@ tailpipe query "select distinct event_type from aws_cloudtrail_log where tp_date
 
 Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read one of many files created by the collection process. 
 
-## What's Next?
+## What's next?
 
 We've demonstrated basic log collection and analysis with Tailpipe. Here's what to explore next:
 
