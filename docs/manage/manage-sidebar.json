@@ -1,0 +1,14 @@
+{
+  "type": "category",
+  "id": "manage-tailpipe",
+  "link": "manage",
+  "items": [
+    "manage/collection",
+    "manage/connection",
+    "manage/source",
+    "manage/table",
+    "manage/partition",
+    "manage/plugin",
+    "manage/workspace"
+  ]
+}
