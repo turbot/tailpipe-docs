@@ -25,6 +25,7 @@
     "items": [
       "query/query-shell",
       "query/batch-query",
+      "query/visualize",
       "query/snapshots"
     ]
   },

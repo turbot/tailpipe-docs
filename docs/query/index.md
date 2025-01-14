@@ -32,3 +32,6 @@ To run a query from the command line, specify the query as an argument to tailpi
 tailpipe query "select count(*) from aws_cloudtrail_log"
 ```
 
+## Visualization
+
+
