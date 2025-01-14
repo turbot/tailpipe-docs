@@ -35,5 +35,38 @@ The partition index is defined by the plugin author who may choose to define mea
 
 The values of a partition index are determined by the author of a configuration file who may, for example, specify an AWS table that sources from several AWS profiles. Queries can then slice the table by each profile's `account_id`.
 
+### Common fields
 
+Tailpipe plugins populate a set of common fields. Some are mandatory, for example `tp_partition` and `tp_date`. Others, like `tp_source_ip` and `tp_ips`, are optional. Plugins map table-specific fields to these common fields when it is appropriate to do so. The AWS Cloudtrail plugin, for example, maps the value of the native field `SourceIPAddress` to the common field `tp_source_ip`. It also adds that address to the `tp_ips` array.
 
+These mappings enable queries that correlate values across different logs. If you have collected both Cloudtrail and ALB logs, for example, you could query for source addresses that occur in both the `aws_cloudtrail_log` and `aws_alb_access_log` tables.
+
+```go
+type CommonFields struct {
+	// Mandatory fields
+	TpID              string    `json:"tp_id"`
+	TpSourceType      string    `json:"tp_source_type"`
+	TpIngestTimestamp time.Time `json:"tp_ingest_timestamp"`
+	TpTimestamp       time.Time `json:"tp_timestamp"`
+
+	// Hive fields
+	TpTable     string    `json:"tp_table"`
+	TpPartition string    `json:"tp_partition"`
+	TpIndex     string    `json:"tp_index"`
+	TpDate      time.Time `json:"tp_date" parquet:"type=DATE"`
+
+	// Optional fields
+	TpSourceIP       *string `json:"tp_source_ip"`
+	TpDestinationIP  *string `json:"tp_destination_ip"`
+	TpSourceName     *string `json:"tp_source_name"`
+	TpSourceLocation *string `json:"tp_source_location"`
+
+	// Searchable
+	TpAkas      []string `json:"tp_akas,omitempty"`
+	TpIps       []string `json:"tp_ips,omitempty"`
+	TpTags      []string `json:"tp_tags,omitempty"`
+	TpDomains   []string `json:"tp_domains,omitempty"`
+	TpEmails    []string `json:"tp_emails,omitempty"`
+	TpUsernames []string `json:"tp_usernames,omitempty"`
+}
+```
