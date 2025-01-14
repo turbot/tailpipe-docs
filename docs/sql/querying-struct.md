@@ -25,7 +25,6 @@ DuckDB doesn't have a `struct_keys` function analogous to `json_keys` but you ca
 select json_keys( json(user_identity) ) from aws_cloudtrail_log limit 1;
 ```
 
-
 The `user_identity` column includes an `invoked_by` field that you can extract using dot notation:
 
 ```sql
