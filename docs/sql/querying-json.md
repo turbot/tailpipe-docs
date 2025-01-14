@@ -4,7 +4,7 @@ title: Querying JSON
 
 # Querying JSON Columns
 
-Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: JSON or STRUCT. Learn about JSON idioms here, see [Querying STRUCT Columns](/docs/sql/querying-struct) for STRUCT idioms.
+Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: [JSON](https://duckdb.org/docs/data/json/overview.html#retrieving-json-data) or [STRUCT](https://duckdb.org/docs/sql/data_types/struct.html#retrieving-from-structs). Learn about JSON idioms here, see [Querying STRUCT Columns](/docs/sql/querying-struct) for STRUCT idioms.
 
 When an object's instances have irregular shape, a plugin uses DuckDB's JSON type. The `request_parameters` column of the `aws_cloudtrail_log` table is a JSON column, as you can verify using the `typeof` function.
 
