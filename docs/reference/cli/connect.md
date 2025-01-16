@@ -11,10 +11,6 @@ Return a connection string for a database, with a schema determined by the provi
  tailpipe connect [flags]
  ```
 
->[!NOTE]
-> Powerpipe does this automatically. I could use it manually to avoid conflict, if querying with DuckDB (or Tailpipe), is there another purpose?
-
-
 ### Arguments
 
 | Flag | Description
@@ -29,8 +25,14 @@ Return a connection string for a database, with a schema determined by the provi
 Connect to the Tailpipe database, filtered to records after the start time:
 
 ```bash
-tailpipe connect --from 15/11/2024
+tailpipe connect --from 2025-01-01
+/home/jon/.tailpipe/data/default/tailpipe_20250115140447.db
 ```
+
+> [!NOTE]
+> You could use this connection string with DuckDB:
+> 
+> duckdb /home/jon/.tailpipe/data/default/tailpipe_20241212134120.db
 
 Show the filepath for the connected database:
 
@@ -38,17 +40,3 @@ Show the filepath for the connected database:
 tailpipe connect --output json
 ```
 
-```json
-{ 'database_filepath":"/home/jon/.tailpipe/data/default/tailpipe_20241212134120.db"}
-```
-
-Use Tailpipe to query the connected database:
-
->[!NOTE]
-> Not a `tailpipe query` option, yet, will it be?
-
-Use DuckDB to query the connected database:
-
-```bash
-duckdb /home/jon/.tailpipe/data/default/tailpipe_20241212134120.db
-```
