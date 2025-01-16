@@ -26,16 +26,9 @@ select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
 ```
 
-## Use pre-filtering
+### Use common fields
 
-The `tailpipe connect` command can optionally restrict the set of files that Tailpipe reads to satisfy queries. For example, `tailpipe connect --from T-45d` yields a database connection that includes only the most recent 45 days of log data. Note that this restriction applies to all tables visible through that connections. You can further restrict the files read by Tailpipe using `where` or `join` filters in queries against that connection.
-
-> [!NOTE]
-> i'm aware that powerpipe uses this under the covers. it's unclear how i'd use it directly. i can do this
-> tailpipe connect --from 2024-12-01
-> /home/jon/.tailpipe/data/default/tailpipe_20250108123401.db
-> and i can connect duckdb to that thing and query it
-> how would i do so with tailpipe?
+Tailpipe plugins map a subset of log-specific fields to [common fields](/docs/manage/collection#common-fields). Use them 
 
 ## Use JSON functions vs operators
 

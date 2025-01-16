@@ -56,15 +56,6 @@
   },
   {
     "type": "category",
-    "id": "guides",
-    "link": "guides",
-    "items": [
-      "guides/collecting",
-      "guides/testdata"
-    ]
-  },
-  {
-    "type": "category",
     "id": "faq",
     "link": "faq",
     "items": []
