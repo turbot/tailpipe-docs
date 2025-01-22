@@ -8,6 +8,8 @@ The `pipes` connection can be used to access Turbot Pipes resources.
 
 ```hcl
 connection "pipes" "pipes_connection" {
+  token      = "spt_cbu2_FAKETOKEN_5ruln"
+  org_handle = "my-pipes-org"  
 
 }
 ```
@@ -16,10 +18,12 @@ connection "pipes" "pipes_connection" {
 
 | Name            | Type   | Required? | Description                                                                                                     |
 | --------------- | ------ | --------- | --------------------------------------------------------------------------------------------------------------- |
-| `tenant_id`     | String | Optional  | The Microsoft Entra tenant (directory) ID.                                                                      |
-| `client_id`     | String | Optional  | The client (application) ID of an App Registration in the tenant                                                |
-| `client_secret` | String | Optional  | A client secret that was generated for the App Registration.                                                    |
-| `environment`   | String | Optional  | The Azure cloud where your resources exist - `AzureCloud` (default), `AzureChinaCloud`, or `AzureUSGovernment`. |
+| `token`         | String | Optional  | A Pipes [access token](https://turbot.com/pipes/docs/accounts/developer/advanced#tokens).
+| `org_handle`    | String | Optional  | A Pipes organization handle.
+
+
+>[!NOTE]
+> Copied from azure, do these sections this apply? We have PIPES_TOKEN but I think not PIPE_ORG_HANDLE?
 
 ## Attributes (Read-Only)
 

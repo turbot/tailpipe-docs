@@ -35,6 +35,20 @@ All arguments are optional, and a `azure` connection with no arguments will beha
 
 The `azure` connection type includes an implicit, default connection (`connection.azure.default`) that will be configured using the Azure environment variables:
 
+
+>[!NOTE]
+> the aws page illustrates default connection by showing it in use
+>
+> partition "aws_cloudtrail_log" "prod" {
+>  source "aws_s3_bucket" {
+>   connection = connection.aws.default
+>    bucket     = "aws-cloudtrail-logs-6054...81-fe67"
+>  }
+> }
+>
+> do the same here and for gcp and pipes?
+
+
 ```hcl
 connection "azure" "default" {
   tenant_id       = env("AZURE_TENANT_ID")

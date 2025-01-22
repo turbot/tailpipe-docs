@@ -42,6 +42,17 @@ The AWS connection type includes an implicit, default connection (`connection.aw
 
 ## Examples
 
+### Default connection
+
+```hcl
+partition "aws_cloudtrail_log" "prod" {
+  source "aws_s3_bucket" {
+    connection = connection.aws.default
+    bucket     = "aws-cloudtrail-logs-6054...81-fe67"
+  }
+}
+```
+
 ### Static Connections
 
 ```hcl
@@ -59,19 +70,3 @@ connection "aws" "aws_profile" {
 }
 ```
 
-### Using AWS Connections in Container Step
-
-```hcl
-pipeline "ex1" {
-  param "connection" {
-    type    = string
-    default = "default"
-  }
-
-  step "container" "aws" {
-    image = "public.ecr.aws/aws-cli/aws-cli"
-    cmd   = [ "s3", "ls" ]
-    env   = connection.aws[param.connection].env
-  }
-}
-```
