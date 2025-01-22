@@ -31,22 +31,22 @@ tailpipe plugin install aws
 
 ## Configure data collection
 
-Tailpipe uses HCL configuration files to define what data to collect. You will need to define a [connection](/docs/manage/connection) that governs how Tailpipe accesses logs. 
+Tailpipe uses HCL configuration files to define what data to collect. You will need to define a [connection](/docs/manage/connection) that governs how Tailpipe accesses logs. For example:
 
 ```
-connection "aws" "sample" {
+connection "aws" "admin" {
   profile = "SSO-Admin-605...13981"
 }
 ```
 
-Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to run the examples. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
+Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to collect CloudTrail logs. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
 
-You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition. Tailpipe knows the structure of a bucket that contains Cloudtrail logs so you only need to specify the bucket name.
+You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition. Tailpipe knows the structure of a bucket that contains Cloudtrail logs so you only need to specify the bucket name:
 
 ```
-partition "aws_cloudtrail_log" "sample" {
+partition "aws_cloudtrail_log" "prod" {
   source "aws_s3_bucket" {
-    connection = connection.aws.dev
+    connection = connection.aws.admin
     bucket     = "aws-cloudtrail-logs-6054...81-fe67"
   }
 }
@@ -54,7 +54,7 @@ partition "aws_cloudtrail_log" "sample" {
 
 Create a file, `~/.tailpipe/config`, with a `connection` and `partition` block similar to these examples.  
 
-Note: If you don't have any access to live Cloudtrail logs, you can use the [flaws.cloud](http://flaws.cloud/) sample logs. To get them:
+Note: If you don't have access to live Cloudtrail logs, you can use the [flaws.cloud](http://flaws.cloud/) sample logs. To get them:
 
 ```
 mkdir ~/flaws
@@ -66,10 +66,10 @@ tar xvf flaws_cloudtrail_logs.tar
 To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
 
 ```
-partition "aws_cloudtrail_log" "sample" {
+partition "aws_cloudtrail_log" "prod" {
  source "file_system" {
-    paths = ["~/flaws"]
-    extensions = ["*.gz"]
+    paths       = ["~/flaws"]
+    file_layout = ["%{DATA}.json.gz"]
   }
 }
 ```
@@ -79,7 +79,7 @@ partition "aws_cloudtrail_log" "sample" {
 Now let's collect the logs:
 
 ```bash
-tailpipe collect aws_cloudtrail_log.sample
+tailpipe collect aws_cloudtrail_log.prod
 ```
 
 This command will:
