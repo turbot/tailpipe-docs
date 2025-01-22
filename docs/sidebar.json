@@ -43,23 +43,7 @@
       "manage/workspace"
     ]
   },
-  {
-    "type": "category",
-    "id": "pipes-ecosystem",
-    "link": "pipes-ecosystem",
-    "items": [
-      "pipes-ecosystem/steampipe",
-      "pipes-ecosystem/powerpipe",
-      "pipes-ecosystem/flowpipe",
-      "pipes-ecosystem/pipes"
-    ]
-  },
-  {
-    "type": "category",
-    "id": "faq",
-    "link": "faq",
-    "items": []
-  },
+
   {
     "type": "category",
     "id": "reference",
@@ -91,9 +75,20 @@
       {
         "type": "category",
         "id": "config-files",
+        "label": "Configuration Files",
         "link": "reference/config-files",
         "items": [
-          "reference/config-files/connection",
+          {
+            "type": "category",
+            "id": "connection",
+            "link": "reference/config-files/connection",
+            "items": [
+              "reference/config-files/connection/aws",
+              "reference/config-files/connection/azure",
+              "reference/config-files/connection/gcp",
+              "reference/config-files/connection/pipes"
+            ]
+          },
           "reference/config-files/partition",
           "reference/config-files/workspace"
         ]
@@ -110,5 +105,23 @@
       },
       "reference/glossary"
     ]
+  },
+  {
+    "type": "category",
+    "id": "pipes-ecosystem",
+    "link": "pipes-ecosystem",
+    "items": [
+      "pipes-ecosystem/steampipe",
+      "pipes-ecosystem/powerpipe",
+      "pipes-ecosystem/flowpipe",
+      "pipes-ecosystem/pipes"
+    ]
+  },  
+  {
+    "type": "category",
+    "id": "faq",
+    "link": "faq",
+    "items": []
   }
+
 ]
