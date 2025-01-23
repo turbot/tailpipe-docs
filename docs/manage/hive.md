@@ -10,17 +10,8 @@ Tailpipe uses [hive partitioning](https://duckdb.org/docs/data/partitioning/hive
 
   - The *plugin* may choose the **index** value, but it is not *user*-definable
 
-  - The metadata is also written to parquet files the workspace directory, with a prescribed directory and filename structure. 
-
->[!NOTE]
-> what's in the metadata? do users care?
-
 The standard partitioning/hive structure enables efficient queries that only need to read subsets of the hive filtered by index or date. 
 
-Tailpipe [schemas](#schemas) also depend on this structure, as the filterable fields are aligned to the hive partitions.
-
->[!NOTE]
-> what about schema is relevant to the user for lw7, vs later?
 
 
 ### Index: Custom Partition Key 
