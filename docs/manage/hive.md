@@ -6,7 +6,7 @@ title: Hive
 
 Tailpipe uses [hive partitioning](https://duckdb.org/docs/data/partitioning/hive_partitioning.html) to leverage automatic [filter pushdown](https://duckdb.org/docs/data/partitioning/hive_partitioning.html#filter-pushdown) and Tailpipe is opinionated on the layout:
 
-  - The data is written to parquet files in the workspace directory, with a prescribed directory and filename structure.  Other than **index** the layout is dictated by the Tailpipe core.
+  - The data is written to Parquet files in the workspace directory, with a prescribed directory and filename structure.  Other than **index** the layout is dictated by the Tailpipe core.
 
   - The *plugin* may choose the **index** value, but it is not *user*-definable
 

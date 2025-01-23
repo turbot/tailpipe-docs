@@ -68,7 +68,7 @@ The query shell supports standard emacs-style key bindings:
 
 ## Exploring Tables & Columns
 
-Tailpipe **tables** provide an interface for querying log data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
+Tailpipe **tables** provide an interface for querying log data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over Parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
 
 ### Tables
 

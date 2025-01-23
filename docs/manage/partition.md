@@ -9,7 +9,7 @@ Partitions are defined in HCL and are required for collection.
 
 The partition has two labels:
 
-1. The table name. The table name is meaningful and must match a table name for an installed plugin. The table name implies the shape of resulting parquet file, and also makes assumptions about the source data format.  For example, the `aws_cloudtrail_log` table is defined in the AWS plugin.  The shape of that table (the structure of the data in the destination parquet file, which corresponds to table columns) is defined in the AWS plugin.
+1. The table name. The table name is meaningful and must match a table name for an installed plugin. The table name implies the shape of resulting Parquet file, and also makes assumptions about the source data format.  For example, the `aws_cloudtrail_log` table is defined in the AWS plugin.  The shape of that table (the structure of the data in the destination Parquet file, which corresponds to table columns) is defined in the AWS plugin.
 
 2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
 

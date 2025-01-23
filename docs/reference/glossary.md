@@ -6,11 +6,11 @@ title: Glossary
 
 ## Collection
 
-A collection is a tree of parquet files in the standard hive format. It is created by a plugin when you run the `tailpipe collect` command. 
+A collection is a tree of Parquet files in the standard hive format. It is created by a plugin when you run the `tailpipe collect` command. 
 
 ## Compaction
 
-A collection may result in storage of multiple parquet files for a given day. Tailpipe can compact those into a single file for the day. This happens automatically when you run `tailpipe collect`.
+A collection may result in storage of multiple Parquet files for a given day. Tailpipe can compact those into a single file for the day. This happens automatically when you run `tailpipe collect`.
 
 >[!NOTE]
 > why would i ever need to run tailpipe compact?
@@ -35,7 +35,7 @@ Tailpipe uses DuckDB, an embeddable column-oriented database.
 
 ## Hive
 
-A tree of parquet files in the Tailpipe workspace (by default,`~/.tailpipe/data/default`). The `tailpipe.db` in `~/.tailpipe/data/default` (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`), are thin wrappers that materialize views over the parquet data.
+A tree of Parquet files in the Tailpipe workspace (by default,`~/.tailpipe/data/default`). The `tailpipe.db` in `~/.tailpipe/data/default` (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`), are thin wrappers that materialize views over the Parquet data.
 
 ## Index
 
