@@ -8,11 +8,15 @@ title: Tailpipe CLI
 
 | Command | Description
 |-|-
-| [tailpipe help](/docs/reference/cli/help)         | Help about any command
-| [tailpipe collect](/docs/reference/cli/collect)   | Collect from log sources
+| [tailpipe collect](/docs/reference/cli/collect)   | Run a collection
+| [tailpipe compact](/docs/reference/cli/compact)   | Compact multiple parquet files per day to one per day
 | [tailpipe connect](/docs/reference/cli/connect)   | Return a connection string for a database
+| [tailpipe help](/docs/reference/cli/help)         | Help about any command
+| [tailpipe partition](/docs/reference/cli/partition)     | List, show, and delete Tailpipe partitions
 | [tailpipe plugin](/docs/reference/cli/plugin)     | Tailpipe plugin management
-| [tailpipe query](/docs/reference/cli/query)       | Query log sources
+| [tailpipe query](/docs/reference/cli/query)       | Execute a query against the workspace database
+| [tailpipe source](/docs/reference/cli/source)       | List and show Tailpipe sources
+| [tailpipe table](/docs/reference/cli/table)       | List and show Tailpipe tables
 
 
 
@@ -31,7 +35,7 @@ title: Tailpipe CLI
   <tr> 
     <td nowrap="true"> `--config-path` </td> 
     <td>  
-    Sets the search path for <a href = "/docs/reference/config-files">configuration files</a>. This argument accepts a colon-separated list of directories.  All configuration files (`*.fpc`) will be loaded from each path, with decreasing precedence.  The default is `.:$TAILPIPE_INSTALL_DIR/config` (`.:~/.tailpipe/config`).  This allows you to manage your <a href="/docs/reference/config-files/workspace"> workspaces </a> and <a href="/docs/reference/config-files/connection">connections</a> centrally in the `~/.tailpipe/config` directory, but override them in the working directory / mod location if desired.
+    Sets the search path for <a href = "/docs/reference/config-files">configuration files</a>. This argument accepts a colon-separated list of directories.  All configuration files (`*.tpc`) will be loaded from each path, with decreasing precedence.  The default is `.:$TAILPIPE_INSTALL_DIR/config` (`.:~/.tailpipe/config`).  This allows you to manage your <a href="/docs/reference/config-files/workspace"> workspaces </a> and <a href="/docs/reference/config-files/connection">connections</a> centrally in the `~/.tailpipe/config` directory, but override them in the working directory / mod location if desired.
     </td> 
   </tr>
 
