@@ -13,7 +13,7 @@ Tailpipe is a high-performance data collection and querying tool that makes it e
 - [Query](/docs/query) your data with familiar SQL syntax using Tailpipe (or DuckDB!)
 - Use [Powerpipe](https://powerpipe.io) to visualize your logs and run detections 
 
-This tutorial uses the AWS plugin to demonstrate collection and analysis of Cloudtrail logs. First, [download and install Tailpipe](/downloads).
+This tutorial uses the [AWS plugin](https://hub.tailpipe.io/plugins/turbot/aws) to demonstrate collection and analysis of Cloudtrail logs. First, [download and install Tailpipe](/downloads).
 
 ```bash+macos
 brew install turbot/tap/tailpipe
@@ -33,7 +33,7 @@ tailpipe plugin install aws
 
 Tailpipe uses HCL configuration files to define what data to collect. You will need to define a [connection](/docs/manage/connection) that governs how Tailpipe accesses logs. For example:
 
-```
+```hcl
 connection "aws" "admin" {
   profile = "SSO-Admin-605...13981"
 }
@@ -43,7 +43,7 @@ Tailpipe can use the default AWS credentials from your credential file and/or en
 
 You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition.
 
-```
+```hcl
 partition "aws_cloudtrail_log" "prod" {
   source "aws_s3_bucket" {
     connection  = connection.aws.admin
@@ -66,7 +66,7 @@ tar xvf flaws_cloudtrail_logs.tar
 
 To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
 
-```
+```hcl
 partition "aws_cloudtrail_log" "flaws" {
  source "file" {
     paths       = ["~/flaws"]
