@@ -16,12 +16,10 @@ Often, the source data to be ingested is large, and the first ingestion would ta
 
 ```
 tailpipe collect aws_cloudtrail_log.test --from T-180d
-tailpipe collect aws_cloudtrail_log.test --from 2024-01-01 --to 2024-03-31
+tailpipe collect aws_cloudtrail_log.test --from 2024-01-01
 ```
 
 - Subsequent collection runs occur chronologically resuming from the last collection by default, so there are no time gaps while the data is being collected.
-
-- A user may specify a specify time range using `--from` and `--to` but generally this is discouraged as it potentially leaves gaps in the data.
 
 - The data is available for querying even while partition collection is still occurring.
 

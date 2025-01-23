@@ -17,7 +17,6 @@ Run a **collection**.
 |-|-
 |  `--compact`       | Compact the Parquet files after collection (default true)
 |  `--from string`   | Collect days newer than a relative or absolute date.
-| `--to string`      | Collect days older than than a relative or absolute date.
 | `--output output`  | Output format; one of: json, table (default text)
 |  `--help`          | Help for connect
 
