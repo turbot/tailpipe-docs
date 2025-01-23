@@ -16,7 +16,7 @@ The standard partitioning/hive structure enables efficient queries that only nee
 
 ### Index: Custom Partition Key 
 
-Each plugin chooses what the **index** is for a given table.   Because the data is laid out into partitions,  performance is optimized when the partition appears in a `where` or `join` clause, or is used on a **schema**  definition.  The index provides a way to segment the data to optimize lookup performance in a way that is *optimal for the specific plugin*.  For example, AWS tables index on account id, Azure tables on subscription, and GCP on project id. 
+Each plugin chooses what the **index** is for a given table.   Because the data is laid out into partitions,  performance is optimized when the partition appears in a `where` or `join` clause.  The index provides a way to segment the data to optimize lookup performance in a way that is *optimal for the specific plugin*.  For example, AWS tables index on account id, Azure tables on subscription, and GCP on project id. 
 
 ```bash
 tp_table=aws_cloudtrail_log
