@@ -17,9 +17,9 @@ The partition has two labels:
 partition "aws_cloudtrail_log" "test" {
 
   source "aws_s3" {
-    connection = connection.aws.logs
-    bucket = "my-logs-bucket"
-    prefix = "optional/path"
+    connection    = connection.aws.logs
+    bucket        = "my-logs-bucket"
+    file_layout   = "%{DATA}.json.gz"
   }
   
 }
