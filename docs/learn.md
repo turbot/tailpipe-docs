@@ -41,13 +41,14 @@ connection "aws" "admin" {
 
 Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to collect CloudTrail logs. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
 
-You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition. Tailpipe knows the structure of a bucket that contains Cloudtrail logs so you only need to specify the bucket name:
+You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition.
 
 ```
 partition "aws_cloudtrail_log" "prod" {
   source "aws_s3_bucket" {
-    connection = connection.aws.admin
-    bucket     = "aws-cloudtrail-logs-6054...81-fe67"
+    connection  = connection.aws.admin
+    bucket      = "aws-cloudtrail-logs-6054...81-fe67"
+    file_layout = "AWSLogs/%{NUMBER:account_id}/%{DATA}.json.gz"
   }
 }
 ```
@@ -66,10 +67,10 @@ tar xvf flaws_cloudtrail_logs.tar
 To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
 
 ```
-partition "aws_cloudtrail_log" "prod" {
- source "file_system" {
+partition "aws_cloudtrail_log" "flaws" {
+ source "file" {
     paths       = ["~/flaws"]
-    file_layout = ["%{DATA}.json.gz"]
+    file_layout = "%{DATA}.json.gz"
   }
 }
 ```
@@ -79,7 +80,7 @@ partition "aws_cloudtrail_log" "prod" {
 Now let's collect the logs:
 
 ```bash
-tailpipe collect aws_cloudtrail_log.prod
+tailpipe collect aws_cloudtrail_log
 ```
 
 This command will:

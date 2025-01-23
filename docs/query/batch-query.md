@@ -26,7 +26,7 @@ We can now run the query by passing the file name to `tailpipe query`
 tailpipe query cloudtrail_event.sql
 ```
 
-You can even run multiple sql files by passing a glob or a space separated list of file names to the command:
+You can even run multiple sql files by passing a glob or a space-separated list of file names to the command:
 ```bash
 tailpipe query *.sql
 ```

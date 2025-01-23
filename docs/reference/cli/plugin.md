@@ -46,17 +46,17 @@ tailpipe plugin install aws
 
 Install a specific version of a plugin:
 ```bash
-tailpipe plugin install aws@0.107.0
+tailpipe plugin install aws@0.2.0
 ```
 
 Install the latest version of a plugin matching a semver constraint:
 ```bash
-tailpipe plugin install aws@^0.107
+tailpipe plugin install aws@^0.2
 ```
 
 Note: if your semver constraint contain special characters you may need to quote it:
 ```bash
-tailpipe plugin install "aws@>=0.100"
+tailpipe plugin install "aws@>=0.2"
 ```
 
 Install all missing plugins specified in configuration files. Do not download their default configuration files:
@@ -72,7 +72,7 @@ tailpipe plugin list
 
 Uninstall a plugin:
 ```bash
-tailpipe plugin uninstall dmi/paper
+tailpipe plugin uninstall aws
 ```
 
 Update all plugins to the latest in the installed stream:
@@ -82,7 +82,7 @@ tailpipe plugin update --all
 
 Update the aws plugin to the latest version meeting the constraint:
 ```bash
-tailpipe plugin update aws@^0.107
+tailpipe plugin update aws@^0.2
 ```
 
 Update all plugins to the latest and hide the progress bar:

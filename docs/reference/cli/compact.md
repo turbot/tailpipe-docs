@@ -2,7 +2,7 @@
 title: tailpipe compact
 ---
 
-Compact multiple parquet files per day to one per day.
+Compact multiple Parquet files per day to one per day.
 
 # tailpipe compact
 

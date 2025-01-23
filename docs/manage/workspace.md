@@ -12,7 +12,7 @@ A Tailpipe workspace is a profile that defines the environment in which Tailpipe
 
 Each workspace comprises:
 
-- A single local workspace directory for Tailpipe data (parquet) and metadata files
+- A single local workspace directory for Tailpipe data (Parquet) and metadata files
 
 - Optionally, context-specific settings and options
 

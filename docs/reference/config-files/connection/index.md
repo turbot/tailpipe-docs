@@ -20,7 +20,7 @@ connection "slack" "slack" {
 }
 ```
 
-Connections are defined using the `connection` block in one or more Tailpipe config files. Tailpipe will load ALL configuration files (`*.fpc`) from every directory in the [configuration search path](/docs/reference/env-vars/tailpipe_config_path), with decreasing precedence. The set of connections is the union of all connections defined in these directories.
+Connections are defined using the `connection` block in one or more Tailpipe config files. Tailpipe will load ALL configuration files (`*.tpc`) from every directory in the [configuration search path](/docs/reference/env-vars/tailpipe_config_path), with decreasing precedence. The set of connections is the union of all connections defined in these directories.
 
 Each connection has a type label and a name. There is a type for each service: [aws](/docs/reference/config-files/connection/aws), [gcp](/docs/reference/config-files/connection/gcp), [azure](/docs/reference/config-files/connection/azure), [github](/docs/reference/config-files/connection/github), [slack](/docs/reference/config-files/connection/slack), etc. **The arguments and attributes vary by type.**
 

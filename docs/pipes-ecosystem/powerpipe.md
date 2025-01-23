@@ -5,8 +5,9 @@ sidebar_label: Powerpipe
 
 # Powerpipe
 
-[Powerpipe](https://powerpipe.io/) is an open-source platform that enables you to visualize logs and cloud infrastructure using   dashboards, log detections, and compliance controls.  Powerpipe works seamlessly with Tailpipe; use it to evaluate your logs against a [library of benchmarks](#TBD) keyed to the MITRE ATT&CK framework.
+[Powerpipe](https://powerpipe.io/) is an open-source platform that enables you to visualize logs and cloud infrastructure using   dashboards, log detections, and compliance controls.  Use it with [Tailpipe mods](https://hub.powerpipe.io?engines=tailpipe) that visualize logs on dashboards and benchmark them using the MITRE ATT&CK framework.
 
+<!--
 
 ## Visualize your logs with Powerpipe Dashboards
 
@@ -21,3 +22,4 @@ sidebar_label: Powerpipe
 
 ![](/images/docs/pipes-ecosystem/benchmark_dashboard_view.png)
 
+-->
