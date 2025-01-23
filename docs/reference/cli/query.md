@@ -116,9 +116,4 @@ Run a query and return output in pipe-separated format:
 tailpipe query "select * from aws_cloudtrail_log" --output csv --separator '|'
 ```
 
-Run a query with a specific search_path:
-```bash
-tailpipe query --search-path="aws,github" "select * from aws_cloudtrail_log"
-```
-
 
