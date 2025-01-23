@@ -10,7 +10,7 @@ Tailpipe maintains collection state, so you'll only see new rows.
 
 ## How do I reset a table?
 
-If you want to reset and collect everything, you can delete `~/.internal/collection/default/collection_state.db`. You might want to do this if you're building your own plugin and changing the schema.
+If you want to reset and collect everything, you can use  `rm -rf ~/.tailpipe/internal/collection/default/*`. You might want to do this if you're building your own plugin and changing the schema.
 
 >[!NOTE]
 > What's the story for published plugins that change schema?
@@ -29,7 +29,7 @@ Then connect to it:
 ```
 $ duckdb /home/jon/.tailpipe/data/default/tailpipe_20241224111847.db
 D .tables
-aws_cloudtrail_log  github_audit_log    nginx_access_log    pipes_audit_log
+aws_cloudtrail_log  pipes_audit_log
 ```
 
 ## Can I define more than one partition per table?
@@ -50,19 +50,15 @@ Yes. In this example, the `aws_cloudtrail_log` table has two partitions, one for
 partition "aws_cloudtrail_log" "12345" {
   source "aws_s3_bucket" {
     connection = connection.aws.12345
-    bucket     = "aws-cloudtrail-logs-12345-2755fe67"
-    prefix     = "AWSLogs/12345/CloudTrail/us-east-1/2025"
-    region     = "us-east-1"
-    extensions = [".gz"]
+    bucket     = "aws-cloudtrail-logs-12345"
+    file_layout = "AWSLogs/%{NUMBER:account_id}/%{DATA}.json.gz"
   }
 
 partition "aws_cloudtrail_log" "6789" {
   source "aws_s3_bucket" {
     connection = connection.aws.6789
-    bucket     = "aws-cloudtrail-logs-6789-2755fe67"
-    prefix     = "AWSLogs/6789/CloudTrail/us-east-1/2025"
-    region     = "us-east-1"
-    extensions = [".gz"]
+    bucket     = "aws-cloudtrail-logs-6789"
+    file_layout = "AWSLogs/%{NUMBER:account_id}/%{DATA}.json.gz"
   }
 ```
 
@@ -85,23 +81,19 @@ partition "aws_cloudtrail_log" "cloudtrail_all" {
   source "aws_s3_bucket" {
     connection = connection.aws.12345
     bucket     = "aws-cloudtrail-logs-12345-2755fe67"
-    prefix     = "AWSLogs/12345/CloudTrail/us-east-1/2025"
-    region     = "us-east-1"
-    extensions = [".gz"]
+    file_layout = "AWSLogs/%{NUMBER:account_id}/%{DATA}.json.gz"
   }
 
   source "aws_s3_bucket" {
     connection = connection.aws.6789
     bucket     = "aws-cloudtrail-logs-6789-2755fe67"
-    prefix     = "AWSLogs/6789/CloudTrail/us-east-1/2025"
-    region     = "us-east-1"
-    extensions = [".gz"]
+    file_layout = "AWSLogs/%{NUMBER:account_id}/%{DATA}.json.gz"
   }
 ```
 
 ## What partition indexes are available for a table?
 
-That depends on how the plugin author has defined the common `tp_index` field. For AWS tables, it's the `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (`but `tp_partition` will aways be the same). 
+That depends on how the plugin author has defined the common `tp_index` field. For AWS tables, it's the `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (but `tp_partition` will aways be the same). 
 
 
 
