@@ -53,9 +53,9 @@ To learn more, see **[Managing Workspaces →](/docs/run/workspaces)**
 
 
 
-Workspaces are defined using the `workspace` block in one or more Tailpipe config files.  Tailpipe will load ALL configuration files (`*.fpc`) from every directory in the [configuration search path](/docs/reference/env-vars/tailpipe_config_path), with decreasing precedence. The set of workspaces is the union of all workspaces defined in these directories.  
+Workspaces are defined using the `workspace` block in one or more Tailpipe config files.  Tailpipe will load ALL configuration files (`*.tpc`) from every directory in the [configuration search path](/docs/reference/env-vars/tailpipe_config_path), with decreasing precedence. The set of workspaces is the union of all workspaces defined in these directories.  
 
-The workspace named `default` is special; If a workspace named `default` exists, it will be used whenever the `--workspace` argument is not passed to Tailpipe.  Creating a `default` workspace in `~/.tailpipe/config/workspaces.fpc` provides a way to set all defaults.
+The workspace named `default` is special; If a workspace named `default` exists, it will be used whenever the `--workspace` argument is not passed to Tailpipe.  Creating a `default` workspace in `~/.tailpipe/config/workspaces.tpc` provides a way to set all defaults.
 
 
 Note that the HCL argument names are the same as the equivalent CLI argument names,
