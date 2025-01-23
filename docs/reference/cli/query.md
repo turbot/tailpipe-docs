@@ -5,9 +5,7 @@ title: tailpipe query
 # tailpipe query
 
 >[!NOTE]
-> Cloned from Steampipe with minor variation: show is new, no service mode
-> snapshot stuff out of scope?
-> pipes also? currently i can snap to pipes but nothing to see there with no engine behind
+> Cloned from Steampipe with minor variation. I took out search_path and search_path_pefix. Should also remove timing? query-timeout? 
 
 Query a Tailpipe table
 
@@ -46,8 +44,10 @@ tailpipe query {query} [flags]
   `--pipes-token`                | Sets the Turbot Pipes authentication token used when connecting to Turbot Pipes workspaces. See [PIPES_TOKEN](reference/env-vars/pipes_token) for details.
 | `--progress`                   | Enable or disable progress information. By default, progress information is shown - set `--progress=false` to hide the progress bar.
 | `--query-timeout int`          | The query timeout, in seconds. The default is `0` (no timeout).
+<!--
 | `--search-path strings`        | Set a comma-separated list of connections to use as a custom [search path](managing/connections#setting-the-search-path) for the query session.
 | `--search-path-prefix strings` | Set a comma-separated list of connections to use as a prefix to the current [search path](managing/connections#setting-the-search-path) for the query session.
+-->
 | `--separator string`           | A single character to use as a separator string for csv output (defaults to `","`).
 | `--share`                      | Create snapshot in Turbot Pipes with `anyone_with_link` visibility.
 | `--snapshot`                   | Create snapshot in Turbot Pipes with the default (`workspace`) visibility.
