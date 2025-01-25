@@ -11,7 +11,9 @@ Tailpipe is a high-performance data collection and querying tool that makes it e
 
 - [Collect](/docs/manage/collection) logs from various sources and store them efficiently
 - [Query](/docs/query) your data with familiar SQL syntax using Tailpipe (or DuckDB!)
-- Use [Powerpipe](https://powerpipe.io) to visualize your logs and run detections 
+- Use [Powerpipe](https://powerpipe.io) to visualize your logs and run detections
+
+## Prerequisites
 
 This tutorial uses the [AWS plugin](https://hub.tailpipe.io/plugins/turbot/aws) to demonstrate collection and analysis of Cloudtrail logs. First, [download and install Tailpipe](/downloads).
 
@@ -41,7 +43,7 @@ connection "aws" "admin" {
 
 Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to collect CloudTrail logs. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
 
-You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (*aws_cloudtrail_log*) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition.
+You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (`aws_cloudtrail_log`) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition.
 
 ```hcl
 partition "aws_cloudtrail_log" "prod" {
@@ -53,27 +55,25 @@ partition "aws_cloudtrail_log" "prod" {
 }
 ```
 
-Create a file, `~/.tailpipe/config`, with a `connection` and `partition` block similar to these examples.  
+Create a file, e.g. `~/.tailpipe/config/aws.tpc`, with a `connection` and `partition` block similar to these examples.  
 
-Note: If you don't have access to live Cloudtrail logs, you can use the [flaws.cloud](http://flaws.cloud/) sample logs. To get them:
-
-```
-mkdir ~/flaws
-cd ~/flaws
-wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
-tar xvf flaws_cloudtrail_logs.tar
-```
-
-To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
-
-```hcl
-partition "aws_cloudtrail_log" "flaws" {
- source "file" {
-    paths       = ["~/flaws"]
-    file_layout = "%{DATA}.json.gz"
-  }
-}
-```
+> [!NOTE]
+> If you don't have access to live Cloudtrail logs, you can use the [flaws.cloud](http://flaws.cloud/) sample logs. To get them:
+> ```bash
+> mkdir ~/flaws
+> cd ~/flaws
+> wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
+> tar xvf flaws_cloudtrail_logs.tar
+> ```
+> To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
+> ```hcl
+> partition "aws_cloudtrail_log" "flaws" {
+> source "file" {
+>    paths       = ["~/flaws"]
+>    file_layout = "%{DATA}.json.gz"
+>  }
+>}
+>```
 
 ## Collect log data
 
