@@ -62,14 +62,14 @@ Create a file, e.g. `~/.tailpipe/config/aws.tpc`, with a `connection` and `parti
 > ```bash
 > mkdir ~/flaws
 > cd ~/flaws
-> wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
+> curl -O https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
 > tar xvf flaws_cloudtrail_logs.tar
 > ```
 > To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
 > ```hcl
 > partition "aws_cloudtrail_log" "flaws" {
 > source "file" {
->    paths       = ["~/flaws"]
+>    paths       = ["/Users/dboeke/flaws/flaws_cloudtrail_logs"]
 >    file_layout = "%{DATA}.json.gz"
 >  }
 >}
@@ -83,47 +83,61 @@ Now let's collect the logs:
 tailpipe collect aws_cloudtrail_log
 ```
 
-This command will:
 
-- Acquire compressed (.gz) log files
+Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/reference/glossary#hive).
 
-- Uncompress them
+![](/images/docs/learn/collection.png)
 
-- Parse all the .json log files and map fields of each line to the plugin-defined schema
+To see the table that was created:
 
-- Store the data in files organized by date
-
-By default, Tailpipe collects only the most recent 7 days of log data.
-
-## View the table
-
->[!NOTE]
-> use .inspect here if available, else tailpipe table list
+```bash
+$ tailpipe table list
+NAME                  PLUGIN                                       LOCAL SIZE    FILES    ROWS
+aws_cloudtrail_log    hub.tailpipe.io/plugins/turbot/aws@latest    42 MB         2        160,581
+```
 
 ## Query your logs
 
-Tailpipe provides an interactive SQL shell for analyzing your collected data. You can count the records in the table:
+Tailpipe provides an interactive SQL shell for analyzing your collected data. Run `tailpipe query` to start the query shell.
+
+You can count the records in the table:
 
 ```bash
-tailpipe query "count(*) from aws_cloudtrail_log"
+> select
+   count(*)
+ from 
+   aws_cloudtrail_log
 ```
-
 or find the oldest and newest records:
 
 ```bash
-tailpipe query "select min(tp_date), max(tp_date) from aws_cloudtrail_log"
+> select 
+  min(tp_date), max(tp_date)
+from 
+  aws_cloudtrail_log"
 ```
 
 This query finds the top 10 IPs:
 
 ```bash
-tailpipe query "select tp_source_ip, count(*) as count from aws_cloudtrail_log group by tp_source_ip order by count desc"
+> select 
+  tp_source_ip, count(*) as count
+ from
+   aws_cloudtrail_log
+group by
+  tp_source_ip order by count desc"
 ```
 
 This query lists Cloudtrail event types for a specified day:
 
 ```bash
-tailpipe query "select distinct event_type from aws_cloudtrail_log where tp_date = '2024-11-07'"
+tailpipe 
+  select distinct 
+    event_type 
+from 
+  aws_cloudtrail_log
+where 
+  tp_date = '2024-11-07'"
 ```
 
 Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read one of many files created by the collection process. 
@@ -132,6 +146,7 @@ Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read one o
 
 We've demonstrated basic log collection and analysis with Tailpipe. Here's what to explore next:
 
+- [Visualize your Tailpipe log data with Powerpipe Dashbaords](https://powerpipe.io/docs/learn/tailpipe)  
 - [Discover more plugins on the Hub →](https://hub.tailpipe.io/plugins)
 - [Discover pre-built benchmarks and dashboard for popular log formats →](https://hub.powerpipe.io/?engines=tailpipe)
 - [Join #tailpipe on Slack →](https://turbot.com/community/join)
