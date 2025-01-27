@@ -62,14 +62,14 @@ Create a file, e.g. `~/.tailpipe/config/aws.tpc`, with a `connection` and `parti
 > ```bash
 > mkdir ~/flaws
 > cd ~/flaws
-> wget https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
+> curl -O https://summitroute.com/downloads/flaws_cloudtrail_logs.tar
 > tar xvf flaws_cloudtrail_logs.tar
 > ```
 > To source the log data from the `.gz` file extracted from the tar file, your `aws.tpc` file won't include a `connection` block. Its `partition` block will follow this format:
 > ```hcl
 > partition "aws_cloudtrail_log" "flaws" {
 > source "file" {
->    paths       = ["~/flaws"]
+>    paths       = ["/Users/dboeke/flaws/flaws_cloudtrail_logs"]
 >    file_layout = "%{DATA}.json.gz"
 >  }
 >}
