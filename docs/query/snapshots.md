@@ -1,12 +1,9 @@
+
 ---
 title: Snapshots
 ---
 
 # Snapshots
-
->[!NOTE]
-> i think essentially all of this applies?
-
 
 Tailpipe enables you to take **snapshots**.  A snapshot is a saved view of a benchmark run or dashboard that you can view as a [dashboard in Powerpipe](https://powerpipe.io/docs/run/dashboard)  All data and metadata for a snapshot is contained in a JSON file which can be saved and viewed locally in the Powerpipe dashboard or uploaded to [Turbot Pipes](https://turbot.com/pipes/docs).  Snapshots in Turbot Pipes may be shared with other Turbot Pipes users or made public (shared with anyone that has the link).
 
@@ -27,7 +24,6 @@ powerpipe query run "select * from aws_cloudtrail_log order by tp_date desc limi
 powerpipe benchmark run cloudtrail_log_detections --snapshot
 ```
 
-
 The `--snapshot` flag will create a snapshot with `workspace` visibility in your user workspace. A snapshot with `workspace` visibility is visible only to users that have access to the workspace in which the snapshot resides -- A user must be authenticated to Turbot Pipes with permissions on the workspace.
 
 If you want to create a snapshot that can be shared with *anyone*, use the `--share` flag instead. This will create the snapshot with `anyone_with_link` visibility:
@@ -35,7 +31,6 @@ If you want to create a snapshot that can be shared with *anyone*, use the `--sh
 ```bash
 powerpipe benchmark run cloudtrail_log_detections --share
 ```
-
 
 You can set a snapshot title in Turbot Pipes with the `--snapshot-title` argument.
 
@@ -71,55 +66,7 @@ You can specify a local path in the `--snapshot-location` argument or `TAILPIPE_
 
 ```bash
 powerpipe benchmark run cloudtrail_log_detections --snapshot-location .
-
-steampipe query --snapshot --snapshot-location . "select * from aws_account"
 ```
 
 You can also set `snapshot_location` in a [workspace](/docs/managing/workspaces) if you wish to make it the default location.
 
->[!NOTE]
-> remaining conversion tbd, assuming this is on the right track
-
-
-
-Alternatively, you can use the `--export` argument to export a query in the Steampipe snapshot format.  This will create a file with a `.sps` extension in the current directory:
-
-```bash
-steampipe query --export sps "select * from aws_account"
-```
-
-The `snapshot` export/output type is an alias for `sps`:
-
-```bash
-steampipe query --export snapshot "select * from aws_account"
-```
-
-To give the file a name, simply use `{filename}.sps`, for example:
-
-```bash
-steampipe query --export aws_accounts.sps "select * from aws_account"
-```
-
-Alternatively, you can write the steampipe snapshot to stdout with `--output sps`
-```bash
-steampipe query --output sps  "select * from aws_account" > aws_accounts.sps
-```
-
-or `--output snapshot`
-```bash
-steampipe query --output snapshot  "select * from aws_account" > aws_accounts.sps
-```
-
-
-## Controlling Output
-When using `--share` or `--snapshot`, the output will include the URL to view the snapshot that you created in addition to the usual output:
-```bash
-Snapshot uploaded to https://pipes.turbot.com/user/costanza/workspace/vandelay/snapshot/snap_abcdefghij0123456789_asdfghjklqwertyuiopzxcvbn
-```
-
-You can use the `--progress=false` argument to suppress displaying the URL and other progress data.  This may be desirable when you are using an alternate output format, especially when piping the output to another command:
-
-```bash
-steampipe query --snapshot --output json  \
-  --progress=false  "select * from aws_account" | jq
-```

@@ -3,7 +3,7 @@ title: Interactive Queries
 ---
 
 # Interactive Query Shell
-Tailpipe provides an interactive query shell that provides features like auto-complete, syntax highlighting, and command history to assist you in [writing queries](/docs/sql/tailpipe-sql).
+Tailpipe provides an interactive query shell that provides features like auto-complete, syntax highlighting, and command history to assist you in [writing queries](/docs/sql).
 
 To open the query shell, run `tailpipe query`:
 
