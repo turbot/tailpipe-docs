@@ -2,7 +2,6 @@
 title: Partitions
 ---
 
-
 # Partitions
 
 Partitions are defined in HCL and are required for collection.  
@@ -19,14 +18,35 @@ partition "aws_cloudtrail_log" "test" {
   source "aws_s3" {
     connection    = connection.aws.logs
     bucket        = "my-logs-bucket"
-    file_layout   = "%{DATA}.json.gz"
   }
   
 }
 ``` 
 
-The data for each table partition will be stored in its own subdirectory in the hive.
+The data for each table partition will be stored in its own subdirectory in the [hive](/docs/reference/glossary#hive).
 
 At query time, Tailpipe discovers partitions in the workspace and automatically creates tables based on the partitions it finds.  For instance, if you define three `aws_cloudtrail_log` partitions, the `aws_cloudtrail_log` table will include the data from all three.
+
+## Take advantage of hive partitioning
+
+You can speed up a query by using a `where` or `join` clause to restrict the number of files Tailpipe will read to satisfy the query. This restriction operates at three levels.
+
+*Partition*. When a table defines more than one partition, you can filter to include only files belonging to other partitions.
+
+```sql
+select count(*) from aws_cloudtrail_log where partition = 'prod'
+```
+
+*Index*. When a partition defines more than one index, you can filter to include  all files belonging to other indexes.
+
+```sql
+select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789
+```
+
+*Date*. Each file contains log data for one day. You can filter to include only files for that day.
+
+```sql
+select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
+```
 
 

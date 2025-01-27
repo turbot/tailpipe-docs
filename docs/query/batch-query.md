@@ -73,7 +73,7 @@ us-east-1,AWSServiceEvent
 Redirecting the output to CSV is common way to export data for use in other tools, such as Excel:
 
 ```
-tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output json" --output csv > cloudtrail_events.csv
+tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv > cloudtrail_events.csv
 ```
 
 

@@ -11,9 +11,17 @@ Tailpipe leverages DuckDB to provide a SQL interface to the tables built from th
 Like most popular databases, DuckDB supports standard SQL syntax. If you know SQL, you already know how to query your logs!
 
 You can **query all the columns** in a table:
+
 ```sql
 select * from aws_cloudtrail_log limit 1000;
 ```
+
+But you may want to limit the number of rows when tables are large:
+
+```sql
+select * from aws_cloudtrail_log limit 1000;
+```
+
 
 You can **filter** rows where columns only have a specific value: 
 ```sql
@@ -118,28 +126,13 @@ order by
   count desc;
 ```
 
-or **sum** them:
+or find **min** and **max**:
 ```sql
 select
-  method,
-  sum(body_bytes_sent) as total_bytes
+  min(tp_date),method,
+  max(tp_date)
 from
-  nginx_access_log
-group by
-  method;
-```
-
-or find **min**, **max**, and **average**:
-```sql
-select
-  method,
-  min(body_bytes_sent) as min_bytes,
-  max(body_bytes_sent) as max_bytes,
-  avg(body_bytes_sent) as avg_bytes
-from
-  nginx_access_log
-group by
-  method;
+  aws_cloudtrail_log
 ```
 
 You can **exclude duplicate rows**:

@@ -10,6 +10,9 @@ When all instances of the object have a regular shape, a plugin uses DuckDB's ST
 
 ```sql
 select typeof(user_identity) from aws_cloudtrail_log limit 1;
+```
+
+```sql
 typeof(user_identity) = STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR,
   account_id VARCHAR, access_key_id VARCHAR, user_name VARCHAR,
   session_context STRUCT(attributes STRUCT(mfa_authenticated VARCHAR, creation_date BIGINT),
