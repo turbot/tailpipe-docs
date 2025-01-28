@@ -6,7 +6,7 @@ Compact multiple Parquet files per day to one per day.
 
 # tailpipe compact
 
-# Usage
+## Usage
 ```bash
  tailpipe compact [table] [table.partition] [args]
  ```

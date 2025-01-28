@@ -6,7 +6,7 @@ title: tailpipe collect
 
 Run a **collection**.
 
-# Usage
+## Usage
 ```bash
  tailpipe collect [table|table.partition] [flags]
  ```

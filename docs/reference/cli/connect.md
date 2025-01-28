@@ -6,7 +6,7 @@ title: tailpipe connect
 
 Return a connection string for a database, with a schema determined by the provided parameters.
 
-# Usage
+## Usage
 ```bash
  tailpipe connect [flags]
  ```
