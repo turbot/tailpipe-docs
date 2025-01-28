@@ -1,12 +1,8 @@
 ---
-title: Workspaces
+title: Workspace
 ---
 
->[!NOTE]
-> cloned from sp, applicable?
-
-
-# Workspaces
+# Workspace
 
 A Tailpipe workspace is a profile that defines the environment in which Tailpipe operates.
 
@@ -23,22 +19,11 @@ Workspace configurations can be defined in any `.tpc` file in the `~/.tailpipe/c
 ```hcl
 workspace "default" {
   local             = "~/.tailpipe/data/default"
-  remote            = "s3://myorg-tailpipe-data/tailpipe/prod"
-  remote_connection = connection.aws.default
 }
 
 workspace "dev" {
   local             = "~/.tailpipe/data/dev"
-  remote            = "s3://myorg-tailpipe-data/tailpipe/dev"
-  remote_connection = connection.aws.default
 }
-
-workspace "personal" {
-  local             = "~/personal/tailpipe/data/default"
-  remote            = "s3://my-bucket"
-  remote_connection = connection.aws.personal
-}
-
 ```
 
 

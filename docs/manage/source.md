@@ -1,8 +1,8 @@
 ---
-title: Sources
+title: Source
 ---
 
-# Sources
+# Source
 
 A partition acquires data from one or more **sources**.  Often a source will connect to a resource via a [connection](/docs/reference/config-files/connection) which specifies the credentials and account scope.  The source is typically more specific than the connection though. For example, a connection that provides the ability to interact with an AWS account may support several sources that use that connection but provide logs from different services and locations, for example two AWS S3 sources from two different S3 buckets.
 

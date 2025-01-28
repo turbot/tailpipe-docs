@@ -34,7 +34,7 @@ tailpipe query {query} [flags]
 
 ## Flags
 
-| Argument  |Description  
+| Argument  | Description  
 |--|--
 | `--export string`              | Export query output to a file. You may export multiple output formats by entering multiple `--export` arguments. If a file path is specified as an argument, its type will be inferred by the suffix. Supported export formats are `sps` (`snapshot`). 
 | `--header string`              | Specify whether to include column headers in csv and table output (default true`)|
@@ -44,11 +44,6 @@ tailpipe query {query} [flags]
   `--pipes-token`                | Sets the Turbot Pipes authentication token used when connecting to Turbot Pipes workspaces. See [PIPES_TOKEN](reference/env-vars/pipes_token) for details.
 | `--progress`                   | Enable or disable progress information. By default, progress information is shown - set `--progress=false` to hide the progress bar.
 | `--query-timeout int`          | The query timeout, in seconds. The default is `0` (no timeout).
-<!--
-| `--search-path strings`        | Set a comma-separated list of connections to use as a custom [search path](managing/connections#setting-the-search-path) for the query session.
-| `--search-path-prefix strings` | Set a comma-separated list of connections to use as a prefix to the current [search path](managing/connections#setting-the-search-path) for the query session.
--->
-| `--separator string`           | A single character to use as a separator string for csv output (defaults to `","`).
 | `--share`                      | Create snapshot in Turbot Pipes with `anyone_with_link` visibility.
 | `--snapshot`                   | Create snapshot in Turbot Pipes with the default (`workspace`) visibility.
 | `--snapshot-location string`   | The location to write snapshots - either a local file path or a Turbot Pipes workspace.
