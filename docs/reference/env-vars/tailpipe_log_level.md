@@ -24,5 +24,5 @@ unset TAILPIPE_LOG_LEVEL
 
 Redirect logs to a file:
 ```bash
-TAILPIPE_LOG_LEVEL=debug tailpipe collect nginx_access_log.dev 2> mylogs.txt
+TAILPIPE_LOG_LEVEL=debug tailpipe collect aws_cloudtrail_log 2> mylogs.txt
 ```
