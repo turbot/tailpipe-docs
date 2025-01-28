@@ -38,7 +38,7 @@ You can exit the query shell by pressing `Ctrl+d` on a blank line, or using the 
 ### Autocomplete
 The query shell includes an autocomplete feature that will suggest words as you type.  Type `.` (period). Notice that the autocomplete appears with a list of the [Tailpipe meta-commands](/docs/reference/dot-commands/overview) commands that start with `.`:
 
-![](/images/docs/shell/metacommands.png)
+![](/shell/metacommands.png)
 
 As you continue to type, the autocomplete will continue to narrow down the list of tables to only those that match.
 
@@ -70,10 +70,64 @@ The query shell supports standard emacs-style key bindings:
 
 Tailpipe **tables** provide an interface for querying log data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over Parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
 
-### Tables
+In the query shell, use `.inspect` to view tables. 
 
-TBD
+```bash
+> .inspect
+Table              Plugin    
+aws_cloudtrail_log aws@local 
+```
 
-### Columns
+Select a table to view its columns.
 
-TBD
+```bash
+> .inspect aws_cloudtrail_log
+Column                          Type      
+additional_event_data           json      
+api_version                     varchar   
+aws_region                      varchar   
+edge_device_details             json      
+error_code                      varchar   
+error_message                   varchar   
+event_category                  varchar   
+event_id                        varchar   
+event_name                      varchar   
+event_source                    varchar   
+event_time                      timestamp 
+event_type                      varchar   
+event_version                   varchar   
+management_event                boolean   
+read_only                       boolean   
+recipient_account_id            varchar   
+request_id                      varchar   
+request_parameters              json      
+resources                       json      
+response_elements               json      
+service_event_details           json      
+session_credential_from_console varchar   
+shared_event_id                 varchar   
+source_ip_address               varchar   
+tls_details                     struct    
+tp_akas                         varchar[] 
+tp_date                         date      
+tp_destination_ip               varchar   
+tp_domains                      varchar[] 
+tp_emails                       varchar[] 
+tp_id                           varchar   
+tp_index                        varchar   
+tp_ingest_timestamp             timestamp 
+tp_ips                          varchar[] 
+tp_partition                    varchar   
+tp_source_ip                    varchar   
+tp_source_location              varchar   
+tp_source_name                  varchar   
+tp_source_type                  varchar   
+tp_table                        varchar   
+tp_tags                         varchar[] 
+tp_timestamp                    timestamp 
+tp_usernames                    varchar[] 
+user_agent                      varchar   
+user_identity                   struct    
+vpc_endpoint_id                 varchar  
+```
+
