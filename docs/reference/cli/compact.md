@@ -6,9 +6,6 @@ Compact multiple Parquet files per day to one per day.
 
 # tailpipe compact
 
->[!NOTE]
-> Given that collect's --compact defaults to true, why would I use this?
-
 # Usage
 ```bash
  tailpipe compact [table] [table.partition] [args]
@@ -18,10 +15,8 @@ Compact multiple Parquet files per day to one per day.
 
 | Flag | Description
 |-|-
-| `--from string`    |  Compact days newer than a relative or absolute date.
-| `--to string`      |  Compact days older than a relative or absolute date.
-| `--output output`  |  Output format; one of: json, table (default text)
-|  `--help`          |  Help for connect
+|  `--help`          |  Help for compact
+|  `--output`        |  Output format; one of: json, table (default text)
 
 ## Examples
 

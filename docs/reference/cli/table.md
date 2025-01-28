@@ -45,11 +45,11 @@ Show details for a table.
 Show details in table format.
 
 ```bash
-tailpipe table show github_audit_log.prod
+tailpipe table show pipes_audit_log.prod
 ```
 
 Show details in JSON format.
 
 ```bash
-tailpipe table show github_audit_log.prod --output json
+tailpipe table show pipes_audit_log.prod --output json
 ```

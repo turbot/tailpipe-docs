@@ -8,18 +8,18 @@ List, show, and delete Tailpipe partitions.
 
 ## Usage
 ```bash
+tailpipe partition delete table_name.partition_name [args]
 tailpipe partition list [args]
 tailpipe partition show table_name.partition_name [args]
-tailpipe partition delete table_name.partition_name [args]
 ```
 
 ## Sub-Commands
 
 | Command | Description
 |-|-
+| [delete](#tailpipe-partition-delete) | Delete a partition.
 | [list](#tailpipe-partition-list) | List all partitions.
 | [show](#tailpipe-partition-show)  | Show details of a partition.
-| [delete](#tailpipe-partition-delete) | Delete a partition.
 
 
 ## tailpipe partition list
