@@ -5,7 +5,7 @@ sidebar_label: Turbot Pipes
 
 # Turbot Pipes
 
-**[Turbot Pipes](/docs/steampipe-cloud)** is the only intelligence, automation & security platform built specifically for DevOps. Pipes provides hosted Steampipe database instances, shared dashboards, snapshots, and more!
+**[Turbot Pipes](https://turbot.com/pipes)** is the only intelligence, automation & security platform built specifically for DevOps. Pipes provides hosted Steampipe database instances, shared dashboards, snapshots, and more!
 
 While the Steampipe CLI is optimized for a single developer doing a single thing at a single point in time, Pipes is designed for many users doing many things across time.  Turbot Pipes provides additional benefits above and beyond the Steampipe CLI:
 

@@ -79,17 +79,7 @@
         "label": "Configuration Files",
         "link": "reference/config-files",
         "items": [
-          {
-            "type": "category",
-            "id": "connection",
-            "link": "reference/config-files/connection",
-            "items": [
-              "reference/config-files/connection/aws",
-              "reference/config-files/connection/azure",
-              "reference/config-files/connection/gcp",
-              "reference/config-files/connection/pipes"
-            ]
-          },
+          "reference/config-files/connection",
           "reference/config-files/partition",
           "reference/config-files/workspace"
         ]
@@ -107,12 +97,6 @@
       "pipes-ecosystem/flowpipe",
       "pipes-ecosystem/pipes"
     ]
-  },  
-  {
-    "type": "category",
-    "id": "faq",
-    "link": "faq",
-    "items": []
   }
-
+  
 ]
