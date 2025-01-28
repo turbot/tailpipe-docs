@@ -16,11 +16,11 @@ Show help:
 ```bash
 tailpipe help 
 ```
-Show help for the `mod` sub-command:
+Show help for the `partition` sub-command:
 ```bash
-tailpipe help mod
+tailpipe partition -h
 ```
-Show help for the `mod install` sub-command:
+Show help for the `partition list` sub-command:
 ```bash
-tailpipe help mod install
+tailpipe partition list -h
 ```
