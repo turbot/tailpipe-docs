@@ -17,7 +17,7 @@ $ tailpipe plugin install aws
 This will download the latest aws plugin from the hub registry, and will set up a default connection named `aws`.
 
 > [!NOTE]
-> If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/managing/connections) configuration file in order to use the additional versions of the plugin. 
+> If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/manage/connection) configuration file in order to use the additional versions of the plugin. 
 
 > ^ Will this apply to tailpipe?
 

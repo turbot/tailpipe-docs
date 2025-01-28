@@ -36,7 +36,7 @@ You can exit the query shell by pressing `Ctrl+d` on a blank line, or using the 
 
 
 ### Autocomplete
-The query shell includes an autocomplete feature that will suggest words as you type.  Type `.` (period). Notice that the autocomplete appears with a list of the [Tailpipe meta-commands](/docs/reference/dot-commands/overview) commands that start with `.`:
+The query shell includes an autocomplete feature that will suggest words as you type.  Type `.` (period). Notice that the autocomplete appears with a list of the Tailpipe meta-commands commands that start with `.`:
 
 ![](/shell/metacommands.png)
 

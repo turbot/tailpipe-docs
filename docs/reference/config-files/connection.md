@@ -24,7 +24,7 @@ connection "gcp" "gcp_my_other_project" {
 }
 ```
 
-Each connection has a type label and a name. There is a type for each service: [aws](/docs/reference/config-files/connection/aws), [azure](/docs/reference/config-files/connection/azure), [gcp](/docs/reference/config-files/connection/gcp), [pipes](/docs/reference/config-files/pipes), etc.
+Each connection has a type label and a name. There is a type for each service: [aws](https://hub.tailpipe.io/plugins/turbot/aws#connection-credentials), [azure](https://hub.tailpipe.io/plugins/turbot/azure#connection-credentials), [gcp](https://hub.tailpipe.io/plugins/turbot/gcp#connection-credentials), [pipes](https://hub.tailpipe.io/plugins/turbot/pipes#connection-credentials), etc.
 
 ### Default connections
 
