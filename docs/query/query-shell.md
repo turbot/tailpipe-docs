@@ -40,9 +40,7 @@ The query shell includes an autocomplete feature that will suggest words as you 
 
 ![](/shell/metacommands.png)
 
-As you continue to type, the autocomplete will continue to narrow down the list of tables to only those that match.
-
-You can cycle forward through the list with the `Tab` key, or backward with `Shift+Tab`.  Tab to select `.tables` and hit enter.  The `.tables` command is executed, and lists all the tables that are installed and available to query.
+As you continue to type, the autocomplete will continue to narrow down the list of metacommands to only those that match. You can cycle forward through the list with the `Tab` key, or backward with `Shift+Tab`. 
 
 
 ### History
@@ -63,7 +61,6 @@ The query shell supports standard emacs-style key bindings:
 | `Backspace` | Delete a character backwards
 | `Ctrl+p`, `Up Arrow` |	Go to the previous command in your history
 | `Ctrl+n`, `Down Arrow` |	Go to the next command in your history
-
 
 
 ## Exploring Tables & Columns
