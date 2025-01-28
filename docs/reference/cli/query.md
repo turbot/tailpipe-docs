@@ -4,9 +4,6 @@ title: tailpipe query
 
 # tailpipe query
 
->[!NOTE]
-> Cloned from Steampipe with minor variation. I took out search_path and search_path_pefix. Should also remove timing? query-timeout? 
-
 Query a Tailpipe table
 
 ## Usage
@@ -36,22 +33,14 @@ tailpipe query {query} [flags]
 
 | Argument  | Description  
 |--|--
-| `--export string`              | Export query output to a file. You may export multiple output formats by entering multiple `--export` arguments. If a file path is specified as an argument, its type will be inferred by the suffix. Supported export formats are `sps` (`snapshot`). 
+| `--from string`                | Specify the start time
 | `--header string`              | Specify whether to include column headers in csv and table output (default true`)|
-| `--help`                       | Help for `tailpipe query`.
-| `--output string`              | Select the console output format. Possible values are `line, csv, json, table, snapshot` (default `table`).
-| `--pipes-host`                 | Sets the Turbot Pipes host used when connecting to Turbot Pipes workspaces. See [PIPES_HOST](reference/env-vars/pipes_host) for details. 
-  `--pipes-token`                | Sets the Turbot Pipes authentication token used when connecting to Turbot Pipes workspaces. See [PIPES_TOKEN](reference/env-vars/pipes_token) for details.
-| `--progress`                   | Enable or disable progress information. By default, progress information is shown - set `--progress=false` to hide the progress bar.
-| `--query-timeout int`          | The query timeout, in seconds. The default is `0` (no timeout).
-| `--share`                      | Create snapshot in Turbot Pipes with `anyone_with_link` visibility.
-| `--snapshot`                   | Create snapshot in Turbot Pipes with the default (`workspace`) visibility.
-| `--snapshot-location string`   | The location to write snapshots - either a local file path or a Turbot Pipes workspace.
-| `--snapshot-tag string=string` | Specify tags to set on the snapshot. Multiple `--snapshot-tag` arguments may be passed.
-| `--snapshot-title string`      | The title to give a snapshot when uploading to Turbot Pipes.
-| `--timing=string`              | Enable or disable query execution timing: `off` (default), `on`, or `verbose`.
-| `--workspace-database`         | Sets the database that Tailpipe will connect to. This can be `local` (the default) or a remote Turbot Pipes database. See [STEAMPIPE_WORKSPACE_DATABASE](/docs/reference/env-vars/steampipe_workspace_database) for details. 
-
+| `--help`                       | Help for `tailpipe query`
+| `--index strings`              | Specify the index(es) to use
+| `--output output               | Output format; one of: table, csv, json, line (default table)
+| `--partition strings`          | Specify the partition(s) to use
+| `--separator string`          |  Separator string for csv output (default ",")
+| `--to string`                | Specify the end time
 
 
 ## Examples
@@ -63,7 +52,32 @@ tailpipe query
 
 Run a specific query directly:
 ```bash
-tailpipe query "select * from aws_cloudtrail_log"
+tailpipe query "select count(*) from aws_cloudtrail_log"
+```
+
+Query from a date:
+```bash
+tailpipe query "select count(*) from aws_cloudtrail_log" --from 2025-01-01
+```
+
+Query within a range of dates:
+```bash
+tailpipe query "select count(*) from aws_cloudtrail_log" --from 2025-01-01 --to 2025-01-31
+```
+
+Query a specific partition:
+```bash
+tailpipe query "select count(*) from aws_cloudtrail_log --partition flaws
+```
+
+Query two partitions:
+```bash
+tailpipe query "select count(*) from aws_cloudtrail_log --partition flaws,prod
+```
+
+Query a specific index:
+```bash
+tailpipe query "select count(*) from aws_cloudtrail_log --index 605491513981
 ```
 
 Run a query and save a [snapshot](/docs/snapshots/batch-snapshots):
@@ -81,34 +95,15 @@ Run the SQL command in the `my_queries/my_query.sql` file:
 tailpipe query my_queries/my_query.sql
 ```
 
-Run the SQL commands in all `.sql` files in the `my_queries` directory and concatenate the results:
-```bash
-tailpipe query my_queries/*.sql
 ```
-
-Run a query and report the query execution time:
-```bash
-tailpipe query "select * from aws_cloudtrail_log" --timing
-```
-
-Run a query and report the query execution time and details for each scan:
-```bash
-tailpipe query "select * from aws_cloudtrail_log" --timing=verbose
-```
-
-Run a query and return output in json format:
-```bash
-tailpipe query "select * from aws_cloudtrail_log" --output json
-```
-
 Run a query and return output in CSV format:
 ```bash
-tailpipe query "select * from aws_cloudtrail_log" --output csv
+tailpipe query "select * from aws_cloudtrail_log limit 1000" --output csv
 ```
 
 Run a query and return output in pipe-separated format:
 ```bash
-tailpipe query "select * from aws_cloudtrail_log" --output csv --separator '|'
+tailpipe query "select * from aws_cloudtrail_log limit 1000" --output csv --separator '|'
 ```
 
 
