@@ -36,6 +36,7 @@
     "items": [
       "manage/collection",
       "manage/connection",
+      "manage/hive",
       "manage/source",
       "manage/table",
       "manage/partition",
@@ -54,10 +55,10 @@
         "id": "cli",
         "link": "reference/cli",
         "items": [
-          "reference/cli/help",
           "reference/cli/collect",
-          "reference/cli/connect",
           "reference/cli/compact",
+          "reference/cli/connect",
+          "reference/cli/help",
           "reference/cli/partition",
           "reference/cli/plugin",
           "reference/cli/query",

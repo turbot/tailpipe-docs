@@ -1,10 +1,10 @@
 ---
-title: Connections
+title: Connection
 ---
 
-## Connections
+## Connection
 
-**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.  Tailpipe connections use the Powerpipe/Flowpipe format (with a type label), not the Steampipe format:
+**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe. 
 
 ```hcl
 connection "aws" "aws_01" {
@@ -22,5 +22,5 @@ connection "gcp" "gcp_my_other_project" {
 }
 ```
 
-A default connection, e.g. `connection.aws.default` always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. For AWS, credentials resolve in the SDK's order.
+A default connection, e.g. `connection.aws.default` always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. Tailpipe defines a [connection type](reference/config-files/connection) for each plugin.
 
