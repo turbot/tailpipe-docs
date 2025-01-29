@@ -92,8 +92,8 @@
     "id": "pipes-ecosystem",
     "link": "pipes-ecosystem",
     "items": [
-      "pipes-ecosystem/steampipe",
       "pipes-ecosystem/powerpipe",
+      "pipes-ecosystem/steampipe",
       "pipes-ecosystem/flowpipe",
       "pipes-ecosystem/pipes"
     ]
