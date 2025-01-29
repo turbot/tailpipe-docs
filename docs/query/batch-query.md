@@ -2,9 +2,6 @@
 title: Batch Queries
 ---
 
->[!NOTE]
-> cloned from tailpipe, with minor variation. how much is applicable?
-
 # Batch Queries
 
 Tailpipe queries can provide valuable insight into your logs, and the interactive client is a powerful tool for ad hoc queries and exploration.  Often, however, you will write a query that you will want to re-run in the future, either manually or perhaps as a cron job.  Tailpipe allows you to save your query to a file, and pass the file into the `tailpipe query` command.

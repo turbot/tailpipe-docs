@@ -19,9 +19,6 @@ typeof(user_identity) = STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR
   ...
 ```
 
->[!NOTE]
-> if .inspect is available, that'll be the preferred way to observe the type
-
 DuckDB doesn't have a `struct_keys` function analogous to `json_keys` but you can list the keys of STRUCT by casting to JSON
 
 ```sql

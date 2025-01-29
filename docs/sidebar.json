@@ -70,7 +70,13 @@
         "id": "env-vars",
         "link": "reference/env-vars",
         "items": [
-          "reference/env-vars/tailpipe_log_level"
+          "reference/env-vars/tailpipe_install_dir",
+          "reference/env-vars/tailpipe_log_level",
+          "reference/env-vars/tailpipe_memory_max_mb",
+          "reference/env-vars/tailpipe_plugin_memory_max_mb",
+          "reference/env-vars/tailpipe_query_timeout",
+          "reference/env-vars/tailpipe_update_check",
+          "reference/env-vars/tailpipe_workspace"
         ]
       },
       {

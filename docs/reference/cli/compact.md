@@ -81,12 +81,4 @@ tailpipe compact aws_cloudtrail_log.prod  --from 1/1/2024 --from 2/1/2024
 tailpipe compact aws_cloudtrail_log.prod  --from T-7d
 ```
 
-Compact the metadata:
-
->[!NOTE]
-> in scope?
-
-```hcl
-tailpipe compact --metadata
-```
 
