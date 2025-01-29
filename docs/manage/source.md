@@ -39,10 +39,5 @@ partition "aws_cloudtrail_log" "test" {
 
 Standard source types, like `aws_s3_bucket` and `file`, have an HCL shape that is consistent across all the partitions, and a standard set of arguments. 
 
->[!NOTE]
-> is this still true, given file_layout?
-
-However the *interpretation* of the arguments, and the *behavior* of the source, is plugin-dependent. For instance, the `aws_s3_source` for the `aws_cloudtrail_log` table makes Cloudtrail-specific assumptions about the key prefix structure and file names.
-
 
 

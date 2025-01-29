@@ -12,9 +12,6 @@ A collection is a tree of Parquet files in the standard hive format. It is creat
 
 A collection may result in storage of multiple Parquet files for a given day. Tailpipe can compact those into a single file for the day. This happens automatically when you run `tailpipe collect`.
 
->[!NOTE]
-> why would i ever need to run tailpipe compact?
-
 ## Benchmark
 
 A benchmark bundles a set of detections, and/or sub-benchmarks, into a single unit.
