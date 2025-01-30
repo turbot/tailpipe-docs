@@ -2,7 +2,7 @@
 title: Connection
 ---
 
-## Connection
+# Connection
 
 **Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe. 
 
