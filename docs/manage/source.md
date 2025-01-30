@@ -27,12 +27,10 @@ partition "aws_cloudtrail_log" "test" {
   source "aws_s3_bucket" {
     connection    = connection.aws.logs
     bucket        = "my-logs-bucket"
-    file_layout   = "{%DATA}.json.gz"
   }
   
   source "file" {
     path       = "/path/to/files"
-    file_layout   = "{%DATA}.json.gz"
   }
 }
 ```

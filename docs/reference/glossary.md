@@ -26,7 +26,7 @@ A connection represents a reusable connection to a service. In a `.tpc` file, th
 
 ## Detection
 
-A detection is a Tailpipe query, optionally bundled into a benchmark, that is runs in the context of a mod. The detection's query looks for a specific pattern. In a Cloudtrail log, for example, an `UpdateTrail` event with a null `KmsKeyId` in its request parameters indicates the removal of a KMS key. The AWS detections mod includes `cloudtrail_logs_detect_cloudtrail_trails_with_encryption_disabled`, a detection that queries for this pattern and associates it with Mitre Attack `TA0005:T1562.001`.
+A detection is a Tailpipe query, optionally bundled into a benchmark, that runs in the context of a mod. The detection's query looks for a specific pattern. In a Cloudtrail log, for example, an `UpdateTrail` event with a null `KmsKeyId` in its request parameters indicates the removal of a KMS key. The AWS detections mod includes `cloudtrail_logs_detect_cloudtrail_trails_with_encryption_disabled`, a detection that queries for this pattern and associates it with MITRE ATT&CK `TA0005:T1562.001`.
 
 ## DuckDB
 
@@ -46,7 +46,7 @@ A Tailpipe mod provides the context for detections (usually organized into bench
 
 ## Source
 
-A plugin-defined mechanism for acquiring log data. When you configure a collection in a `.tpc` file, you use the `source` argument. Example values include `file` and `aws_s3_bucket`, which are generic ways to acquire log files (enhanced by plugin-specific configuration). A source like `pipes_audit_log` is an example of a plugin-specific mechanism to acquire log data via an API.
+A plugin-defined mechanism for acquiring log data. When you configure a collection in a `.tpc` file, you use the `source` argument. Example values include `file` and `aws_s3_bucket`, which are generic ways to acquire log files (enhanced by plugin-specific configuration). A source like [pipes_audit_log_api](https://hub-tailpipe.io/plugins/turbot/pipes/sources/pipes_audit_log_api) is an example of a plugin-specific mechanism to acquire log data via an API.
 
 ## Parquet
 

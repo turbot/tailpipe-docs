@@ -2,11 +2,9 @@
 title: tailpipe plugin
 ---
 
-
 # tailpipe plugin
-tailpipe plugin management
 
-Plugins extend tailpipe to work with many different services and providers. Find plugins using the public registry at [hub.tailpipe.io](https://hub.tailpipe.io).
+Tailpipe plugin management. Plugins extend tailpipe to work with many different services and providers. Find plugins using the public registry at [hub.tailpipe.io](https://hub.tailpipe.io).
 
 
 ## Usage

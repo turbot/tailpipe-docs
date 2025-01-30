@@ -69,8 +69,7 @@ Create a file, e.g. `~/.tailpipe/config/aws.tpc`, with a `connection` and `parti
 > ```hcl
 > partition "aws_cloudtrail_log" "flaws" {
 > source "file" {
->    paths       = ["/Users/dboeke/flaws/flaws_cloudtrail_logs"]
->    file_layout = "%{DATA}.json.gz"
+    paths       = ["/Users/dboeke/flaws/flaws_cloudtrail_logs"]
 >  }
 >}
 >```
@@ -84,21 +83,21 @@ tailpipe collect aws_cloudtrail_log
 ```
 
 
-Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/reference/glossary#hive).
+Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/manage/hive).
 
 ![](/learn/collection.png)
 
-To see the table that was created:
-
-```bash
-$ tailpipe table list
-NAME                  PLUGIN                                       LOCAL SIZE    FILES    ROWS
-aws_cloudtrail_log    hub.tailpipe.io/plugins/turbot/aws@latest    42 MB         2        160,581
-```
 
 ## Query your logs
 
-Tailpipe provides an interactive SQL shell for analyzing your collected data. Run `tailpipe query` to start the query shell.
+Tailpipe provides an interactive SQL shell for analyzing your collected data. Run `tailpipe query` to start the query shell. To see the table that was created:
+
+```bash
+$ tailpipe query
+> .inspect
+Table              Plugin          
+aws_cloudtrail_log aws@0.1.0
+```
 
 You can count the records in the table:
 

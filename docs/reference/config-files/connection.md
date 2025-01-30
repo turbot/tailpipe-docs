@@ -28,9 +28,9 @@ Each connection has a type label and a name. There is a type for each service: [
 
 ### Default connections
 
-Tailpipe also creates a single **implicit default** connection for each connection type. The connection is named `default`, eg `connection.aws.default`, `connection.azure.defaut`, etc. The intent of the default connection is that Tailpipe can "just work" with your existing setup, and is similar to the default connection that Steampipe creates for each plugin. For example, the AWS default connection will use the standard AWS SDK connection resolution mechanism to create a Tailpipe connection that will use the same connection that the `aws` CLI would use.
+Tailpipe also creates a single **implicit default** connection for each connection type. The connection is named `default`, eg `connection.aws.default`, `connection.azure.default`, etc. The intent of the default connection is that Tailpipe can "just work" with your existing setup, and is similar to the default connection that Steampipe creates for each plugin. For example, the AWS default connection will use the standard AWS SDK connection resolution mechanism to create a Tailpipe connection that will use the same connection that the `aws` CLI would use.
 
-You can override the default by simply creating a connection for that type that is named `default`:
+You can override the default by creating a connection for that type that is named `default`:
 
 ```hcl
 connection "aws" "default" {

@@ -26,7 +26,7 @@ Collect a specific partition.
 tailpipe collect aws_cloudtrail_log.dev
 ```
 
-See [/docs/reference/cli/collect](/docs/reference/cli/collect) for more examples.
+See [collect](/docs/reference/cli/collect) for more examples.
 
 
 The collection process always writes to a local [workspace](/docs/manage/workspace), and does so on a per-partition basis.  While you may specify multiple partitions on the command line, `partition` is the unit of collection.
@@ -51,7 +51,7 @@ tailpipe collect aws_cloudtrail_log.test --from T-180d
 tailpipe collect aws_cloudtrail_log.test --from 2024-01-01
 ```
 
-- Subsequent collection runs occur chronologically resuming from the last collection by default, so there are no time gaps while the data is being collected.
+Subsequent collection runs occur chronologically resuming from the last collection by default, so there are no time gaps while the data is being collected.
 
 <!--
 - The data is available for querying even while partition collection is still occurring.
