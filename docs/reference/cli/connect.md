@@ -53,6 +53,9 @@ Connect to the Tailpipe database, filtered to records after the start time:
 
 ```bash
 tailpipe connect --from 2025-01-01
+```
+
+```bash
 /home/jon/.tailpipe/data/default/tailpipe_20250115140447.db
 ```
 
@@ -61,19 +64,13 @@ tailpipe connect --from 2025-01-01
 > 
 > duckdb /home/jon/.tailpipe/data/default/tailpipe_20241212134120.db
 
-```bash
-tailpipe connect --from 2025-01-01
-/home/jon/.tailpipe/data/default/tailpipe_20250115140447.db
-```
-
-```bash
-tailpipe connect --from 2025-01-01
-/home/jon/.tailpipe/data/default/tailpipe_20250115140447.db
-```
-
-Show the filepath for the connected database:
+Connect with no filter, show output as json:
 
 ```bash
 tailpipe connect --output json
+```
+
+```bash
+{"database_filepath":"/Users/jonudell/.tailpipe/data/default/tailpipe_20250129204416.db"}
 ```
 

@@ -2,9 +2,9 @@
 title: tailpipe compact
 ---
 
-Compact multiple Parquet files per day to one per day.
-
 # tailpipe compact
+
+Compact multiple Parquet files per day to one per day.
 
 ## Usage
 ```bash

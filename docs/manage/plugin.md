@@ -19,8 +19,6 @@ This will download the latest aws plugin from the hub registry, and will set up 
 > [!NOTE]
 > If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/manage/connection) configuration file in order to use the additional versions of the plugin. 
 
-> ^ Will this apply to tailpipe?
-
 ## Installing a Specific Version
 
 To install a specific version, simply specify the version tag after the plugin name, separated by `@` or `:`
@@ -108,9 +106,6 @@ For example, consider a `myplugin` plugin that you have developed.  To install i
     }
     ```
 
-> [!WARNING]
-> ^ Keep? If so, change how?
-
 
 ## Installing Missing Plugins
 
@@ -134,15 +129,15 @@ tail
 ## Viewing Installed Plugins
 You can list the installed plugins with the `tailpipe plugin list` command:
 
-```
+```hcl
 $ tailpipe plugin list
 ┌─────────────────────────────────────────────────────┬─────────┬────────────────────────────────────────────┐
 │ NAME                                                │ VERSION │ CONNECTIONS                                │
 ├─────────────────────────────────────────────────────┼─────────┼────────────────────────────────────────────┤
-│ hub.tailpipe.io/plugins/turbot/aws@latest           │ 0.1.0   │ aws,aws_account_aaa,aws_account_aab         │
-│ hub.tailpipe.io/plugins/turbot/gcp@latest           │ 0.0.6   │ gcp_project_a,gcp,gcp_project_b             │
-│ hub.tailpipe.io/plugins/turbot/github@latest        │ 0.0.5   │ github                                      │
-└─────────────────────────────────────────────────────┴─────────┴─────────────────────────────────────────────┘
+│ hub.tailpipe.io/plugins/turbot/aws@latest           │ 0.1.0   │ aws,aws_account_aaa,aws_account_aab        │
+│ hub.tailpipe.io/plugins/turbot/gcp@latest           │ 0.0.6   │ gcp_project_a,gcp,gcp_project_b            │
+│ hub.tailpipe.io/plugins/turbot/github@latest        │ 0.0.5   │ github                                     │
+└─────────────────────────────────────────────────────┴─────────┴────────────────────────────────────────────┘
 ```
 
 ## Updating Plugins
@@ -192,7 +187,7 @@ $ tailpipe plugin list
 |                    NAME                    | VERSION | CONNECTIONS |
 +--------------------------------------------+---------+-------------+
 | hub.tailpipe.io/plugins/turbot/aws@latest  | 0.0.5   | aws         |
-    +--------------------------------------------+---------+-------------+
++--------------------------------------------+---------+-------------+
 ```
 
 ## Tailpipe Plugin Registry Support Lifecycle

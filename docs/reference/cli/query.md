@@ -4,7 +4,7 @@ title: tailpipe query
 
 # tailpipe query
 
-Query a Tailpipe table
+Query a Tailpipe table.
 
 ## Usage
 ```bash
@@ -119,7 +119,6 @@ Run the SQL command in the `my_queries/my_query.sql` file:
 tailpipe query my_queries/my_query.sql
 ```
 
-```
 Run a query and return output in CSV format:
 ```bash
 tailpipe query "select * from aws_cloudtrail_log limit 1000" --output csv

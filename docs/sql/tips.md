@@ -8,13 +8,13 @@ title: Tips and Tricks
 
 You can speed up a query by using a `where` or `join` clause to restrict the number of files Tailpipe will read to satisfy the query. This restriction operates at three levels.
 
-*Partition*. When a table defines more than one partition, you can filter to include only files belonging to other partitions.
+*Partition*. When a table defines more than one partition, you can filter to include only files belonging to that partition.
 
 ```sql
 select count(*) from aws_cloudtrail_log where partition = 'prod'
 ```
 
-*Index*. When a partition defines more than one index, you can filter to include  all files belonging to other indexes.
+*Index*. When a partition defines more than one index, you can filter to include  all files belonging to that index.
 
 ```sql
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789
@@ -26,7 +26,7 @@ select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
 ```
 
-The [hive directory structure](docs/manage/hive) enables you to exclude large numbers of Parquet files.
+The [hive directory structure](/docs/manage/hive) enables you to exclude large numbers of Parquet files.
 
 ## Use common fields
 
