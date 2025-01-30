@@ -8,9 +8,11 @@ title: Plugin Tables
 
 The initial step to building a table is to define the schema, this should be as close in content as possible to the data available from the log entry the table is designed to represent.
 
-These row structs should live in the `rows` package of the plugin, and consist of the fields to match the log entry as close as possible, the fields must have `json` tags to define the name of the column which should be **snake_case** and optional nullability of the column.
+These row structs should live in the `tables/<table_name>` directory of the plugin, and consist of the fields to match the log entry as close as possible, the fields must have `json` tags to define the name of the column which should be **snake_case** and optional nullability of the column.
 
-Additionally, the row struct should also embed the `enrichment.CommonFields` struct from the SDK, this is to ensure every table will have the common fields.
+Additionally, the row struct should also embed the `schema.CommonFields` struct from the SDK, this is to ensure every table will have the common fields.
+
+You can also override the column descriptions for this schema by providing a function with the signature `GetColumnDescriptions() map[string]string`.
 
 > NOTE: Not all data types are supported.
 
@@ -22,60 +24,55 @@ Some sources may be already provided in the plugin or SDK such as `AwsS3BucketSo
 
 However, may need to implement a custom source for example if logs are only available from an API.
 
-In this event we should create a custom source in our `sources` package, which should embed `row_source.RowSourceImpl` and implement the following functions:
+In this event we should create a custom source in our `sources/<source_name` directory, which should embed `row_source.RowSourceImpl` and implement the following functions:
 - `Identifier()` returning the name of the source.
 - `Collect(ctx context.Context)` responsible for obtaining the log entries.
+- _Optionally_ `Init(ctx context.Context, params *row_source.RowSourceParams, opts ...row_source.RowSourceOption)` if any custom start up logic is required (setting of collection state func, etc.)
 
 A source **should** implement collection state.
 
 ### Source Config
 
-If configuration is required, define a schema struct also in the `sources` package named `{source_name}_config.go` and implement `GetConfigSchema()` on the source returning an instance of this struct.
+If configuration is required, define a schema struct also in the `sources/<source_name>` package named `{source_name}_config.go` and implement the following functions:
+- `Identifier()` returning the name of the source.
+- `Validate()` a validation function for the provided config.
 
 ### Collection State
 
 Collection state is required for resumption of log collection to ensure that the same logs are not collected multiple times (with some instances offering benefit of allowing performance benefit by adjusting the starting offset).
 
-The `SDK` provides a few varying types of collection state, however if none of these apply to the source, create a custom collection state.
+The `SDK` provides a few varying types of collection state, however if none of these apply to the source, you can create a custom collection state in the `sources/<source_name>` directory using `{source_name}_collection_state.go`.
 
 ## Step 3: Table
 
-Tables are essentially the glue that binds together a source, mapper(s) & schema to establish a collection of log entries in the format of the schema, these reside in the `tables` package of the plugin.
+Tables are essentially the glue that binds together a source, mapper(s) & schema to establish a collection of log entries in the format of the schema, these reside in the `tables/<table_name>` directory of the plugin.
 
-Tables **MUST** embed `table.TableImpl`, this is a generic struct parameterized with 3 types:
+Tables **MUST** embed `table.TableImpl`, this is a generic struct parameterized with 2 types:
 - The `type` of the row struct.
-- The `type` of the table [config](#table-config).
-- The `type` of the connection. (This should be optional)
+- The `type` of the table.
 
 They should also implement the following functions:
 - `Identifier()` returning the name of the table.
-- `GetRowSchema()` returning a new instance of the row struct.
-- `GetConfigSchema()` returning an empty instance of the [table config](#table-config) schema struct.
+- `GetSourceMetadata()` - responsible for defining which `sources` the table supports in addition to defining the mapper associated with the source and any required source options.
 - `EnrichRow` - see [enrichment](#step-5-enrichment)
-- Optionally: if any sources require options `GetSourceOptions(sourceType string)` returning `[]row_source.RowSourceOption` for the source.
-- Optionally: if any sources require [mappers](#step-4-mapping-sources-to-schema), these should be initialized in the tables `Init()` function.
-
-
-### Table Config
-
-A configuration struct is required and should also have a defined schema struct in the `tables` package named `{table_name}_config.go` and implement `GetConfigSchema()` on the table returning an instance of this struct.
+- _Optionally_ `GetDescription()` to define a table description.
 
 ## Step 4: Mapping Sources to Schema
 
 The data returned from the source may need mapping into the row struct.
 
-Mappers reside in the `mappers` package of the plugin, they take in data from a source and return a collection of the associated row struct.
+Mappers reside in the `table/<table_name>` directory of the plugin, they take in data from a source and return a collection of the associated row struct.
 
 Mappers are generic structs parameterized by row struct type.
 
-A different mapper may be required depending on the source. It's the tables responsibility to initialize a mapper based on configured source (Tables `Init()` function).
+A different mapper may be required depending on the source. It's the tables responsibility to define the related mapper in the `GetSourceMetadata()` function.
 
 ## Step 5: Enrichment
 
 To ensure log entries are populated with the common fields (`tp_* fields`), this means that our Table needs to implement an `EnrichRow` function with the following signature, where `R` is the row struct.
 
 ```go
-EnrichRow(row R, sourceEnrichmentFields *enrichment.CommonFields) (R, error)
+EnrichRow(row R, sourceEnrichmentFields schema.SourceEnrichment) (R, error)
 ```
 
 The purpose of this is to populate the `enrichment.CommonFields` on our row struct, either from the source or from the existing row data.
@@ -106,17 +103,14 @@ make
 Create a `{pluginName}.tpc` file in the Tailpipe installations config directory (`~/.tailpipe/config`) for a partition using the new table, along with the source and any configuration options they require.
 
 ```hcl
-partition "aws_cloudtrail_log" "saas_prod_use2" {
-  plugin = "aws"
+connection "aws" "account" {
+  profile = "test"
+}
+
+partition "aws_cloudtrail_log" "example" {
   source "aws_s3_bucket" {
-    bucket = "aws-cloudtrail-logs-165086849490-3b37f8dd"
-    prefix = "AWSLogs/o-z3cf4qoe7m/287590803701/CloudTrail/us-east-2/2024/09"
-    region = "us-east-2"
-    extensions = [".gz"]
-    lexicographical_order = true
-    access_key = "ASIA..."
-    secret_key = "abc..."
-    session_token = "abc..."
+    bucket     = "aws-cloudtrail-logs"
+    connection = connection.aws.account
   }
 }
 ```
@@ -126,5 +120,5 @@ partition "aws_cloudtrail_log" "saas_prod_use2" {
 Run a collection on the new partition:
 
 ```sh
-tailpipe collect aws_cloudtrail_log.saas_prod_use2
+tailpipe collect aws_cloudtrail_log.example
 ```
