@@ -131,7 +131,7 @@ tailpipe plugin update --all
 ```
 
 
-## Removing Plugins
+## Uninstalling Plugins
 You can uninstall a plugin with the `tailpipe plugin uninstall` command:
 
 ```
