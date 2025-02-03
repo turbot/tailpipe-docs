@@ -18,13 +18,10 @@ Workspace configurations can be defined in any `.tpc` file in the `~/.tailpipe/c
 
 ```hcl
 workspace "default" {
-  local             = "~/.tailpipe/data/default"
+  local = "~/.tailpipe/data/default"
 }
 
 workspace "dev" {
-  local             = "~/.tailpipe/data/dev"
+  local = "~/.tailpipe/data/dev"
 }
 ```
-
-
-
