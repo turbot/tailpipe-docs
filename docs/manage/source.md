@@ -25,12 +25,12 @@ Sources are defined as sub-blocks in a *partition*.
 ```hcl
 partition "aws_cloudtrail_log" "test" {
   source "aws_s3_bucket" {
-    connection    = connection.aws.logs
-    bucket        = "my-logs-bucket"
+    connection = connection.aws.logs
+    bucket     = "my-logs-bucket"
   }
   
   source "file" {
-    path       = "/path/to/files"
+    path = "/path/to/files"
   }
 }
 ```
