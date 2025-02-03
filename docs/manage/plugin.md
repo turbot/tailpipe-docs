@@ -6,7 +6,7 @@ title: Plugin
 
 Tailpipe provides an integrated, standardized SQL interface for querying various sources of log data. It relies on plugins to define and implement tables for those logs. This approach decouples the Tailpipe core from provider-specific implementations, providing flexibility and extensibility.
 
-Tailpipe plugins are packaged as Open Container Images (OCI) and stored in the [Tailpipe Hub registry](https://hub.tailpipe.io).  This registry contains a curated set of plugins developed by and/or vetted by Turbot.  To install the latest version of a standard plugin, you can simply install it by name.
+Tailpipe plugins are packaged as Open Container Images (OCI) and stored in the [Tailpipe Hub registry](https://hub.tailpipe.io).  This Hub registry contains a curated set of plugins developed by and/or vetted by Turbot.  To install the latest version of a standard plugin, you can simply install it by name.
 
 For example, to install the latest `aws` plugin:
 
@@ -14,10 +14,7 @@ For example, to install the latest `aws` plugin:
 $ tailpipe plugin install aws
 ```
 
-This will download the latest aws plugin from the hub registry, and will set up a default connection named `aws`.
-
-> [!NOTE]
-> If you install multiple versions of a plugin only the first installation will create a connection automatically for you, you will need to create/edit a [connection](/docs/manage/connection) configuration file in order to use the additional versions of the plugin. 
+This will download the latest aws plugin from the Hub registry.
 
 ## Installing a Specific Version
 
@@ -29,11 +26,11 @@ For example, to install the 0.118.0 version of the aws plugin:
 $ tailpipe plugin install aws@0.118.0
 ```
 
-This will download the aws plugin version 0.118.0 (the one with the `0.118.0` tag) from the hub registry. 
+This will download the aws plugin version 0.118.0 (the one with the `0.118.0` tag) from the Hub registry. 
 
 ## Installing from a SemVer Constraint
 
-Plugins should follow [semantic versioning](https://semver.org/) guidelines, and they are tagged in the registry with a **version tag** that specifies their *exact version* in the `major.minor.patch` format (e.g. `1.0.1`).
+Plugins should follow [semantic versioning](https://semver.org/) guidelines, and they are tagged in the Hub registry with a **version tag** that specifies their *exact version* in the `major.minor.patch` format (e.g. `1.0.1`).
 
 The intent of the version tag is that it is immutable - while it is technically possible to move the version tag to a different image version, this should not be done.
 
@@ -81,7 +78,7 @@ $ tailpipe plugin install aws@~2.1
 $ tailpipe plugin install aws@2.1.x
 ```
 
-## Installing from another registry
+## Installing from Another Registry
 
 Tailpipe plugins are packaged in OCI format and can be hosted and installed from any artifact repository or container registry that supports OCI V2 images. To install a plugin from a repository, specify the full path in the install command:
 
@@ -89,7 +86,7 @@ Tailpipe plugins are packaged in OCI format and can be hosted and installed from
 $ tailpipe plugin install us-docker.pkg.dev/myproject/myrepo/myplugin@mytag
 ```
 
-## Installing from a file
+## Installing from a File
 
 A plugin binary can be installed manually, and this is often convenient when developing the plugin. Tailpipe will attempt to load any plugin that is referred to in a `connection` configuration:
 - The plugin binary file must have a `.plugin` extension
@@ -99,45 +96,22 @@ A plugin binary can be installed manually, and this is often convenient when dev
 For example, consider a `myplugin` plugin that you have developed.  To install it:
 - Create a subdirectory `.tailpipe/plugins/local/myplugin`
 - Name your plugin binary `myplugin.plugin`, and copy it to `.tailpipe/plugins/local/myplugin/myplugin.plugin` 
-- Create a `~/.tailpipe/config/myplugin.spc` config file containing a connection definition that points to your plugin:
+- Create a `~/.tailpipe/config/myplugin.tpc` config file containing a connection definition that points to your plugin:
     ```hcl
     connection "myplugin" {
-        plugin    = "local/myplugin"                 
+        plugin = "local/myplugin"                 
     }
     ```
-
-
-## Installing Missing Plugins
-
-You can install all missing plugins that are referenced in your configuration files:
-
-```bash
-$ tailpipe plugin install
-```
-
-Running `tailpipe plugin install` with no arguments will cause Tailpipe to read all `connection` and `plugin` blocks in all `.spc` files in the `~/.tailpipe/config` directory and install any that are referenced but are not installed.  Note that when doing so, any default `.spc` file that does not exist in the configuration will also be copied.  You may pass the `--skip-config` flag if you don't want to copy these files:
-
-```bash
-$ tailpipe plugin install --skip-config
-```
-
-> [!WARNING]
-> ^ Keep? If so, change how?
-
-tail
 
 ## Viewing Installed Plugins
 You can list the installed plugins with the `tailpipe plugin list` command:
 
 ```hcl
 $ tailpipe plugin list
-┌─────────────────────────────────────────────────────┬─────────┬────────────────────────────────────────────┐
-│ NAME                                                │ VERSION │ CONNECTIONS                                │
-├─────────────────────────────────────────────────────┼─────────┼────────────────────────────────────────────┤
-│ hub.tailpipe.io/plugins/turbot/aws@latest           │ 0.1.0   │ aws,aws_account_aaa,aws_account_aab        │
-│ hub.tailpipe.io/plugins/turbot/gcp@latest           │ 0.0.6   │ gcp_project_a,gcp,gcp_project_b            │
-│ hub.tailpipe.io/plugins/turbot/github@latest        │ 0.0.5   │ github                                     │
-└─────────────────────────────────────────────────────┴─────────┴────────────────────────────────────────────┘
+INSTALLED                                       VERSION    PARTITIONS
+hub.tailpipe.io/plugins/turbot/aws@latest       0.1.0      aws_cloudtrail_log.dev, aws_cloudtrail_log.prod
+hub.tailpipe.io/plugins/turbot/core@latest      0.1.3
+hub.tailpipe.io/plugins/turbot/gcp@latest       0.1.0      gcp_audit_log.dev, gcp_audit_log.staging
 ```
 
 ## Updating Plugins
@@ -158,37 +132,11 @@ tailpipe plugin update --all
 
 
 ## Removing Plugins
-You can uninstall a plugin with the `tailpipe plugin remove` command:
+You can uninstall a plugin with the `tailpipe plugin uninstall` command:
 
 ```
 tailpipe plugin uninstall [plugin]
 ```  
-
-Note that you cannot remove a plugin if there are active connections using it.  You must remove any connections that use the plugin first:
-
-```
-$ tailpipe plugin list
-+--------------------------------------------------+---------+-------------+
-|                       NAME                       | VERSION | CONNECTIONS |
-+--------------------------------------------------+---------+-------------+
-| hub.tailpipe.io/plugins/turbot/aws@latest        | 0.0.5   | aws         |
-| hub.tailpipe.io/plugins/turbot/tailpipe@latest   | 0.0.1   | tailpipe    |
-+--------------------------------------------------+---------+-------------+
-
-$ tailpipe plugin remove tailpipe
-Error: Failed to remove plugin 'tailpipe' - there are active connections using it: 'tailpipe'
-
-$ rm ~/.tailpipe/config/tailpipe.spc 
-
-$ tailpipe plugin remove tailpipe
-Removed plugin tailpipe
-$ tailpipe plugin list
-+--------------------------------------------+---------+-------------+
-|                    NAME                    | VERSION | CONNECTIONS |
-+--------------------------------------------+---------+-------------+
-| hub.tailpipe.io/plugins/turbot/aws@latest  | 0.0.5   | aws         |
-+--------------------------------------------+---------+-------------+
-```
 
 ## Tailpipe Plugin Registry Support Lifecycle
 
