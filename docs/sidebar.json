@@ -90,6 +90,13 @@
           "reference/config-files/workspace"
         ]
       },
+      {
+        "type": "category",
+        "id": "develop",
+        "label": "Developers",
+        "link": "reference/develop",
+        "items": ["reference/develop/plugin-release-checklist"]
+      },
       "reference/glossary"
     ]
   },
@@ -104,5 +111,4 @@
       "pipes-ecosystem/pipes"
     ]
   }
-  
 ]
