@@ -1,5 +1,7 @@
 ---
-title:  Developers
+title: Developers
 ---
 
-Learn how to ...
+# Developers
+
+- **[Plugin release checklist →](/docs/reference/develop/plugin-release-checklist)**
