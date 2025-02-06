@@ -93,6 +93,17 @@ Every table and column has a description. These are consistent across tables. Th
 
 ## Table and Column Design
 
+<input type="checkbox"/> <b>Row enrichment</b>
+
+The table enriches the row with the following required [common fields](https://tailpipe.io/docs/manage/table#common-fields):
+- `tp_date` - The date the event was originally generated.
+- `tp_id` - A unique identifier for the row. In Turbot plugins, typically set to an [xid](https://github.com/rs/xid).
+- `tp_index` - The index used to partition the data, e.g., AWS account ID, GitHub organization, hostname.
+- `tp_ingest_timestamp` - The timestamp when the event was ingested into the system.
+- `tp_timestamp` -  The timestamp when the event was originally generated.
+
+Additional common fields, like `tp_ips` and `tp_source_location` should be added based on what is available in the log type.
+
 <input type="checkbox"/> <b>Default file layout</b>
 
 For each supported artifact source, the table defines a default `FileLayout` that uses the most common pattern. For instance, the `aws_cloudtrail_log` uses the standard AWS log format as the default `FileLayout` for the `aws_s3_bucket` source as part of its [GetSourceMetadata function](https://github.com/turbot/tailpipe-plugin-aws/blob/6b2620d49330aff84f8879e2740fabb39fc87b79/tables/cloudtrail_log/cloudtrail_log_table.go#L26-L28).
@@ -144,7 +155,9 @@ The color matches the provider's brand guidelines, typically stated on a page li
 
 The description in `docs/index.md` is appropriate for the provider. The [AWS plugin](https://hub.tailpipe.io/plugins/turbot/aws), for example, uses:
 
-> AWS provides on-demand cloud computing platforms and APIs to authenticated customers on a metered pay-as-you-go basis.
+```
+AWS provides on-demand cloud computing platforms and APIs to authenticated customers on a metered pay-as-you-go basis.
+```
 
 The opening sentence of the Wikipedia page for the provider can be a good source of guidance here.
 
