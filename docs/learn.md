@@ -103,15 +103,15 @@ aws_cloudtrail_log aws@0.1.0
 You can count the records in the table:
 
 ```bash
-> select
-   count(*)
- from 
-   aws_cloudtrail_log
+select
+  count(*)
+from 
+  aws_cloudtrail_log
 ```
 or find the oldest and newest records:
 
 ```bash
-> select 
+select 
   min(tp_date), max(tp_date)
 from 
   aws_cloudtrail_log"
@@ -120,9 +120,9 @@ from
 This query finds the top 10 IPs:
 
 ```bash
-> select 
+select 
   tp_source_ip, count(*) as count
- from
+from
    aws_cloudtrail_log
 group by
   tp_source_ip order by count desc"
@@ -131,9 +131,8 @@ group by
 This query lists Cloudtrail event types for a specified day:
 
 ```bash
-tailpipe 
-  select distinct 
-    event_type 
+select distinct 
+  event_type 
 from 
   aws_cloudtrail_log
 where 
@@ -150,4 +149,3 @@ We've demonstrated basic log collection and analysis with Tailpipe. Here's what 
 - [Discover more plugins on the Hub →](https://hub.tailpipe.io/plugins)
 - [Discover pre-built benchmarks and dashboard for popular log formats →](https://hub.powerpipe.io/?engines=tailpipe)
 - [Join #tailpipe on Slack →](https://turbot.com/community/join)
-
