@@ -114,7 +114,7 @@ or find the oldest and newest records:
 select 
   min(tp_date), max(tp_date)
 from 
-  aws_cloudtrail_log"
+  aws_cloudtrail_log
 ```
 
 This query finds the top 10 IPs:
@@ -125,7 +125,7 @@ select
 from
    aws_cloudtrail_log
 group by
-  tp_source_ip order by count desc"
+  tp_source_ip order by count desc
 ```
 
 This query lists Cloudtrail event types for a specified day:
@@ -136,7 +136,7 @@ select distinct
 from 
   aws_cloudtrail_log
 where 
-  tp_date = '2024-11-07'"
+  tp_date = '2024-11-07'
 ```
 
 Because we specified `tp_date = '2024-11-07'`, Tailpipe only needs to read one of many files created by the collection process. 
