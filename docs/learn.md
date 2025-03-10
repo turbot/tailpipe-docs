@@ -80,7 +80,7 @@ Create a file, e.g. `~/.tailpipe/config/aws.tpc`, with a `connection` and `parti
 Now let's collect the logs:
 
 ```bash
-tailpipe collect aws_cloudtrail_log
+tailpipe collect aws_cloudtrail_log  --from 2016-01-01
 ```
 
 
