@@ -41,7 +41,7 @@ connection "aws" "admin" {
 }
 ```
 
-Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws ls s3`, for example, then you should be able to collect CloudTrail logs. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
+Tailpipe can use the default AWS credentials from your credential file and/or environment variables; if you can run `aws s3 ls`, for example, then you should be able to collect CloudTrail logs. The AWS plugin [documentation](https://hub.tailpipe.io/plugins/turbot/aws) describes other access patterns.
 
 You will also need to define a [partition](/docs/manage/partition) which refers to a plugin-defined table (`aws_cloudtrail_log`) that describes the data found in each line of a Cloudtrail log, and a [source](/docs/manage/source) that governs how Tailpipe acquires the data that populates the partition.
 
