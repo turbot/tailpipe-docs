@@ -1,10 +1,10 @@
 ---
-title: Plugin
+title: Plugins
 ---
 
-# Plugin
+# Plugins
 
-Tailpipe provides an integrated, standardized SQL interface for querying various sources of log data. It relies on plugins to define and implement tables for those logs. This approach decouples the Tailpipe core from provider-specific implementations, providing flexibility and extensibility.
+Tailpipe provides an integrated, standardized SQL interface for querying various sources of log data. It relies on **plugins** to define and implement tables for those logs. This approach decouples the Tailpipe core from provider-specific implementations, providing flexibility and extensibility.
 
 Tailpipe plugins are packaged as Open Container Images (OCI) and stored in the [Tailpipe Hub registry](https://hub.tailpipe.io).  This Hub registry contains a curated set of plugins developed by and/or vetted by Turbot.  To install the latest version of a standard plugin, you can simply install it by name.
 

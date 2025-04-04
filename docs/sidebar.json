@@ -34,13 +34,12 @@
     "id": "manage-tailpipe",
     "link": "manage",
     "items": [
-      "manage/collection",
-      "manage/connection",
-      "manage/hive",
-      "manage/source",
+      "manage/plugin",
       "manage/table",
       "manage/partition",
-      "manage/plugin",
+      "manage/source",
+      "manage/connection",
+      "manage/collection",
       "manage/workspace"
     ]
   },
@@ -86,7 +85,9 @@
         "link": "reference/config-files",
         "items": [
           "reference/config-files/connection",
+          "reference/config-files/format",
           "reference/config-files/partition",
+          "reference/config-files/table",
           "reference/config-files/workspace"
         ]
       },

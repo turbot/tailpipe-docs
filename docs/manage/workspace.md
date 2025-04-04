@@ -1,8 +1,8 @@
 ---
-title: Workspace
+title: Workspaces
 ---
 
-# Workspace
+# Workspaces
 
 A Tailpipe workspace is a profile that defines the environment in which Tailpipe operates.
 

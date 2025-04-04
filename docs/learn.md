@@ -84,7 +84,7 @@ tailpipe collect aws_cloudtrail_log
 ```
 
 
-Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/manage/hive).
+Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/manage/partition#hive-partitioning).
 
 ![](/learn/collection.png)
 
