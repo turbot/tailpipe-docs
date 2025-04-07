@@ -57,10 +57,12 @@
           "reference/cli/collect",
           "reference/cli/compact",
           "reference/cli/connect",
+          "reference/cli/format",
           "reference/cli/help",
           "reference/cli/partition",
           "reference/cli/plugin",
           "reference/cli/query",
+          "reference/cli/source",
           "reference/cli/table"
         ]
       },

@@ -11,7 +11,7 @@ When Tailpipe starts, it finds all the tables in the workspace according to the 
 
 ## Plugin Tables
 
-Tailpipe [plugins](manage/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](manage\partition) for the table and begin [collecting logs](manage/collect)!
+Tailpipe [plugins](manage/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](manage\partition) for the table and begin [collecting logs](manage/collection)!
 
 You can see what tables are available with the `tailpipe plugin list` command.  The list will include any table defined in plugins that you have installed (even if you have not collected any data for them) as well as any [custom tables](#custom-tables) you have defined:
 

@@ -6,9 +6,6 @@ title: format
 
 The `format` block enables you to define source formats for custom tables.  Formats describe the layout of the source data so that it can be collected into a table.
 
-Format blocks have 2 labels:
-- the [format type](#format-types)
-- the name of the table
 
 
 ```hcl
@@ -17,13 +14,47 @@ format "regex" "openstack_syslog"{
 }
 ```
 
+> [!TIP]
+> Use backticks (<code>`</code>) to delimit the <code>layout</code>.  Tailpipe treats anything in backticks as a non-interpolated string, so you don't have to escape quotes, backslashes, etc.
+
+## Formats
+
+You can define a format with the  `format` block:
+
+```hcl
+format "regex" "custom_log" {
+  layout = `^(?P<timestamp>[\d-]+\s+[\d:.]+)\s+(?P<pid>\d+)\s+(?P<log_level>\w+)\s+(?P<component>[\w._-]+)`
+}
+```
+Format blocks have 2 labels:
+- The [format type](#format-types).  This can be a [core format type](#core-plugin-formats) or any format type in any installed plugin
+- A name for the format
+
+
+Plugins may also export preset formats which may be referenced by name.    For example, the [Nginx plugin](https://hub.tailpipe.io/plugins/turbot/nginx) provides the `nginx_access_log.combined` format which defines the Nginx default combined log format:
+```
+$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"
+```
+
+You can list and view details of both your custom formats and the plugin preset formats using the introspection `tailpipe format list` and `tailpipe format show` commands.
+
+
+
 ## Format Types
 
 The format type defines the parsing mechanism which should be used. The properties of the `format` are specific to the format type.
 
-Formats types are implemented by plugins. A number of formats types are provided by the `core` plugin, which is included in every Tailpipe installation.
+Formats types are implemented by plugins. A number of "generic" formats types are [provided by the `core` plugin](#core-plugin-formats), which is included in every Tailpipe installation.  These core format types provide a mechanism for describing file layouts using general-purpose syntax such as regular expressions, Grok, and JSONL. 
+ 
+Any plugin may include a format type to simplify describing the layout of log files specific to the plugin using its "native" syntax.  For example, the [Nginx plugin](https://hub.tailpipe.io/plugins/turbot/nginx) provides the `nginx_access_log` format type.  When using the `nginx_access_log` format, you can specify the `layout` using the same [Nginx log_format](https://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) as you use in your Nginx configuration files:
 
-Instances of a format type can be defined in a `format` block. Also, plugins may export format `presets` which may be referenced by name.   These may be discovered using the introspection commands: `tailpipe plugin show <plugin name>` or `tailpipe format list`
+```hcl
+format "nginx_access_log" "my_format" {
+  layout = `$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_time`
+}
+```
+
+You can discover the installed format types with the introspection `tailpipe format list` command.
 
 
 ### Core Plugin Formats
@@ -33,7 +64,7 @@ The `grok` format is used for parsing log lines using [Grok patterns](https://ww
 
 ```hcl
 format "grok" "custom_log" {
-  layout = "%{TIMESTAMP_ISO8601:time_local} - %{NUMBER:event_id} - %{WORD:user} - [%{DATA:location}] \"%{DATA:message}\" %{WORD:severity}"
+  layout = `%{TIMESTAMP_ISO8601:time_local} - %{NUMBER:event_id} - %{WORD:user} - [%{DATA:location}] \"%{DATA:message}\" %{WORD:severity}`
   patterns = {
     "REGION" = "[a-zA-Z0-9\\-]+"
   }

@@ -47,7 +47,7 @@ Column block allow you to define columns for your table and map and transform da
 ```hcl
 table  "my_table" {
 
-  column "user_id {
+  column "user_id" {
     type        = "varchar"
     description = "User id"
     required    = true
