@@ -9,7 +9,7 @@ slug: /
 
 Tailpipe is a high-performance data collection and querying tool that makes it easy to collect, store, and analyze log data. With Tailpipe you can:
 
-- [Collect](/docs/manage/collection) logs from various sources and store them efficiently
+- [Collect](/docs/collect/collect) logs from various sources and store them efficiently
 - [Query](/docs/query) your data with familiar SQL syntax using Tailpipe (or DuckDB!)
 - Use [Powerpipe](https://powerpipe.io) to visualize your logs and run detections
 

@@ -74,8 +74,11 @@ format "grok" "custom_log" {
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
 | `layout`     | String   | Required  | The Grok pattern that defines how to parse the log line
-| `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the layout
+| `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the layout.  This is optional, and the [standard patterns](https://github.com/elastic/go-grok?tab=readme-ov-file#default-set-of-patterns) are available out-of-the-box.
 | `description`| String   | Optional  | A description of the format
+
+> [!TIP]
+> Use the [Grok Debugger](https://grokdebugger.com/) to help create and test your grok expressions. 
 
 
 #### Regex Format
@@ -91,6 +94,9 @@ format "regex" "custom_log" {
 |--------------|----------|-----------|-----------------
 | `layout`     | String   | Required  | The regular expression pattern with named capture groups
 | `description`| String   | Optional  | A description of the format
+
+> [!TIP]
+> Use the [RegEx 101](https://regex101.com/) to help create and test your regular expressions. 
 
 #### Delimited Format
 The `delimited` format is used for parsing CSV, TSV, and other delimited file formats. The properties are passed directly to DuckDB which implements the delimited data parsing.

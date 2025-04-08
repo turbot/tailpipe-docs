@@ -29,21 +29,20 @@
       "query/snapshots"
     ]
   },
+
   {
     "type": "category",
-    "id": "manage-tailpipe",
-    "link": "manage",
+    "id": "collect-data",
+    "link": "collect",
     "items": [
-      "manage/plugin",
-      "manage/table",
-      "manage/partition",
-      "manage/source",
-      "manage/connection",
-      "manage/collection",
-      "manage/workspace"
+      "collect/plugins",
+      "collect/configure",
+      "collect/collect",
+      "collect/manage-data",
+      "collect/custom-tables",
+      "collect/workspaces"
     ]
   },
-
   {
     "type": "category",
     "id": "reference",

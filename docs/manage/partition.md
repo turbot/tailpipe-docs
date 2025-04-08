@@ -4,11 +4,11 @@ title: Partitions
 
 # Partitions
 
-A partition represents data gathered from a [source](/docs/manage/source). Partitions are defined [in HCL](/docs/reference/config-files/partition) and are required for [collection](/docs/manage/collection).  
+A partition represents data gathered from a [source](/docs/manage/source). Partitions are defined [in HCL](/docs/reference/config-files/partition) and are required for [collection](/docs/collect/collect).  
 
 The partition has two labels:
 
-1. The [table](/docs/manage/table) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/manage/plugin) or a [custom table](manage/table#custom-tables). The table name implies the shape of resulting Parquet file, and also makes assumptions about the source data format.  For example, the `aws_cloudtrail_log` table is defined in the AWS plugin. The shape of that table — the structure of the data in the destination Parquet file, which corresponds to table columns — is defined in the AWS plugin.
+1. The [table](/docs/manage/table) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](manage/table#custom-tables). The table name implies the shape of resulting Parquet file, and also makes assumptions about the source data format.  For example, the `aws_cloudtrail_log` table is defined in the AWS plugin. The shape of that table — the structure of the data in the destination Parquet file, which corresponds to table columns — is defined in the AWS plugin.
 
 2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
 

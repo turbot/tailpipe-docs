@@ -4,7 +4,7 @@ title: Query Tailpipe
 
 # Powered by DuckDB!
 
-Tailpipe [collects](/docs/manage/collection) logs into a [DuckDB](https://duckdb.org/) database that use [standard SQL syntax](https://duckdb.org/docs/sql/introduction.html) to query. It's easy to [get started writing queries](/docs/sql), and the [Tailpipe Hub](https://hub.tailpipe.io) provides ***hundreds of example queries*** that you can use or modify for your purposes.  There are [example queries for each table](https://hub.tailpipe.io/plugins/turbot/aws/tables/aws_cloudtrail_log) in every plugin, and you can also [browse, search, and view the queries](https://hub.tailpipe.io/mods/turbot/tailpipe-mod-aws-dections/queries) in every published mod!
+Tailpipe [collects](/docs/collect/collect) logs into a [DuckDB](https://duckdb.org/) database that use [standard SQL syntax](https://duckdb.org/docs/sql/introduction.html) to query. It's easy to [get started writing queries](/docs/sql), and the [Tailpipe Hub](https://hub.tailpipe.io) provides ***hundreds of example queries*** that you can use or modify for your purposes.  There are [example queries for each table](https://hub.tailpipe.io/plugins/turbot/aws/tables/aws_cloudtrail_log) in every plugin, and you can also [browse, search, and view the queries](https://hub.tailpipe.io/mods/turbot/tailpipe-mod-aws-dections/queries) in every published mod!
 
 
 ## Interactive Query Shell

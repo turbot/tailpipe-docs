@@ -1,0 +1,140 @@
+---
+title: Configure Collection
+
+---
+
+# Configure Collection
+
+Before you can begin collecting logs, you must tell Tailpipe what to collect.  Tailpipe configuration is defined using HCL in one or more Tailpipe config (`.tpc`) files in the config directory (`~/.tailpipe/config` by default) .  
+
+
+## Tables
+
+Tables are implemented as DuckDB views over the Parquet files.  Tailpipe creates tables (that is, creates views in the `tailpipe.db` database) based on the data and metadata that it discovers in the [workspace](#workspaces), along with the filter rules.
+
+When Tailpipe starts, it finds all the tables in the workspace according to the [hive directory layout](/docs/manage/partition#hive-partitioning).  For each schema, it adds a view for the table.  The view definitions will include qualifiers that implement the filter rules that are defined in the [schema definition](#schemas).
+
+Tailpipe [plugins](manage/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](manage\partition) for the table and begin [collecting logs](manage/collection)!  
+
+If your logs are not in a standard format, or are not currently supported by a plugin, you can create [custom tables](/docs/collect/custom-tables) to collect data from arbitrary log files and other sources.
+
+You can see what tables are available with the `tailpipe plugin list` command. 
+
+## Partitions
+A partition represents data gathered from a [source](/docs/manage/source). Partitions are defined [in HCL](/docs/reference/config-files/partition) and are required for [collection](/docs/collect/collect).  
+
+```hcl
+partition "aws_cloudtrail_log" "test" {
+
+  source "aws_s3" {
+    connection = connection.aws.logs
+    bucket     = "my-logs-bucket"
+  }
+  
+}
+``` 
+
+The partition has two labels:
+
+1. The [table](#tables) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](manage/table#custom-tables). 
+2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
+
+The partition must also contain one or more [`source` blocks](#sources) that define the location of the source log files as well as the [`connection`](#connections) information to interact with it.
+
+The data for each table partition will be stored in its own subdirectory in the [hive](#hive-partitioning).
+
+At query time, Tailpipe discovers partitions in the [workspace](/docs/manage/workspace) and automatically creates tables based on the partitions it finds.  For instance, if you define three `aws_cloudtrail_log` partitions, the `aws_cloudtrail_log` table will include the data from all three.
+
+
+### Hive partitioning
+
+Tailpipe uses [hive partitioning](https://duckdb.org/docs/data/partitioning/hive_partitioning.html) to leverage automatic [filter pushdown](https://duckdb.org/docs/data/partitioning/hive_partitioning.html#filter-pushdown) and Tailpipe is opinionated on the layout:
+
+  - The data is written to Parquet files in the workspace directory, with a prescribed directory and filename structure.  Other than **index** the layout is dictated by the Tailpipe core.
+
+  - The *plugin* may choose the **index** value, but it is not *user*-definable
+
+The standard partitioning/hive structure enables efficient queries that only need to read subsets of the hive filtered by index or date.  Because the data is laid out into partitions,  performance is optimized when the partition appears in a `where` or `join` clause.  The index provides a way to segment the data to optimize lookup performance in a way that is *optimal for the specific plugin*.  For example, AWS tables index on account id, Azure tables on subscription, and GCP on project id. 
+
+```bash
+tp_table=aws_cloudtrail_log
+└── tp_partition=prod
+    └── tp_index=605491513981
+        ├── tp_date=2024-12-31
+        │   └── data_20250106140713_740378_0.parquet
+        ├── tp_date=2025-01-01
+        │   └── data_20250106140713_740378_0.parquet
+        ├── tp_date=2025-01-02
+        │   └── snap_20250106140823_952067.parquet
+        ├── tp_date=2025-01-03
+        │   └── snap_20250106140824_011599.parquet
+        ├── tp_date=2025-01-04
+        │   └── data_20250106140752_829722_0.parquet
+        ├── tp_date=2025-01-05
+        │   └── snap_20250106140824_073116.parquet
+        └── tp_date=2025-01-06
+            └── snap_20250106140824_131637.parquet
+```
+
+
+
+## Sources
+
+A partition acquires data from one or more [sources](/docs/reference/config-files/partition#source).  Often a source will connect to a resource via a [connection](#connections) which specifies the credentials and account scope. 
+
+```hcl
+partition "aws_cloudtrail_log" "test" {
+  source "aws_s3_bucket" {
+    connection = connection.aws.logs
+    bucket     = "my-logs-bucket"
+  }
+  
+  source "file" {
+    path = "/path/to/files"
+  }
+}
+```
+
+The block label denotes the source type - `aws_s3_bucket`, `file`, etc. The source types are defined in plugins, and the arguments vary by type.  The[ Tailpipe Hub](https://hub.tailpipe.io) provides extended documentation and examples for plugin sources. The [`file` source](/docs/reference/config-files/partition#file-source) is provided by the core plugin, which is included in every Tailpipe installation.
+   
+
+
+A plugin's source mechanism is responsible for:
+
+- turning raw data into rows
+
+- initiating file transfers / requests
+
+- downloading / copying raw data
+
+- unzipping/untaring, etc
+
+- incremental transfer / tracking, retrying, etc
+
+<!--
+- source-specific filtering for sources that support them, e.g. [Cloudwatch log filters](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html)
+
+
+-->
+
+## Connections
+
+**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe. 
+
+```hcl
+connection "aws" "aws_01" {
+  profile = "aws_01"
+}
+
+connection "aws" "aws_03" {
+  access_key = "AKIA4YFAKEKEYXTDS252"
+  secret_key = "SH42YMW5p3EThisIsNotRealzTiEUwXN8BOIOF5J8m"
+}
+
+connection "gcp" "gcp_my_other_project" {
+  project     = "my-other-project"
+  credentials = "/home/me/my-service-account-creds.json"
+}
+```
+
+A default connection, e.g. `connection.aws.default` always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. Tailpipe defines a [connection type](reference/config-files/connection) for each plugin.

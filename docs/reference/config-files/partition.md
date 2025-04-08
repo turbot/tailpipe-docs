@@ -4,7 +4,27 @@ title:  partition
 
 # partition
 
-The [partition](/docs/manage/partition) block defines the set of log rows, in a plugin-defined Tailpipe table, that come from a specified [source](/docs/manage/source). A given Tailpipe table, like `aws_cloudtrail_log`, can include multiple partitions that use one or several `source` types. 
+The [partition](/docs/manage/partition) block defines the set of log rows, in a plugin-defined Tailpipe table, that come from a specified [source](/docs/manage/source). A given Tailpipe table, like `aws_cloudtrail_log`, can include multiple partitions that use one or several `source` types. Partitions are defined in HCL and are required for [collection](/docs/collect/collect).  
+
+
+```hcl
+partition "aws_cloudtrail_log" "test" {
+
+  source "aws_s3" {
+    connection = connection.aws.logs
+    bucket     = "my-logs-bucket"
+  }
+  
+}
+```
+
+The partition has two labels:
+
+1. The [table](/docs/manage/table) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](manage/table#custom-tables). The table name implies the shape of resulting Parquet file, and also makes assumptions about the source data format.  For example, the `aws_cloudtrail_log` table is defined in the AWS plugin. The shape of that table — the structure of the data in the destination Parquet file, which corresponds to table columns — is defined in the AWS plugin.
+
+2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
+
+
 
 ## Arguments
 
@@ -30,7 +50,7 @@ partition "aws_cloudtrail_log" "s3_bucket_us_east_1" {
 }
 ```
 
-The block label denotes the source type - `aws_s3_bucket`, `file`, etc.  The source types are defined in plugins, and you can view them with the `tailpipe source list` command.  The Tailpipe Hub provides [extended documentation and examples](https://hub.tailpipe.io/plugins/turbot/aws/sources/aws_s3_bucket) for plugin sources as well.
+The block label denotes the source type - `aws_s3_bucket`, `file`, etc.  The source types are defined in plugins, and you can view them with the `tailpipe source list` command.  The [`file` source](#file-source) is provided by the `core` plugin, which is included in every Tailpipe installation. The Tailpipe Hub provides [extended documentation and examples](https://hub.tailpipe.io/plugins/turbot/aws/sources/aws_s3_bucket) for plugin sources.  
 
 
 ### file_layout
@@ -53,6 +73,33 @@ Refer to the documentation for your table on the [Tailpipe Hub](https://hub.tail
 
 > [!TIP]
 > Use backticks (<code>`</code>) to delimit the <code>file_layout</code>.  Tailpipe treats anything in backticks as a non-interpolated string, so you don't have to escape quotes, backslashes, etc.
+
+
+### file source
+
+The `file` source enables you to collect files on your local filesystem.
+
+```hcl
+source "file" {
+  paths       = ["/my/logs/April", "/my/logs/May"]
+  file_layout = `%{MY_PATTERN}.log`
+
+  patterns = {
+    "MY_PATTERN": `%{YEAR:year}%{MONTHNUM:month}%{MONTHDAY:day}-blah-%{NUMBER}`
+  }
+}
+```
+
+| Argument     | Type     | Optional? | Description
+|--------------|----------|-----------|-----------------
+| `paths`      | String   | Required  | The path to the files to collect.
+| `file_layout` | String  | Optional  | The Grok pattern that [defines the log file structure](#file_layout).  `file_layout` is optional if not provided all files at the path(s) from paths will be collected.
+| `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the `file_layout`.  This is optional, and the [standard patterns](https://github.com/elastic/go-grok?tab=readme-ov-file#default-set-of-patterns) are available out-of-the-box.
+
+<!--
+| `description`| String   | Optional  | A description of the source
+-->
+
 
 
 ## Examples
