@@ -31,7 +31,6 @@ List all partitions.
 |-|-
 |  `--help`      |  Show help.
 |  `--output`    |  Output format: json, text (default)
-|  `--to`        |  Delete days older than than a relative or absolute date.
 
 ### Examples
 
@@ -81,6 +80,11 @@ Delete a partition.
 |  `--from`      |  Specify the start time
 |  `--help`      |  Help for delete
 
+
+<!--
+|  `--to`        |  Delete days older than than a relative or absolute date.
+-->
+
 ### Examples
 
 Delete an entire partition.
@@ -100,7 +104,7 @@ Delete days newer than an absolute date with no confirmation.
 ```bash
 tailpipe partition delete aws_cloudtrail_log.dev --from 2024-01-01  --force
 ```
-
+<!--
 Delete days older than a relative date.
 
 ```bash
@@ -112,7 +116,7 @@ Delete days older than an absolute date.
 ```bash
 tailpipe partition delete aws_cloudtrail_log.dev --to 2024-01-01
 ```
-
+-->
 
 ## Global Flags
 

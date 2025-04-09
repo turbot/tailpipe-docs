@@ -4,13 +4,12 @@ title: format
 
 # format
 
-The `format` block enables you to define source formats for custom tables.  Formats describe the layout of the source data so that it can be collected into a table.
-
+The `format` block enables you to define source formats for tables and sources.  Formats describe the layout of the source data so that it can be collected into a table.
 
 
 ```hcl
-format "regex" "openstack_syslog"{
-  layout = `^(?P<log_file>nova-[\w-]+\.log(?:\.\d+)?\.[\d-]+_[\d:]+)\s+(?P<timestamp>[\d-]+\s+[\d:.]+)\s+(?P<pid>\d+)\s+(?P<log_level>\w+)\s+(?P<component>[\w._-]+)(?:\s+(?:\[(?:req-(?P<request_id>[^\s]+)\s+(?P<user_id>[^\s]+)\s+(?P<tenant_id>[^\s]+)(?:\s+[^\]]+)?|-)]\s+)?(?:(?P<client_ip>\d+\.\d+\.\d+\.\d+)\s+"(?P<http_method>GET|POST|PUT|DELETE)\s+(?P<http_path>[^\s]+)\s+HTTP\/[\d.]+"\s+status:\s+(?P<http_status>\d+)\s+len:\s+(?P<resp_size>\d+)\s+time:\s+(?P<resp_time>[\d.]+)|(?:\[instance:\s+(?P<instance_id>[^\]]+)\])?\s*(?P<message>.*))?)?$`
+format "regex" "custom_log" {
+  layout = `^(?P<timestamp>[\d-]+\s+[\d:.]+)\s+(?P<pid>\d+)\s+(?P<log_level>\w+)\s+(?P<component>[\w._-]+)`
 }
 ```
 
@@ -19,7 +18,7 @@ format "regex" "openstack_syslog"{
 
 ## Formats
 
-You can define a format with the  `format` block:
+You can define a format with the `format` block:
 
 ```hcl
 format "regex" "custom_log" {
@@ -64,7 +63,7 @@ The `grok` format is used for parsing log lines using [Grok patterns](https://ww
 
 ```hcl
 format "grok" "custom_log" {
-  layout = `%{TIMESTAMP_ISO8601:time_local} - %{NUMBER:event_id} - %{WORD:user} - [%{DATA:location}] \"%{DATA:message}\" %{WORD:severity}`
+  layout = `%{TIMESTAMP_ISO8601:time_local} - %{NUMBER:event_id} - %{WORD:user} - [%{REGION:location}] \"%{DATA:message}\" %{WORD:severity}`
   patterns = {
     "REGION" = "[a-zA-Z0-9\\-]+"
   }

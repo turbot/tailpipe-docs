@@ -56,6 +56,7 @@ Compact a table:
 tailpipe compact aws_cloudtrail_log
 ```
 
+<!--
 Compact a table's newest 7 days:
 
 ```hcl
@@ -67,6 +68,7 @@ Compact a table between two dates:
 ```hcl
 tailpipe compact aws_cloudtrail_log  --from 1/1/2024 --to 2/1/2024
 ```
+-->
 
 Compact a partition:
 
@@ -74,11 +76,12 @@ Compact a partition:
 tailpipe compact aws_cloudtrail_log.prod
 ```
 
+<!--
 Compact specific days for partition:
 
 ```hcl
 tailpipe compact aws_cloudtrail_log.prod  --from 1/1/2024 --from 2/1/2024
 tailpipe compact aws_cloudtrail_log.prod  --from T-7d
 ```
-
+-->
 

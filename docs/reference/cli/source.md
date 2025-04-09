@@ -53,7 +53,7 @@ Show details for a source.
 Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output source: json, text (default)
+|  `--output`    |  Output format: json, plain, pretty (default)
 
 
 ### Examples

@@ -41,7 +41,7 @@ Queries can slice the data by partition using the `tp_partition` field.
 
 ### Initial collection
 
-Often, the source data to be ingested is large, and the first ingestion would take quite a long time. To improve the first-run experience for collection Tailpipe collects by days in reverse chronological order. In other words, it starts with the current day and moves backward. The default is NOT be to collect all data on the initial collection, there is a default 7-day lookback window. You can override that on the command line, e.g.:
+Often, the source data to be ingested is large, and the first ingestion would take quite a long time. To improve the first-run experience for collection Tailpipe attempts to collect in reverse chronological order. In other words, it starts with the current day and moves backward. The default is NOT be to collect all data on the initial collection, there is a default 7-day lookback window. You can override that on the command line, e.g.:
 
 ```
 tailpipe collect aws_cloudtrail_log.test --from T-180d

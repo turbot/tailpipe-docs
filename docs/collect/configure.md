@@ -39,7 +39,7 @@ The partition has two labels:
 1. The [table](#tables) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](manage/table#custom-tables). 
 2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
 
-The partition must also contain one or more [`source` blocks](#sources) that define the location of the source log files as well as the [`connection`](#connections) information to interact with it.
+The partition must also contain a [`source` block](#sources) that defines the location of the source log files as well as the [`connection`](#connections) information to interact with it.
 
 The data for each table partition will be stored in its own subdirectory in the [hive](#hive-partitioning).
 
@@ -50,9 +50,9 @@ At query time, Tailpipe discovers partitions in the [workspace](/docs/manage/wor
 
 Tailpipe uses [hive partitioning](https://duckdb.org/docs/data/partitioning/hive_partitioning.html) to leverage automatic [filter pushdown](https://duckdb.org/docs/data/partitioning/hive_partitioning.html#filter-pushdown) and Tailpipe is opinionated on the layout:
 
-  - The data is written to Parquet files in the workspace directory, with a prescribed directory and filename structure.  Other than **index** the layout is dictated by the Tailpipe core.
+  - The data is written to Parquet files in the workspace directory, with a prescribed directory and filename structure.  Each partition is written to a separate directory.
 
-  - The *plugin* may choose the **index** value, but it is not *user*-definable
+  - For [custom tables](/docs/collect/custom-tables), you can define a `tp_index` column on which to index.  For tables implemented by plugin it is not *user*-definable. Be aware that defining a `tp_index` does not always increase performance, and may in fact decrease it as it can result in many small parquet files.   
 
 The standard partitioning/hive structure enables efficient queries that only need to read subsets of the hive filtered by index or date.  Because the data is laid out into partitions,  performance is optimized when the partition appears in a `where` or `join` clause.  The index provides a way to segment the data to optimize lookup performance in a way that is *optimal for the specific plugin*.  For example, AWS tables index on account id, Azure tables on subscription, and GCP on project id. 
 
@@ -88,27 +88,17 @@ partition "aws_cloudtrail_log" "test" {
     connection = connection.aws.logs
     bucket     = "my-logs-bucket"
   }
-  
-  source "file" {
-    path = "/path/to/files"
-  }
+
 }
 ```
 
 The block label denotes the source type - `aws_s3_bucket`, `file`, etc. The source types are defined in plugins, and the arguments vary by type.  The[ Tailpipe Hub](https://hub.tailpipe.io) provides extended documentation and examples for plugin sources. The [`file` source](/docs/reference/config-files/partition#file-source) is provided by the core plugin, which is included in every Tailpipe installation.
-   
 
-
-A plugin's source mechanism is responsible for:
-
+The source is responsible for:
 - turning raw data into rows
-
 - initiating file transfers / requests
-
 - downloading / copying raw data
-
 - unzipping/untaring, etc
-
 - incremental transfer / tracking, retrying, etc
 
 <!--

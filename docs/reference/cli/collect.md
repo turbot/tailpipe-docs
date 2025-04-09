@@ -69,11 +69,13 @@ Collect all partitions in the `aws_cloudtrail_log` table for the last 45 days.
 tailpipe collect aws_cloudtrail_log --from T-45d
 ```
 
+<!--
 Collect all partitions in the `aws_cloudtrail_log` between January and June.
 
 ```bash
 tailpipe collect aws_cloudtrail_log --from 1/1/2024 --to 6/30/2024
 ```
+-->
 
 Collect all partitions in the `aws_cloudtrail_log` table and output JSON.
 

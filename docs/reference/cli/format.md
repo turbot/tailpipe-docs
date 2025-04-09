@@ -30,7 +30,7 @@ List all formats.
 | Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output format: json, text (default)
+|  `--output`    |  Output format: json, plain, pretty (default)
 
 ### Examples
 
@@ -52,7 +52,7 @@ Show details for a format.
 Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output format: json, text (default)
+|  `--output`    |  Output format: json, plain, pretty (default)
 
 
 ### Examples

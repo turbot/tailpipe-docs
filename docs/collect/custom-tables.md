@@ -9,10 +9,10 @@ Tailpipe [plugins](manage/plugin) define tables for common log sources and forma
 But what if your logs are not in a standard format, or are not currently supported by a plugin? No problem!  **Custom tables** enable you to collect data from arbitrary log files and other sources.
 
 The process is straightforward:
-- First define a `format` that describes how to extract the fields from the source.
-- Next, define a `table` that transforms and maps the source `format` into a destination table structure.
-- Create one or more `partition` for your `table`, specifiying one or more `source` from which to collect logs
-- [Collect](/docs/collect/collect) and [query](/docs/query) as you would for any tailpipe table.
+- First [define a `format`](#define-the-format) that describes how to extract the fields from the source.
+- Next, [define a `table`](#define-the-table) that transforms and maps the source `format` into a destination table structure.
+- Create [one or more `partition`](#create-partitions) for your `table`, specifying a `source` from which to collect logs
+- [Collect and query](#collect--query) as you would for any tailpipe table.
 
 <!--  With Tailpipe, you can define and collect custom tables from any text-based format. 
 
@@ -65,11 +65,11 @@ format "grok" "steampipe_plugin" {
 
 Custom tables are defined in a [`table` block](/docs/reference/config-files/table). Table blocks have a single label, which defines the name of the table. 
 
-Every custom table *must* define the `format` of the source.  In this example, we will use [the format that that we created previously](#define-the-format).  By default, all the fields defined in `format` will be included as columns in the table.  If you want, you can use the `map_fields` to only include specific columns, however.
+You may define the `format` of the source.  In this example, we will use [the format that that we created previously](#define-the-format).  By default, all the fields defined in `format` will be included as columns in the table.  If you want, you can use the `map_fields` to only include specific columns, however.
 
 You may also use one or more [`column` definitions](/docs/reference/config-files/table#column-blocks) to map fields to map and transform data from the source.
 
-In our example, the source format does not define a field named `tp_timestamp`.  Since ***`tp_timestamp` is a required column***,  we will add a `tp_timestamp` column and map the `timestamp` from the source.  Also, the source includes a `plugin_timestamp` but it is parse as a number because it is epoch milliseconds.  We will transform it to a timestamp field.
+In our example, the source format does not define a field named `tp_timestamp`.  Since ***`tp_timestamp` is a required column***,  we will add a `tp_timestamp` column and map the `timestamp` from the source.  Also, the source includes a `plugin_timestamp` but it is parsed as a number because it is epoch milliseconds.  We will transform it to a timestamp data type.
 
 
 ```hcl
@@ -107,7 +107,7 @@ partition "steampipe_plugin" "local" {
 
 ## Collect & Query
 
-You can collect custom logs with `tailpipe` collect, just like any other logs.
+You can [collect](/docs/collect/collect) custom logs with `tailpipe` collect, just like any other logs.
 
 ```bash
 $ tailpipe collect steampipe_plugin
@@ -130,7 +130,8 @@ Files:
 Completed: 416ms
 ```
 
-The next time you run `tailpipe query`, your table will be available to query!
+The next time you run `tailpipe query`, your table will be available to [query](/docs/query)!
+
 ```bash
 MacBook-Pro-7:logs jsmyth$ tailpipe query
 Welcome to Tailpipe v0.3.0-rc.0

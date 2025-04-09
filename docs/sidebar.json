@@ -39,8 +39,7 @@
       "collect/configure",
       "collect/collect",
       "collect/manage-data",
-      "collect/custom-tables",
-      "collect/workspaces"
+      "collect/custom-tables"
     ]
   },
   {

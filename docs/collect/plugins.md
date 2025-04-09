@@ -78,6 +78,8 @@ $ tailpipe plugin install aws@~2.1
 $ tailpipe plugin install aws@2.1.x
 ```
 
+<!--  this has not been tested....
+
 ## Installing from Another Registry
 
 Tailpipe plugins are packaged in OCI format and can be hosted and installed from any artifact repository or container registry that supports OCI V2 images. To install a plugin from a repository, specify the full path in the install command:
@@ -85,6 +87,7 @@ Tailpipe plugins are packaged in OCI format and can be hosted and installed from
 ```
 $ tailpipe plugin install us-docker.pkg.dev/myproject/myrepo/myplugin@mytag
 ```
+-->
 
 ## Viewing Installed Plugins
 You can list the installed plugins with the `tailpipe plugin list` command:
