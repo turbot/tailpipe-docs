@@ -6,7 +6,7 @@ title: Create Custom Tables
 
 Tailpipe [plugins](manage/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](manage\partition) for the table and begin [collecting logs](manage/collection).
 
-But what if your logs are not in a standard format, or are not currently supported by a plugin? No problem!  **Custom tables** enable you to collect data from arbitrary log files and other sources.
+But what if your logs are not in a standard format or are not currently supported by a plugin? No problem!  **Custom tables** enable you to collect data from arbitrary log files and other sources.
 
 The process is straightforward:
 - First [define a `format`](#define-the-format) that describes how to extract the fields from the source.
@@ -14,21 +14,15 @@ The process is straightforward:
 - Create [one or more `partition`](#create-partitions) for your `table`, specifying a `source` from which to collect logs
 - [Collect and query](#collect--query) as you would for any tailpipe table.
 
-<!--  With Tailpipe, you can define and collect custom tables from any text-based format. 
-
-This is useful if you need to analyze logs that have custom or proprietary formats, or to collect logs that do not have plugin support.
-
--->
-
 ## Define the Format
 
 The [`format` block](/docs/reference/config-files/format) enables you to define source formats for custom tables. Formats describe the layout of the source data so that it can be collected into a table.
 
-Format blocks have 2 labels:
+Format blocks have two labels:
 - The [format type](/docs/reference/config-files/format#format-types). This can be a [core format type](/docs/reference/config-files/format#core-plugin-formats) (`grok`, `regex`, `delimited`, or `jsonl`) or any format type in any installed plugin.  
 - A name for the format
 
-For example, Steampipe plugin logs are syslog-style text files.   EVERY row has a timestamp, timezone, severity, and message.  Most log lines will also contain plugin-specific data - the plugin name, plugin severity, plugin timestamp in epoch seconds:
+For example, Steampipe plugin logs are syslog-style text files.   EVERY row has a timestamp, timezone, severity, and message.  Most log lines will also contain plugin-specific data - the plugin name, plugin severity, and plugin timestamp in epoch seconds:
 
 ```
 2025-04-08 15:16:35.733 UTC [DEBUG] steampipe-plugin-aws.plugin: [DEBUG] 1744125262935: retrying request Lambda/ListFunctions, attempt 8
@@ -65,11 +59,11 @@ format "grok" "steampipe_plugin" {
 
 Custom tables are defined in a [`table` block](/docs/reference/config-files/table). Table blocks have a single label, which defines the name of the table. 
 
-You may define the `format` of the source.  In this example, we will use [the format that that we created previously](#define-the-format).  By default, all the fields defined in `format` will be included as columns in the table.  If you want, you can use the `map_fields` to only include specific columns, however.
+You may define the `format` of the source.  In this example, we will use [the format that we created previously](#define-the-format).  By default, all the fields defined in `format` will be included as columns in the table.  If you want, you can use `map_fields` to include only specific columns.
 
 You may also use one or more [`column` definitions](/docs/reference/config-files/table#column-blocks) to map fields to map and transform data from the source.
 
-In our example, the source format does not define a field named `tp_timestamp`.  Since ***`tp_timestamp` is a required column***,  we will add a `tp_timestamp` column and map the `timestamp` from the source.  Also, the source includes a `plugin_timestamp` but it is parsed as a number because it is epoch milliseconds.  We will transform it to a timestamp data type.
+In our example, the source format does not define a field named `tp_timestamp`.  Since ***`tp_timestamp` is a required column***,  we will add a `tp_timestamp` column and map the `timestamp` from the source.  Also, the source includes a `plugin_timestamp`, but it is parsed as a number because it is epoch milliseconds.  We will transform it to a timestamp data type.
 
 
 ```hcl
@@ -163,11 +157,11 @@ steampipe_plugin
 
 
 
-<!--  Where does this go?  why are there no descriptions?
+<!--  Where does this go?  Why are there no descriptions?
 
 ## Common Fields
 
-Tailpipe plugins populate a set of common fields. Some are mandatory, for example `tp_partition` and `tp_date`. Others, like `tp_source_ip` and `tp_ips`, are optional. Plugins map table-specific fields to these common fields when it is appropriate to do so. The AWS Cloudtrail plugin, for example, maps the value of the native field `SourceIPAddress` to the common field `tp_source_ip`. It also adds that address to the `tp_ips` array.
+Tailpipe plugins populate a set of common fields. Some are mandatory, for example, `tp_partition` and `tp_date`. Others, like `tp_source_ip` and `tp_ips`, are optional. Plugins map table-specific fields to these common fields when it is appropriate to do so. The AWS Cloudtrail plugin, for example, maps the value of the native field `SourceIPAddress` to the common field `tp_source_ip`. It also adds that address to the `tp_ips` array.
 
 These mappings enable queries that correlate values across different logs. If you have collected both Cloudtrail and ALB logs, for example, you could query for source addresses that occur in both the `aws_cloudtrail_log` and `aws_alb_access_log` tables.
 

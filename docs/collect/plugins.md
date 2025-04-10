@@ -14,7 +14,7 @@ For example, to install the latest `aws` plugin:
 $ tailpipe plugin install aws
 ```
 
-This will download the latest aws plugin from the Hub registry.
+This will download the latest `aws` plugin from the Hub registry.
 
 ## Installing a Specific Version
 
@@ -34,24 +34,24 @@ Plugins should follow [semantic versioning](https://semver.org/) guidelines, and
 
 The intent of the version tag is that it is immutable - while it is technically possible to move the version tag to a different image version, this should not be done.
 
-Installing with a semver constraint allows you to "lock" (or pin) to a specific set of releases which match the contraints.
+Installing with a semver constraint allows you to "lock" (or pin) to a specific set of releases that match the constraints.
 
 If you install via `tailpipe plugin install aws@^1`, for example, `tailpipe plugin update` (and auto-updates) will only update to versions greater than `1.0.0` but less than `2.0.0`.
 
 Supported semver constraint types:
 
 **Wildcard Constraint**: This matches any version for a particular segment (Major, Minor, or Patch).
-- `1.x.x` would match any version with major segment of `1`.
-- `1.2.x` would match any version with the major segment of `1` and a minor segment of `2`.
+- `1.x.x` would match any version with a major segment of `1`.
+- `1.2.x` would match any version with a major segment of `1` and a minor segment of `2`.
 
 **Caret Constraint (^)**: This matches versions that do not modify the left-most non-zero digit.
-- `^1.2.3` is the latest version equal or greater than `1.2.3`, but less than `2.0.0`.
-- `^0.1.2` is the latest version equal or greater than `0.1.2`, but less than `0.2.0`.
+- `^1.2.3` is the latest version greater than or equal to `1.2.3` but less than `2.0.0`.
+- `^0.1.2` is the latest version greater than or equal to `0.1.2` but less than `0.2.0`.
 
-**Tilde Constraint (~)**: This matches versions based on expression, if minor segment is expressed, locks to it, else locks to major.
-- `~1` is the latest version greater than or equal to `1.0.0`, but less than `2.0.0` (same as `1.x.x`).
-- `~1.2` is the latest version greater than or equal to `1.2.0`, but less than `1.3.0` (same as `1.2.x`).
-- `~1.2.3` is the latest version greater than or equal to `1.2.3`, but less than `1.3.0`.
+**Tilde Constraint (~)**: This matches versions based on expression; if a minor segment is expressed, it locks to it; otherwise it locks to the major version.
+- `~1` is the latest version greater than or equal to `1.0.0` but less than `2.0.0` (same as `1.x.x`).
+- `~1.2` is the latest version greater than or equal to `1.2.0` but less than `1.3.0` (same as `1.2.x`).
+- `~1.2.3` is the latest version greater than or equal to `1.2.3` but less than `1.3.0`.
 
 **Range Constraint**: This specifies a range of versions using a hyphen.
 - `1.2.3-1.2.5` would limit to latest available version of `1.2.3`,`1.2.4` or `1.2.5`.

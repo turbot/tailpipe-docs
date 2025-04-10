@@ -17,7 +17,7 @@ You can see which tables are available with the `tailpipe table list` command.
 tailpipe table list
 ```
 
-The output will include any table defined in plugins that you have installed (even if you have not collected any data for them) as well as any [custom tables](#custom-tables) you have defined.  For each table, you can see the plugin that implements it as well as a description.  If you have collected data for the table, you will see the number of parquet files, the number of rows, and total size as well.
+The output will include any table defined in plugins that you have installed (even if you have not collected any data for them) as well as any [custom tables](#custom-tables) you have defined.  For each table, you can see the plugin that implements it, as well as a description.  If you have collected data for the table, you will see the number of parquet files, rows, and total size.
 
 ```bash
 $ tailpipe table list
@@ -41,7 +41,7 @@ If you prefer, you can get the output in JSON format:
 tailpipe table list --output json
 ```
 
-To view details of a single, table, use the `show` command:
+To view details of a single table, use the `show` command:
 ```bash
 tailpipe table show aws_cloudtrail_log
 ```
@@ -113,7 +113,7 @@ You can list all the partitions you have collected:
 tailpipe partition list
 ```
 
-The list command will list all the partitions, including the name, the plugin name, the total size, number of files, and the row count.
+The list command will list all the partitions, including the name, the plugin name, the total size, the number of files, and the row count.
 ```bash
 NAME                       PLUGIN                                       LOCAL SIZE    FILES    ROWS
 aws_cloudtrail_log.prod    hub.tailpipe.io/plugins/turbot/aws@latest    23 MB         8        100,397
@@ -193,7 +193,7 @@ You can delete all data for the partition after a specific date:
 tailpipe partition delete aws_cloudtrail_log.prod --from=2025-04-01
 ```
 
-Or use relative dates in the `--from` argument"
+Or use relative dates in the `--from` argument:
 ```bash
 tailpipe partition delete aws_cloudtrail_log.prod --from=T-2Y   # (2 years ago)
 tailpipe partition delete aws_cloudtrail_log.prod --from=T-10m  # (10 months ago)
@@ -212,7 +212,7 @@ By default, Tailpipe compacts files when you run `tailpipe collect`.  You can di
 tailpipe collect --compact
 ```
 
-You can then manually compact fiels with the `tailpipe compact` command.  You can compact everything:
+You can then manually compact files with the `tailpipe compact` command.  You can compact everything:
 ```bash
 tailpipe compact
 ```
@@ -228,7 +228,7 @@ tailpipe compact aws_cloudtrail_log.prod
 ```
 
 ## Connecting from Other Tools
-You can connect to your Tailpipe database with the native DuckDB client, or other tools and libraries that can connect to DuckDB.  To do so, you can generate a new db file for the connectino using `tailpipe connect`:
+You can connect to your Tailpipe database with the native DuckDB client or other tools and libraries that can connect to DuckDB.  To do so, you can generate a new db file for the connection using `tailpipe connect`:
 
 ```bash
 tailpipe connect

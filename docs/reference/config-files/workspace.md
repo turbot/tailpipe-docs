@@ -21,7 +21,7 @@ Workspace configurations can be defined in any `.tpc` file in the `~/.tailpipe/c
 
 -->
 
-A Tailpipe `workspace` is a "profile" that allows you to define options for running Tailpipe.  
+A Tailpipe `workspace` is a "profile" that provides a distinct database storage location for your collected logs and allows you to define options for running Tailpipe.  
 
 ```hcl
 workspace "default" {
