@@ -26,7 +26,7 @@ select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
 ```
 
-The [hive directory structure](/docs/manage/partition#hive-partitioning) enables you to exclude large numbers of Parquet files.
+The [hive directory structure](/docs/collect/configure#hive-partitioning) enables you to exclude large numbers of Parquet files.
 
 ## Use common fields
 

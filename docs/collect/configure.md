@@ -12,7 +12,7 @@ Before you can begin collecting logs, you must tell Tailpipe what to collect.  T
 
 Tables are implemented as DuckDB views over the Parquet files.  Tailpipe creates tables (that is, creates views in the `tailpipe.db` database) based on the data and metadata that it discovers in the [workspace](#workspaces), along with the filter rules.
 
-When Tailpipe starts, it finds all the tables in the workspace according to the [hive directory layout](/docs/manage/partition#hive-partitioning).  For each schema, it adds a view for the table.  The view definitions will include qualifiers that implement the filter rules that are defined in the [schema definition](#schemas).
+When Tailpipe starts, it finds all the tables in the workspace according to the [hive directory layout](/docs/collect/configure#hive-partitioning).  For each schema, it adds a view for the table.  The view definitions will include qualifiers that implement the filter rules that are defined in the [schema definition](#schemas).
 
 Tailpipe [plugins](manage/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](manage\partition) for the table and begin [collecting logs](manage/collection)!  
 

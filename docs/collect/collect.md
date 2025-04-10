@@ -4,7 +4,7 @@ title: Run Collection
 
 # Run Collection
 
-The [tailpipe collect](/docs/reference/cli/collect) command runs a [plugin](/docs/collect/plugins) that reads from a [source](/docs/manage/source) and writes to the [hive](/docs/manage/partition#hive-partitioning). Every time you run `tailpipe collect`, Tailpipe refreshes its views over all collected Parquet files. Those views are the tables you query with `tailpipe query`.
+The [tailpipe collect](/docs/reference/cli/collect) command runs a [plugin](/docs/collect/plugins) that reads from a [source](/docs/manage/source) and writes to the [hive](/docs/collect/configure#hive-partitioning). Every time you run `tailpipe collect`, Tailpipe refreshes its views over all collected Parquet files. Those views are the tables you query with `tailpipe query`.
 
 Examples:
 
@@ -35,7 +35,7 @@ The collection process always writes to a local [workspace](/docs/manage/workspa
 A partition day is the atomic unit of work; the partition collection succeeds or fails for all sources for a given day, and if it fails, rolls everything back for that day.
 -->
 
-When a [partition](/docs/manage/partition) is collected, each source resumes from the last time it was collected. Source data is ingested, standardized, then written to Parquet files in the standard [hive](/docs/manage/partition#hive-partitioning).
+When a [partition](/docs/manage/partition) is collected, each source resumes from the last time it was collected. Source data is ingested, standardized, then written to Parquet files in the standard [hive](/docs/collect/configure#hive-partitioning).
 
 Queries can slice the data by partition using the `tp_partition` field.
 
