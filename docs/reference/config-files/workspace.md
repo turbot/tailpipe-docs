@@ -3,17 +3,32 @@ title:  workspace
 ---
 # workspace 
 
+<!--
+
+
+A Tailpipe workspace is a profile that defines the environment in which Tailpipe operates.
+
+Each workspace comprises:
+
+- A single local workspace directory for Tailpipe data (Parquet) and metadata files
+
+- Optionally, context-specific settings and options
+
+You can use **workspaces** to keep independent sets of data. Tailpipe workspaces enable you to define multiple named configurations and easily switch among them using the `--workspace` argument or `TAILPIPE_WORKSPACE` environment variable.  If there is no `--workspace` argument or `TAILPIPE_WORKSPACE` environment variable, then the `default` workspace will be used.
+
+Workspace configurations can be defined in any `.tpc` file in the `~/.tailpipe/config` directory, but by convention they are defined in `~/.tailpipe/config/workspaces.tpc` file. This file may contain multiple workspace definitions that can then be referenced by name.
+
+
+-->
 
 A Tailpipe `workspace` is a "profile" that allows you to define options for running Tailpipe.  
 
 ```hcl
 workspace "default" {
-  memory_max_mb = 2048
-  log_level     = "debug"
+  log_level     = "info"
 }
 
-workspace "debug_workspace" {
-  memory_max_mb = 2048
+workspace "development" {
   log_level     = "debug"
   update_check  = false
 }
@@ -33,7 +48,6 @@ tailpipe collect --workspace my_tailpipe
 | Argument            |    Default  | Description
 |---------------------|-------------|-----------------------------------------
 | `log_level`         | off         | Set the logging output level
-| `memory_max_mb`     | `1024`      | Set a memory soft limit for the tailpipe process. Set to 0 to disable the memory limit. This can also be set via the TAILPIPE_MEMORY_MAX_MB environment variable.
 | `update_check`      | `true`      | Enable or disable automatic update checking.
 
 
@@ -47,5 +61,4 @@ Note that the HCL arguments correspond to environment variables:
 | Workspace Argument | Environment Variable             
 |--------------------|-------------------------
 | `log_level`        | [`TAILPIPE_LOG_LEVEL`](/docs/reference/env-vars/tailpipe_log_level)
-| `memory_max_mb`    | [`TAILPIPE_MEMORY_MAX_MB`](/docs/reference/env-vars/tailpipe_memory_max_mb)
 | `update_check`     | [`TAILPIPE_UPDATE_CHECK`](/docs/reference/env-vars/tailpipe_update_check)

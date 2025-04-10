@@ -44,6 +44,17 @@
   },
   {
     "type": "category",
+    "id": "pipes-ecosystem",
+    "link": "pipes-ecosystem",
+    "items": [
+      "pipes-ecosystem/powerpipe",
+      "pipes-ecosystem/steampipe",
+      "pipes-ecosystem/flowpipe",
+      "pipes-ecosystem/pipes"
+    ]
+  },
+  {
+    "type": "category",
     "id": "reference",
     "link": "reference",
     "items": [
@@ -71,9 +82,6 @@
         "items": [
           "reference/env-vars/tailpipe_install_dir",
           "reference/env-vars/tailpipe_log_level",
-          "reference/env-vars/tailpipe_memory_max_mb",
-          "reference/env-vars/tailpipe_plugin_memory_max_mb",
-          "reference/env-vars/tailpipe_query_timeout",
           "reference/env-vars/tailpipe_update_check",
           "reference/env-vars/tailpipe_workspace"
         ]
@@ -99,17 +107,6 @@
         "items": ["reference/develop/plugin-release-checklist"]
       },
       "reference/glossary"
-    ]
-  },
-  {
-    "type": "category",
-    "id": "pipes-ecosystem",
-    "link": "pipes-ecosystem",
-    "items": [
-      "pipes-ecosystem/powerpipe",
-      "pipes-ecosystem/steampipe",
-      "pipes-ecosystem/flowpipe",
-      "pipes-ecosystem/pipes"
     ]
   }
 ]

@@ -48,19 +48,17 @@ Column block allow you to define columns for your table and map and transform da
 table  "my_table" {
 
   column "user_id" {
-    type        = "varchar"
-    description = "User id"
+    source      = "uid"
+    description = "User ID"
     required    = true
     null_if     = "-"
-    transform   =  "upper(user_id)"
   }
 
   column "tp_timestamp" {
     type        = "timestamp"
-    source      = "event_time"
     description = "Timestamp of the event"
     required    = true
-    time_format = "%d/%m/%y-%H|%M|%S@%Z"
+    transform   = "strptime(event_time, '%d/%m/%y-%H|%M|%S@%Z')"
   }
 }
 ```
@@ -81,8 +79,7 @@ For this usage, either the `source` property is used specify which field in the 
 | `description`| String   | Optional  | a description of the column. This is used to generate documentation for the table.
 | `required`   | Boolean  | Optional  | if set to `true`, then the column is required and a validation error will be raised if the column is not present in the source data.
 | `source`     | String   | Optional  | The field in the source data to use for this column.
-| `time_format`| String   | Optional  | A string, in [`strptime` format](https://duckdb.org/docs/stable/sql/functions/dateformat.html#strptime-examples) that allows the source field to be mapped to a timestamp.  `time_format` can only be used when `type` is `timestamp`.
-| `transform`     | String   | Optional  | A duck DB transform function to apply to the column. This should be expressed as a [SQL function](https://duckdb.org/docs/stable/sql/functions/overview.html). If a `transform` is provided, no `source` should be provided.
+| `transform`     | String   | Optional  | A DuckDB transform function to apply to the column. This should be expressed as a [SQL function](https://duckdb.org/docs/stable/sql/functions/overview.html). If a `transform` is provided, no `source` should be provided.
 
  
 
