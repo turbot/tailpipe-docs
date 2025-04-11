@@ -95,14 +95,14 @@ Every table and column has a description. These are consistent across tables. Th
 
 <input type="checkbox"/> <b>Row enrichment</b>
 
-The table enriches the row with the following required [common fields](https://tailpipe.io/docs/manage/table#common-fields):
+The table enriches the row with the following required [common columns](/docs/reference/config-files/table#common-columns):
 - `tp_date` - The date the event was originally generated.
 - `tp_id` - A unique identifier for the row. In Turbot plugins, typically set to an [xid](https://github.com/rs/xid).
 - `tp_index` - The index used to partition the data, e.g., AWS account ID, GitHub organization, hostname.
 - `tp_ingest_timestamp` - The timestamp when the event was ingested into the system.
 - `tp_timestamp` -  The timestamp when the event was originally generated.
 
-Additional common fields, like `tp_ips` and `tp_source_location` should be added based on what is available in the log type.
+Additional common columns, like `tp_ips` and `tp_source_location` should be added based on what is available in the log type.
 
 <input type="checkbox"/> <b>Default file layout</b>
 

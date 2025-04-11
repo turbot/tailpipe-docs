@@ -67,7 +67,7 @@ Note that you can use `map_fields` to add fields from the source to the table wi
 
 - To specify a column to include in this table which does not exist in the source data. 
 For this usage, either the `source` property is used specify which field in the source field to use, or the `transform` property should be used to specify a DuckDB expression or function to use to produce a value for the column.
-- To provide the source data mapping for the [Tailpipe common (`tp_`) fields](#common-fields). ***You must provide a mapping for the `tp_timestamp` field*** but the rest are all optional (but encouraged).
+- To provide the source data mapping for the [Tailpipe common (`tp_`) fields](/docs/reference/config-files/table#common-columns). ***You must provide a mapping for the `tp_timestamp` field*** but the rest are all optional (but encouraged).
 - To forcibly specify the data type of a column which exists in the source data. By default, DuckDB type inference is used to determine the type of a column based on the source data type.  tis automatic typing is usually sufficient, but there are cases where the automatic type is incorrect or insufficient. For example, in cases where a field usually looks like a UUID but is not always a UUID, it may be useful to specify a string type - otherwise if DuckDB infers the type as a UUID, then any non-UUID values will result in an error when collecting data.
 
 ### Column Arguments
@@ -111,6 +111,36 @@ Tailpipe supports most of the [DuckDB general-purpose data types](https://duckdb
 | `uuid`     | UUID data type
 | `json`     | JSON object (via the json extension)
 
+
+## Common Columns
+
+Tailpipe plugins populate a set of common columns.  These mappings enable queries that correlate values across different logs. If you have collected both Cloudtrail and ALB logs, for example, you could query for `tp_ips` to find IP addresses  in the `aws_cloudtrail_log` and `aws_alb_access_log` tables using the same syntax.
+
+When creating a custom table, `tp_timestamp` is the only required column; ***you must define a `tp_timestamp` column***.  This is because Tailpipe uses the timestamp to [organize the data files](/docs/collect/configure#hive-partitioning).  The `tp_index` is also used in the hive partitioning scheme.  You may set it you want, but it will default to `default` if not set.
+
+Some of the common columns (`tp_date`,`tp_id`,`tp_ingest_timestamp`,`tp_partition`,`tp_table`) are automatically set by the plugins - You do not need to create them.  Others are optional (but encouraged).  If you do not set an optional common column, all values will be `null`.
+
+
+| Field Name           | Required | Type        | Description
+|----------------------|----------|-------------|---------------------------------------------------------------------------------
+| tp_akas              | optional | `varchar[]` | A list of associated globally unique identifier strings (also known as).
+| tp_date              | auto     | `date`      | The original date when the event or log entry was generated in YYYY-MM-DD format.
+| tp_destination_ip    | optional | `varchar`   | The IP address of the destination.
+| tp_domains           | optional | `varchar[]` | A list of associated domain names.
+| tp_emails            | optional | `varchar[]` | A list of associated email addresses.
+| tp_id                | auto     | `varchar`   | A unique identifier for the row.
+| tp_index             | auto     | `varchar`   | The name of the optional index used to partition the data.
+| tp_ingest_timestamp  | auto     | `timestamp` | The timestamp in UTC when the row was ingested into the system.
+| tp_ips               | optional | `varchar[]` | A list of associated IP addresses.
+| tp_partition         | auto     | `varchar`   | The name of the partition as defined in the Tailpipe configuration file.
+| tp_source_ip         | auto     | `varchar`   | The IP address of the source.
+| tp_source_location   | auto     | `varchar`   | The geographic or network location of the source, such as a region.
+| tp_source_name       | auto     | `varchar`   | The name or identifier of the source generating the row, such as a service name.
+| tp_source_type       | optional | `varchar`   | The name of the source that collected the row.
+| tp_table             | auto     | `varchar`   | The name of the table.
+| tp_tags              | optional | `varchar[]` | A list of associated tags or labels.
+| tp_timestamp         | required | `timestamp` | The original timestamp in UTC when the event or log entry was generated.
+| tp_usernames         | optional | `varchar[]` | A list of associated usernames or identities.
 
 
 ## Examples

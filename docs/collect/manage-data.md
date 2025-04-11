@@ -138,11 +138,7 @@ Local Size:  23 MB
 Local Files: 8 B
 ```
 
-<!-- TO DO
-## Viewing Formats
 
-## Viewing Source Types
--->
 ## Deleting Data
 
 You can delete collected data with the `tailpipe partition delete` command.
@@ -226,6 +222,66 @@ or a single partition:
 ```bash
 tailpipe compact aws_cloudtrail_log.prod
 ```
+
+## Viewing Formats
+
+[Formats](/docs/reference/config-files/format) describe the layout of the source data so that it can be collected into a table, and each format has a type.  [Formats types](/docs/reference/config-files/format#format-types) are implemented by plugins and define the parsing mechanism which should be used.  Plugins may also export preset formats that you can use.
+
+You can list the available formats and format types in your installation:
+```bash
+tailpipe format list
+```
+
+<!--  TO DO - Update with latest output from next RC
+The output displays ....
+```bash
+```
+-->
+
+You can also view the details of a single format or format type:
+```bash
+tailpipe format show  nginx_access_log.combined
+```
+
+
+<!--  TO DO - Update with latest output from next RC
+
+The output displays ....
+```bash
+```
+-->
+
+## Viewing Source Types
+
+A partition acquires data from a [source](http://localhost:3000/docs/reference/config-files/partition#source), each of which has a source type.  The source types are defined in plugins, and you can view them with the `tailpipe source list` command:
+
+```bash
+tailpipe source list
+```
+
+<!--  TO DO - Update with latest output from next RC
+
+The output displays the source types that are installed:
+```bash
+NAME             DESCRIPTION
+aws_s3_bucket    
+file    
+```
+-->
+
+You can also view the details of a single source type:
+```bash
+tailpipe source list
+```
+
+
+<!--  TO DO - Update with latest output from next RC
+
+```bash
+Name:        aws_s3_bucket
+```
+-->
+
 
 ## Connecting from Other Tools
 You can connect to your Tailpipe database with the native DuckDB client or other tools and libraries that can connect to DuckDB.  To do so, you can generate a new db file for the connection using `tailpipe connect`:

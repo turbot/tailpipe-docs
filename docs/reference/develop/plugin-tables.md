@@ -10,7 +10,7 @@ The initial step to building a table is to define the schema, this should be as 
 
 These row structs should live in the `rows` package of the plugin, and consist of the fields to match the log entry as close as possible, the fields must have `json` tags to define the name of the column which should be **snake_case** and optional nullability of the column.
 
-Additionally, the row struct should also embed the `enrichment.CommonFields` struct from the SDK, this is to ensure every table will have the common fields.
+Additionally, the row struct should also embed the `enrichment.CommonFields` struct from the SDK, this is to ensure every table will have the common columns.
 
 > NOTE: Not all data types are supported.
 
@@ -72,7 +72,7 @@ A different mapper may be required depending on the source. It's the tables resp
 
 ## Step 5: Enrichment
 
-To ensure log entries are populated with the common fields (`tp_* fields`), this means that our Table needs to implement an `EnrichRow` function with the following signature, where `R` is the row struct.
+To ensure log entries are populated with the common columns (`tp_* fields`), this means that our Table needs to implement an `EnrichRow` function with the following signature, where `R` is the row struct.
 
 ```go
 EnrichRow(row R, sourceEnrichmentFields *enrichment.CommonFields) (R, error)

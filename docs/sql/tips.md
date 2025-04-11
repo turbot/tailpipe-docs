@@ -28,9 +28,9 @@ select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123
 
 The [hive directory structure](/docs/collect/configure#hive-partitioning) enables you to exclude large numbers of Parquet files.
 
-## Use common fields
+## Use common columns
 
-Tailpipe plugins map a subset of log-specific fields to [common fields](/docs/manage/table#common-fields). Use them to correlate across tables, for example to join `aws_cloudtrail_log` and `aws_alb_access_log` on the `tp_ip` field (IP address).
+Tailpipe plugins map a subset of log-specific fields to [common columns](/docs/reference/config-files/table#common-columns). Use them to correlate across tables, for example to join `aws_cloudtrail_log` and `aws_alb_access_log` on the `tp_ip` field (IP address).
 
 ## Use JSON functions vs operators
 

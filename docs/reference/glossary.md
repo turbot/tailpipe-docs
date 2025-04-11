@@ -18,7 +18,7 @@ A benchmark bundles a set of detections, and/or sub-benchmarks, into a single un
 
 ## Common Fields
 
-In addition to populating a log-specific schema, a Tailpipe plugin can (where appropriate) map log-specific fields to common fields like `TpDate`, `TpIps`, or `TpUsernames`. That enables joins across multiple Tailpipe tables, so you can for example write a single query to look for a known malicious IP address in logs from different sources.
+In addition to populating a log-specific schema, a Tailpipe plugin can (where appropriate) map log-specific fields to common columns like `TpDate`, `TpIps`, or `TpUsernames`. That enables joins across multiple Tailpipe tables, so you can for example write a single query to look for a known malicious IP address in logs from different sources.
 
 ## Connection
 
