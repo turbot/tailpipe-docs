@@ -19,11 +19,11 @@ title: Tailpipe CLI
 | [tailpipe table](/docs/reference/cli/table)       | List and show Tailpipe tables
 
 
-## Global Flags
+## Global Arguments
 
 <table>
   <tr> 
-    <th> Flag </th> 
+    <th> Argument </th> 
     <th> Description </th> 
   </tr>
 
