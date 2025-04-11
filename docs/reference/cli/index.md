@@ -11,11 +11,12 @@ title: Tailpipe CLI
 | [tailpipe collect](/docs/reference/cli/collect)   | Run a collection
 | [tailpipe compact](/docs/reference/cli/compact)   | Compact multiple parquet files per day to one per day
 | [tailpipe connect](/docs/reference/cli/connect)   | Return a connection string for a database
+| [tailpipe format](/docs/reference/cli/format)     | List, show, and delete Tailpipe formats and format types
 | [tailpipe help](/docs/reference/cli/help)         | Help about any command
 | [tailpipe partition](/docs/reference/cli/partition)     | List, show, and delete Tailpipe partitions
 | [tailpipe plugin](/docs/reference/cli/plugin)     | Tailpipe plugin management
 | [tailpipe query](/docs/reference/cli/query)       | Execute a query against the workspace database
-| [tailpipe source](/docs/reference/cli/source)       | List and show Tailpipe sources
+| [tailpipe source](/docs/reference/cli/source)     | List and show Tailpipe sources
 | [tailpipe table](/docs/reference/cli/table)       | List and show Tailpipe tables
 
 
