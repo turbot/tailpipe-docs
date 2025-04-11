@@ -4,9 +4,9 @@ title: Querying JSON
 
 # Querying JSON Columns
 
-Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: [JSON](https://duckdb.org/docs/data/json/overview.html#retrieving-json-data) or [STRUCT](https://duckdb.org/docs/sql/data_types/struct.html#retrieving-from-structs). Learn about JSON idioms here, see [Querying STRUCT Columns](/docs/sql/querying-struct) for STRUCT idioms.
+Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: [JSON](https://duckdb.org/docs/data/json/overview.html#retrieving-json-data) or [STRUCT](https://duckdb.org/docs/sql/data_types/struct.html#retrieving-from-structs). Learn about JSON idioms here; see [Querying STRUCT Columns](/docs/sql/querying-struct) for STRUCT idioms.
 
-When an object's instances have irregular shape, a plugin uses DuckDB's JSON type. The `request_parameters` column of the `aws_cloudtrail_log` table is a JSON column, as you can verify using the `typeof` function.
+When an object's instances have an irregular shape, a plugin uses DuckDB's JSON type. The `request_parameters` column of the `aws_cloudtrail_log` table is a JSON column, as you can verify using the `typeof` function.
 
 ```sql
 select
@@ -62,7 +62,7 @@ from
   aws_cloudtrail_log;
 ```
 
-In this case, DuckDB's precedence rules require you to parenthesize the `->>` expression. To avoid confusion we often prefer functions over operators in Tailpipe mods.
+In this case, DuckDB's precedence rules require you to parenthesize the `->>` expression. To avoid confusion, we often prefer functions over operators in Tailpipe mods.
 
 The `resource` column of `aws_cloudtrail_log` is a JSON array of objects. You use 0-based indexing to access elements of an array. To access the first element:
 
@@ -73,7 +73,7 @@ from
   aws_cloudtrail_log;
 ```
 
-Alternatively you can use the JSON `->` operator:
+Alternatively, you can use the JSON `->` operator:
 
 ```sql
 select

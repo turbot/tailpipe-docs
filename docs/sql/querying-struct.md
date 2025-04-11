@@ -4,7 +4,7 @@ title: Querying STRUCT
 
 # Querying STRUCT Columns
 
-Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: STRUCT or JSON. Learn about STRUCT idioms here, see [Querying JSON Columns](/docs/sql/querying-json) for JSON idioms.
+Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: STRUCT or JSON. Learn about STRUCT idioms here; see [Querying JSON Columns](/docs/sql/querying-json) for JSON idioms.
 
 When all instances of the object have a regular shape, a plugin uses DuckDB's STRUCT type. The `user_identity` column of the `aws_cloudtrail_log` table is a STRUCT column, as you can verify using the `typeof` function.
 
@@ -19,7 +19,7 @@ typeof(user_identity) = STRUCT("type" VARCHAR, principal_id VARCHAR, arn VARCHAR
   ...
 ```
 
-DuckDB doesn't have a `struct_keys` function analogous to `json_keys` but you can list the keys of STRUCT by casting to JSON
+DuckDB doesn't have a `struct_keys` function analogous to `json_keys`, but you can list the keys of STRUCT by casting to JSON:
 
 ```sql
 select

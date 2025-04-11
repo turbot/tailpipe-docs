@@ -5,7 +5,7 @@ title: Querying IP Addresses
 
 # Querying IP Addresses
 
-IP addresses are fundamental to security-oriented log analysis. Tailpipe includes DuckDB's [inet extension](https://duckdb.org/docs/extensions/inet.html) which supports CIDR notation.
+IP addresses are fundamental to security-oriented log analysis. Tailpipe includes DuckDB's [inet extension](https://duckdb.org/docs/extensions/inet.html) to simplify working with IP addresses and networks.
 
 You can find requests **from a specific IP address**:
 
