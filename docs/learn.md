@@ -110,10 +110,31 @@ Now, let's collect the logs:
 ```bash
 tailpipe collect
 ```
+```
+Collecting logs for aws_cloudtrail_log.prod from 2025-04-04 
+
+Artifacts:
+  Discovered: 9,691 
+  Downloaded: 9,691 29MB
+  Extracted:  9,691
+
+Rows:
+  Received: 144,426
+  Enriched: 144,426
+  Saved:    144,110
+  Filtered:     316
+
+Files:
+  Compacted: 66 => 9
+
+Completed: 2m55s
+```
 
 Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/collect/configure#hive-partitioning).
 
+<!--
 ![](/learn/collection.png)
+-->
 
 
 ## Query your logs
