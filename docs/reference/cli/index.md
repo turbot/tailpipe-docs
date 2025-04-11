@@ -31,7 +31,7 @@ title: Tailpipe CLI
   <tr> 
     <td nowrap="true"> `--config-path`</td> 
     <td>  
-    Sets the location to search for <a href = "/docs/reference/config-files/">configuration files</a>. The default is `$TAILPIPE_INSTALL_DIR/config`, eg `~/.tailpipe/config`.
+    Sets the location to search for <a href = "/docs/reference/config-files">configuration files</a>. The default is `$TAILPIPE_INSTALL_DIR/config`, eg `~/.tailpipe/config`.
     </td> 
   </tr>
 

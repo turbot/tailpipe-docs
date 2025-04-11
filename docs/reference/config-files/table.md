@@ -34,14 +34,14 @@ The format of the source data is defined by the `format` property, which must re
 
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
-| `column`     | block    | Optional  | One or more [column blocks](#column-blocks) to define columns for your table and map/transform data from the [source](collect/configure#partitions#source).
-| `format`     | [format](reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. `format` is optional on the table definition.  If omitted, it must be specified within the source block.
+| `column`     | block    | Optional  | One or more [column blocks](#column-blocks) to define columns for your table and map/transform data from the [source](/docs/collect/configure#sources).
+| `format`     | [format](/docs/reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. `format` is optional on the table definition.  If omitted, it must be specified within the source block.
 | `map_fields` | List     | Optional  | A list of fields from the source to include as columns in the table.  This list can contain wildcards, and the default is all fields (`["*"]`).
 | `null_if`    | String   | Optional  | A value that should be translated to `null` when it occurs in the source data. For example, if the value is `-`, then any column in the source data which has a value of `-` will be translated to `null` in the resulting parquet file.
 
 
 ## Column blocks
-Column blocks allow you to define columns for your table and map and transform data from the [source](collect/configure#sources). 
+Column blocks allow you to define columns for your table and map and transform data from the [source](/docs/collect/configure#sources). 
 
 ```hcl
 table  "my_table" {

@@ -11,7 +11,7 @@ You can create Turbot Pipes snapshots directly from the Powerpipe CLI, but if yo
 
 ## Taking Snapshots
 
-To upload snapshots to Turbot Pipes, you must either [log in via the `powerpipe login` command](https://powerpipe.io/docs/reference/cli/login) or create an [API token](https://turbot.com/pipes/docs/profile#tokens) and pass it via the [`--pipes-token`](/docs/reference/cli/overview#global-flags) flag or [`PIPES_TOKEN`](/docs/reference/env-vars/pipes_token) environment variable.
+To upload snapshots to Turbot Pipes, you must either [log in via the `powerpipe login` command](https://powerpipe.io/docs/reference/cli/login) or create an [API token](https://turbot.com/pipes/docs/profile#tokens) and pass it via the [`--pipes-token`](https://powerpipe.io/docs/reference/cli/query#arguments) flag or [`PIPES_TOKEN`](https://powerpipe.io/docs/reference/env-vars/pipes_token) environment variable.
 
 To take a snapshot and save it to [Turbot Pipes](https://turbot.com/pipes/docs), simply add the `--snapshot` flag to your command.  
 
@@ -61,7 +61,7 @@ powerpipe benchmark run cloudtrail_log_detections --snapshot-tag:source:cloudtra
 
 Turbot Pipes makes it easy to save and share your snapshots, but you can also save and view snapshots using only the CLI.  
 
-You can specify a local path in the `--snapshot-location` argument or `TAILPIPE_SNAPSHOT_LOCATION` environment variable to save your snapshots to a directory in your filesystem:
+You can specify a local path in the `--snapshot-location` argument or [`POWERPIPE_SNAPSHOT_LOCATION`](https://powerpipe.io/docs/reference/env-vars/powerpipe_snapshot_location) environment variable to save your snapshots to a directory in your filesystem:
 
 ```bash
 powerpipe benchmark run cloudtrail_log_detections --snapshot-location .

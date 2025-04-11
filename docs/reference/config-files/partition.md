@@ -58,9 +58,9 @@ The `source` arguments vary by source type.  The Tailpipe Hub provides [extended
 
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
-| `connection` |  [connection](connection) reference | Varies by source type | The [connection](/docs/reference/connection) to use to connect to the source.  This is required for most sources except `file`.   
+| `connection` |  [connection](/docs/reference/config-files/connection) reference | Varies by source type | The [connection](/docs/reference/config-files/connection) to use to connect to the source.  This is required for most sources except `file`.   
 | `file_layout`| String  | Optional  | The Grok pattern that [defines the log file structure](#file_layout).  `file_layout` is optional if not provided all files at the path(s) from paths will be collected. 
-| `format`     | [format](/docs/reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. If no `format` is specified, the default for the table will be used.
+| `format`     | [format](/docs/reference/config-files/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. If no `format` is specified, the default for the table will be used.
 | `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the `file_layout`.  This is optional, and the [standard patterns](https://github.com/elastic/go-grok?tab=readme-ov-file#default-set-of-patterns) are available out-of-the-box.
 
 
@@ -130,7 +130,7 @@ source "file" {
 |--------------|----------|-----------|-----------------
 | `paths`      | String   | Required  | The path to the files to collect.
 | `file_layout` | String  | Optional  | The Grok pattern that [defines the log file structure](#file_layout).  `file_layout` is optional if not provided all files at the path(s) from paths will be collected.
-| `format`     | [format](/docs/reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. If no `format` is specified, the default for the table will be used.
+| `format`     | [format](/docs/reference/config-files/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. If no `format` is specified, the default for the table will be used.
 | `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the `file_layout`.  This is optional, and the [standard patterns](https://github.com/elastic/go-grok?tab=readme-ov-file#default-set-of-patterns) are available out-of-the-box.
 
 <!--

@@ -4,7 +4,7 @@ title: tailpipe source
 
 # tailpipe source
 
-List, show, and delete Tailpipe [sources](/docs/reference/config-files/source).
+List, show, and delete Tailpipe [sources](/docs/reference/config-files/partition#source).
 
 ## Usage
 ```bash

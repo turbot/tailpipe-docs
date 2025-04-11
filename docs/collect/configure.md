@@ -11,7 +11,7 @@ Before you can begin collecting logs, you must tell Tailpipe what to collect.  T
 ## Tables
 Ultimately, the data that Tailpipe collects ends up in tables that you can query with SQL.
 
-Tailpipe [plugins](/docs/collect/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](/docs/collect/configure#partitions) for the table and begin [collecting logs](/docs/collect/collect)!  
+Tailpipe [plugins](/docs/collect/plugins) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](/docs/collect/configure#partitions) for the table and begin [collecting logs](/docs/collect/collect)!  
 
 If your logs are not in a standard format or are not currently supported by a plugin, you can create [custom tables](/docs/collect/custom-tables) to collect data from arbitrary log files and other sources.
 
