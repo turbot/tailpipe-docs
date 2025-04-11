@@ -7,7 +7,7 @@ title: Data Storage
 
 Tailpipe uses a hive-partitioned storage structure that organizes data for efficient querying. Let's look at how data is stored:
 
-```
+```bash
 tp_table=nginx_access_log
 └── tp_partition=dev
     ├── tp_index=dev1

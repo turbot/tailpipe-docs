@@ -22,13 +22,13 @@ $ tailpipe query --from T-45d
 
 Or to a range:
 
-```
+```bash
 $ tailpipe query --from 2024-12-01 --to 2025-01-01
 ```
 
 Or to a specific index in a partition:
 
-```
+```bash
 $ tailpipe query --partition aws_cloudtrail_log.prod --index 123456789
 ```
 

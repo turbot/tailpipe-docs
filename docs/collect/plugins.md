@@ -10,7 +10,7 @@ Tailpipe plugins are packaged as Open Container Images (OCI) and stored in the [
 
 For example, to install the latest `aws` plugin:
 
-```
+```bash
 $ tailpipe plugin install aws
 ```
 
@@ -22,7 +22,7 @@ To install a specific version, simply specify the version tag after the plugin n
 
 For example, to install the 0.118.0 version of the aws plugin:
 
-```
+```bash
 $ tailpipe plugin install aws@0.118.0
 ```
 
@@ -84,7 +84,7 @@ $ tailpipe plugin install aws@2.1.x
 
 Tailpipe plugins are packaged in OCI format and can be hosted and installed from any artifact repository or container registry that supports OCI V2 images. To install a plugin from a repository, specify the full path in the install command:
 
-```
+```bash
 $ tailpipe plugin install us-docker.pkg.dev/myproject/myrepo/myplugin@mytag
 ```
 -->
@@ -104,7 +104,7 @@ hub.tailpipe.io/plugins/turbot/gcp@latest       0.1.0      gcp_audit_log.dev, gc
 
 To update a plugin to the latest version for a given stream, you can use the  `tailpipe plugin update` command:
 
-```
+```bash
 tailpipe plugin update plugin_name[@stream]
 ```
 
@@ -120,7 +120,7 @@ tailpipe plugin update --all
 ## Uninstalling Plugins
 You can uninstall a plugin with the `tailpipe plugin uninstall` command:
 
-```
+```bash
 tailpipe plugin uninstall [plugin]
 ```
 

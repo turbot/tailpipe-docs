@@ -30,7 +30,7 @@ tailpipe query *.sql
 
 ## Query output formats
 By default, the output format is `table`, which provides a tabular, human-readable view:
-```
+```bash
 +-----------------------+-------------------+
 |        aws_region     |  event_type       |
 +-----------------------+-------------------+
@@ -42,7 +42,7 @@ By default, the output format is `table`, which provides a tabular, human-readab
   
 You can use the `--output` argument to output in a different format.  To print your output to JSON, specify `--output json`:
 
-```
+```bash
 $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output json
 [
  {
@@ -60,7 +60,7 @@ $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --outpu
 
 To print your output to CSV, specify `--output csv`:
 
-```
+```bash
 $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv
 aws_region,event_type
 us-east-1,AWSApiCall
@@ -69,14 +69,14 @@ us-east-1,AWSServiceEvent
 
 Redirecting the output to CSV is a common way to export data for use in other tools, such as Excel:
 
-```
+```bash
 tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv > cloudtrail_events.csv
 ```
 
 
 To use a different delimiter, you can specify the `--separator` argument.  For example, to print to a pipe-separated format:
 
-```
+```bash
 $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv --separator '|'
 aws_region|event_type
 us-east-1|AWSApiCall

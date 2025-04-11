@@ -36,7 +36,7 @@ Along with the following directories
 
 ### Example: Repo Structure
 
-```sh
+```bash
 tailpipe-plugin-example
 ├── LICENSE
 ├── Makefile
