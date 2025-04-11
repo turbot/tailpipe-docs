@@ -78,7 +78,7 @@ The partition also includes a `source` that uses the `connection` that we create
 ```bash
 tailpipe source list
 ```
-```bash
+```
 NAME             DESCRIPTION
 aws_s3_bucket
 file
@@ -98,7 +98,7 @@ The Tailpipe Hub provides [documentation and examples](https://hub.tailpipe.io/p
 > ```hcl
 > partition "aws_cloudtrail_log" "flaws" {
 >   source "file" {
->     paths       = ["/Users/dboeke/flaws/flaws_cloudtrail_logs"]
+>     paths = ["/Users/dboeke/flaws/flaws_cloudtrail_logs"]
 >   }
 >}
 >```

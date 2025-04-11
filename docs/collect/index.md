@@ -13,6 +13,6 @@ Tailpipe makes this process simple:
 
 ## Concepts
 
-When you [collect](/docs/collect/collect) logs from a source, e.g. an S3 bucket containing Cloudtrail logs, you invoke a [plugin](/docs/collect/plugins) that uses a [connection](/docs/manage/connection) to ingest logs from a [source](/docs/collect/define-partitions#sources) into a database table.
+When you [collect](/docs/collect/collect) logs from a source, e.g. an S3 bucket containing Cloudtrail logs, you invoke a [plugin](/docs/collect/plugins) that uses a [connection](/docs/collect/configure#connections) to ingest logs from a [source](/docs/collect/define-partitions#sources) into a database table.
 
 The unit of collection is the [partition](/docs/collect/define-partitions), and a table may comprise one one or more partitions. The collection process writes to a [hive-partitioned](/docs/collect/configure#hive-partitioning) hierarchy of folders and files, over which Tailpipe builds the database table that you query.

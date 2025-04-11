@@ -11,9 +11,9 @@ Before you can begin collecting logs, you must tell Tailpipe what to collect.  T
 ## Tables
 Ultimately, the data that Tailpipe collects ends up in tables that you can query with SQL.
 
-Tailpipe [plugins](collect/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](collect/configure#partitions) for the table and begin [collecting logs](collect/collect)!  
+Tailpipe [plugins](/docs/collect/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](/docs/collect/configure#partitions) for the table and begin [collecting logs](/docs/collect/collect)!  
 
-If your logs are not in a standard format or are not currently supported by a plugin, you can create [custom tables](collect/custom-tables) to collect data from arbitrary log files and other sources.
+If your logs are not in a standard format or are not currently supported by a plugin, you can create [custom tables](/docs/collect/custom-tables) to collect data from arbitrary log files and other sources.
 
 Tables are implemented as DuckDB views over the Parquet files.  Tailpipe creates tables (that is, creates views in the `tailpipe.db` database) based on the data and metadata that it discovers in the [workspace](#workspaces), along with the filter rules.
 
@@ -22,7 +22,7 @@ When you run `tailpipe query` or `tailpipe connect`, Tailpipe finds all the tabl
 You can see what tables are available with the `tailpipe plugin list` command. 
 
 ## Partitions
-A partition represents data gathered from a [source](collect/configure#sources). Partitions are defined [in HCL](/docs/reference/config-files/partition) and are required for [collection](/docs/collect/collect).  
+A partition represents data gathered from a [source](/docs/collect/configure#sources). Partitions are defined [in HCL](/docs/reference/config-files/partition) and are required for [collection](/docs/collect/collect).  
 
 ```hcl
 partition "aws_cloudtrail_log" "test" {
@@ -37,14 +37,14 @@ partition "aws_cloudtrail_log" "test" {
 
 The partition has two labels:
 
-1. The [table](#tables) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](manage/table#custom-tables). 
+1. The [table](#tables) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](/docs/collect/custom-tables). 
 2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
 
 The partition must also contain a [`source` block](#sources) that defines the location of the source log files as well as the [`connection`](#connections) information to interact with it.
 
 The data for each table partition will be stored in its own subdirectory in the [hive](#hive-partitioning).
 
-At query time, Tailpipe discovers partitions in the [workspace](/docs/manage/workspace) and automatically creates tables based on the partitions it finds.  For instance, if you define three `aws_cloudtrail_log` partitions, the `aws_cloudtrail_log` table will include the data from all three.
+At query time, Tailpipe discovers partitions in the [workspace](/docs/reference/config-files/workspace) and automatically creates tables based on the partitions it finds.  For instance, if you define three `aws_cloudtrail_log` partitions, the `aws_cloudtrail_log` table will include the data from all three.
 
 
 ### Hive partitioning
@@ -128,4 +128,4 @@ connection "gcp" "gcp_my_other_project" {
 }
 ```
 
-A default connection (e.g. `connection.aws.default`) always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. Tailpipe defines a [connection type](reference/config-files/connection) for each plugin.
+A default connection (e.g. `connection.aws.default`) always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. Tailpipe defines a [connection type](/docs/reference/config-files/connection) for each plugin.

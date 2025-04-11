@@ -66,6 +66,3 @@ You can specify a local path in the `--snapshot-location` argument or `TAILPIPE_
 ```bash
 powerpipe benchmark run cloudtrail_log_detections --snapshot-location .
 ```
-
-You can also set `snapshot_location` in a [workspace](/docs/manage/workspace) if you wish to make it the default location.
-

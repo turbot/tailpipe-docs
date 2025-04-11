@@ -4,7 +4,7 @@ title: Create Custom Tables
 
 # Custom Tables
 
-Tailpipe [plugins](manage/plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](manage\partition) for the table and begin [collecting logs](manage/collection).
+Tailpipe [plugins](/docs/collect//plugin) define tables for common log sources and formats.  You don't need to define these tables; simply create one or more [partition](/docs/collect//configure#partitions) for the table and begin [collecting logs](/docs/collect//collect).
 
 But what if your logs are not in a standard format or are not currently supported by a plugin? No problem!  **Custom tables** enable you to collect data from arbitrary log files and other sources.
 

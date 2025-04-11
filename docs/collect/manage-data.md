@@ -253,7 +253,7 @@ The output displays ....
 
 ## Viewing Source Types
 
-A partition acquires data from a [source](http://localhost:3000/docs/reference/config-files/partition#source), each of which has a source type.  The source types are defined in plugins, and you can view them with the `tailpipe source list` command:
+A partition acquires data from a [source](/docs/reference/config-files/partition#source), each of which has a source type.  The source types are defined in plugins, and you can view them with the `tailpipe source list` command:
 
 ```bash
 tailpipe source list
