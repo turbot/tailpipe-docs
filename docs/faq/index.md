@@ -19,14 +19,14 @@ If you want to reset and collect everything, you can use  `rm -rf ~/.tailpipe/in
 
 Yes. Use `tailpipe connect` to acquire a unique connection string. For example:
 
-```
+```bash
 $ tailpipe connect
 /home/jon/.tailpipe/data/default/tailpipe_20241224111847.db
 ```
 
 Then connect to it:
 
-```
+```bash
 $ duckdb /home/jon/.tailpipe/data/default/tailpipe_20241224111847.db
 D .tables
 aws_cloudtrail_log  pipes_audit_log
@@ -93,7 +93,4 @@ partition "aws_cloudtrail_log" "cloudtrail_all" {
 
 ## What partition indexes are available for a table?
 
-That depends on how the plugin author has defined the common `tp_index` field. For AWS tables, it's the `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (but `tp_partition` will aways be the same). 
-
-
-
+That depends on how the plugin author has defined the common `tp_index` field. For AWS tables, it's the `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (but `tp_partition` will always be the same). 
