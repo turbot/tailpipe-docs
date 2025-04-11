@@ -40,7 +40,6 @@ The format of the source data is defined by the `format` property, which must re
 | `null_if`    | String   | Optional  | The value which is translated to null when it occurs in the source data. For example, if the null value is "-", then any column in the source data which has a value of "-" will be translated to NULL in the resulting parquet file.
 
 
-
 ## Column blocks
 Column block allow you to define columns for your table and map and transform data from the [source](manage/partition#source). 
 
@@ -81,8 +80,6 @@ For this usage, either the `source` property is used specify which field in the 
 | `source`     | String   | Optional  | The field in the source data to use for this column.
 | `transform`     | String   | Optional  | A DuckDB transform function to apply to the column. This should be expressed as a [SQL function](https://duckdb.org/docs/stable/sql/functions/overview.html). If a `transform` is provided, no `source` should be provided.
 
- 
-
 
 ### Column Data Types
 
@@ -114,9 +111,9 @@ Tailpipe supports most of the [DuckDB general-purpose data types](https://duckdb
 
 ## Common Columns
 
-Tailpipe plugins populate a set of common columns.  These mappings enable queries that correlate values across different logs. If you have collected both Cloudtrail and ALB logs, for example, you could query for `tp_ips` to find IP addresses  in the `aws_cloudtrail_log` and `aws_alb_access_log` tables using the same syntax.
+Tailpipe tables include a set of common columns.  These mappings enable queries that correlate values across different logs. If you have collected both Cloudtrail and ALB logs, for example, you could query for `tp_ips` to find IP addresses in the `aws_cloudtrail_log` and `aws_alb_access_log` tables using the same syntax.
 
-When creating a custom table, `tp_timestamp` is the only required column; ***you must define a `tp_timestamp` column***.  This is because Tailpipe uses the timestamp to [organize the data files](/docs/collect/configure#hive-partitioning).  The `tp_index` is also used in the hive partitioning scheme.  You may set it you want, but it will default to `default` if not set.
+When creating a custom table, `tp_timestamp` is the only required column; ***you must define a `tp_timestamp` column***.  This is because Tailpipe uses the timestamp to [organize the data files](/docs/collect/configure#hive-partitioning).  The `tp_index` is also used in the hive partitioning scheme.  You may set it if you want, but it will default to `default` if not set.
 
 Some of the common columns (`tp_date`,`tp_id`,`tp_ingest_timestamp`,`tp_partition`,`tp_table`) are automatically set by the plugins - You do not need to create them.  Others are optional (but encouraged).  If you do not set an optional common column, all values will be `null`.
 
