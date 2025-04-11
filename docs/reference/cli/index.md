@@ -50,7 +50,7 @@ title: Tailpipe CLI
 |   **0** | `ExitCodeSuccessful`                  | Tailpipe ran successfully
 |   **1** | `ExitCodeExecutionPaused`             | Tailpipe ran without errors but paused waiting input
 |   **2** | `ExitCodeExecutionFailed`             | Tailpipe completed with one or more errors
-|   **3** | `ExitCodeExecutionCancelled`          | The Tailpipe command was canceelled by user request
+|   **3** | `ExitCodeExecutionCancelled`          | The Tailpipe command was cancelled by user request
 |  **61** | `ExitCodeModInitFailed`               | Mod init failed
 |  **62** | `ExitCodeModInstallFailed`            | Mod install failed
 | **250** | `ExitCodeInitializationFailed`        | Initialization failed

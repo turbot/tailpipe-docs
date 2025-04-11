@@ -19,7 +19,7 @@ TBD.
 
 ## Repo Structure
 
-Each plugin should reside in a separate GitHub repository, named `tailpipe-plugin-{plugin name}`. The repo should contain:
+Each plugin should reside in a separate GitHub repository named `tailpipe-plugin-{plugin name}`. The repo should contain:
 
 - `README.md`
 - `LICENSE`

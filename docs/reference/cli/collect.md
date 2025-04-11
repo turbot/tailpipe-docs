@@ -18,6 +18,7 @@ Run a **collection**.
 |  `--compact`       | Compact the Parquet files after collection (default true)
 |  `--from string`   | Collect days newer than a relative or absolute date.
 |  `--help`          |  Help for collect
+| `--progress`       | Show active progress of collection, set to `false` to disable (default `true`)
 
 
 
@@ -59,4 +60,10 @@ Collect all partitions in the `aws_cloudtrail_log` table and output JSON.
 
 ```bash
 tailpipe collect aws_cloudtrail_log --output json
+```
+
+Collect everything, don't display progress.
+
+```bash
+tailpipe collect --progress=false
 ```

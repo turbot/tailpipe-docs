@@ -25,12 +25,12 @@ format "regex" "custom_log" {
   layout = `^(?P<timestamp>[\d-]+\s+[\d:.]+)\s+(?P<pid>\d+)\s+(?P<log_level>\w+)\s+(?P<component>[\w._-]+)`
 }
 ```
-Format blocks have 2 labels:
+Format blocks have two labels:
 - The [format type](#format-types).  This can be a [core format type](#core-plugin-formats) or any format type in any installed plugin
 - A name for the format
 
 
-Plugins may also export preset formats which may be referenced by name.    For example, the [Nginx plugin](https://hub.tailpipe.io/plugins/turbot/nginx) provides the `nginx_access_log.combined` format which defines the Nginx default combined log format:
+Plugins may also export preset formats, which may be referenced by name.  For example, the [Nginx plugin](https://hub.tailpipe.io/plugins/turbot/nginx) provides the `nginx_access_log.combined` format, which defines the Nginx default combined log format:
 ```
 $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"
 ```
@@ -43,7 +43,7 @@ You can list and view details of both your custom formats and the plugin preset 
 
 The format type defines the parsing mechanism which should be used. The properties of the `format` are specific to the format type.
 
-Formats types are implemented by plugins. A number of "generic" formats types are [provided by the `core` plugin](#core-plugin-formats), which is included in every Tailpipe installation.  These core format types provide a mechanism for describing file layouts using general-purpose syntax such as regular expressions, Grok, and JSONL. 
+Format types are implemented by plugins. A number of "generic" format types are [provided by the `core` plugin](#core-plugin-formats), which is included in every Tailpipe installation.  These core format types provide a mechanism for describing file layouts using general-purpose syntax such as regular expressions, Grok, and JSONL. 
  
 Any plugin may include a format type to simplify describing the layout of log files specific to the plugin using its "native" syntax.  For example, the [Nginx plugin](https://hub.tailpipe.io/plugins/turbot/nginx) provides the `nginx_access_log` format type.  When using the `nginx_access_log` format, you can specify the `layout` using the same [Nginx log_format](https://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) as you use in your Nginx configuration files:
 
@@ -81,7 +81,7 @@ format "grok" "custom_log" {
 
 
 #### Regex Format
-The `regex` format is used for parsing log lines using regular expressions with named capture groups.
+The `regex` format is used to parse log lines using regular expressions with named capture groups.
 
 ```hcl
 format "regex" "custom_log" {
@@ -98,7 +98,7 @@ format "regex" "custom_log" {
 > Use the [RegEx 101](https://regex101.com/) to help create and test your regular expressions. 
 
 #### Delimited Format
-The `delimited` format is used for parsing CSV, TSV, and other delimited file formats. The properties are passed directly to DuckDB which implements the delimited data parsing.
+The `delimited` format is used for parsing CSV, TSV, and other delimited file formats. The properties are passed directly to DuckDB, which implements the delimited data parsing.
 
 ```hcl
 format "delimited" "custom_csv" {
@@ -131,7 +131,7 @@ format "delimited" "custom_csv" {
 
 
 #### JSONL Format
-The `jsonl` (JSON Lines) format is used for parsing JSON data where each line is a valid JSON object.
+The `jsonl` (JSON Lines) format is used to parse JSON data where each line is a valid JSON object.
 
 Example:
 ```hcl

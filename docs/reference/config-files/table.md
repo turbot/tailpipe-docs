@@ -5,7 +5,7 @@ title: table
 
 # table
 
-The `table` block allows you to define custom Tailpipe tables.  Custom tables are a means to collect data from arbitrary log files and other sources.  This is useful if you need to analyze logs that have custom or proprietary formats, or to collect logs that do not have plugin support.
+The `table` block allows you to define custom Tailpipe tables.  Custom tables are a means to collect data from arbitrary log files and other sources.  This is useful if you need to analyze logs that have custom or proprietary formats or collect logs that do not have plugin support.
 
 
 ```hcl
@@ -35,13 +35,13 @@ The format of the source data is defined by the `format` property, which must re
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
 | `column`     | block    | Optional  | One or more [column blocks](#column-blocks) to define columns for your table and map/transform data from the [source](manage/partition#source).
-| `format`     | [format](reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block defined in the config, or a format preset defined by a plugin. `format` is optional on the table definition, but if omitted needs to be specified within the source block.
+| `format`     | [format](reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. `format` is optional on the table definition.  If omitted, it must be specified within the source block.
 | `map_fields` | List     | Optional  | A list of fields from the source to include as columns in the table.  This list can contain wildcards, and the default is all fields (`["*"]`).
-| `null_if`    | String   | Optional  | The value which is translated to null when it occurs in the source data. For example, if the null value is "-", then any column in the source data which has a value of "-" will be translated to NULL in the resulting parquet file.
+| `null_if`    | String   | Optional  | A value that should be translated to `null` when it occurs in the source data. For example, if the value is `-`, then any column in the source data which has a value of `-` will be translated to `null` in the resulting parquet file.
 
 
 ## Column blocks
-Column block allow you to define columns for your table and map and transform data from the [source](manage/partition#source). 
+Column blocks allow you to define columns for your table and map and transform data from the [source](manage/partition#source). 
 
 ```hcl
 table  "my_table" {
@@ -64,19 +64,17 @@ table  "my_table" {
 
 Note that you can use `map_fields` to add fields from the source to the table without transforming them.  Use `column` blocks when you need to transform or customize the columns, for example:
 
-- To specify a column to include in this table which does not exist in the source data. 
-For this usage, either the `source` property is used specify which field in the source field to use, or the `transform` property should be used to specify a DuckDB expression or function to use to produce a value for the column.
-- To provide the source data mapping for the [Tailpipe common (`tp_`) fields](/docs/reference/config-files/table#common-columns). ***You must provide a mapping for the `tp_timestamp` field*** but the rest are all optional (but encouraged).
-- To forcibly specify the data type of a column which exists in the source data. By default, DuckDB type inference is used to determine the type of a column based on the source data type.  tis automatic typing is usually sufficient, but there are cases where the automatic type is incorrect or insufficient. For example, in cases where a field usually looks like a UUID but is not always a UUID, it may be useful to specify a string type - otherwise if DuckDB infers the type as a UUID, then any non-UUID values will result in an error when collecting data.
+- To specify a column to include in this table which does not exist in the source data.  In this case, either the `source` property should specify which field in the source field to use, or the `transform` property should be used to specify a DuckDB expression or function to use to produce a value for the column.
+- To provide the source data mapping for the [Tailpipe common (`tp_`) fields](/docs/reference/config-files/table#common-columns). ***You must provide a mapping for the `tp_timestamp` field***, but the rest are all optional (but encouraged).
+- To forcibly specify the data type of a column that exists in the source data. By default, DuckDB type inference is used to determine the type of a column based on the source data type.  This automatic typing is usually sufficient, but there are cases where the automatic type is incorrect or insufficient. For example, in cases where a field usually looks like a UUID but is not always a UUID, it may be useful to specify a string type. Otherwise, DuckDB may infer the type as a UUID, and any non-UUID values will result in an error when collecting data.
 
 ### Column Arguments
 
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
-| `type`       | String   | Optional  | The [data type]() of the column. If the column is required, the type is optional as DuckDB will infer the type from the source data.
-  If the column is optional, then the type must be specified.
-| `description`| String   | Optional  | a description of the column. This is used to generate documentation for the table.
-| `required`   | Boolean  | Optional  | if set to `true`, then the column is required and a validation error will be raised if the column is not present in the source data.
+| `type`       | String   | Optional  | The [data type]() of the column. If the column is required, the type is optional; DuckDB will infer the type from the source data.  If the column is optional, then the type must be specified.
+| `description`| String   | Optional  | A description of the column. This is used to generate documentation for the table.
+| `required`   | Boolean  | Optional  | If set to `true`, then the column is required, and a validation error will be raised if the column is not present in the source data.
 | `source`     | String   | Optional  | The field in the source data to use for this column.
 | `transform`     | String   | Optional  | A DuckDB transform function to apply to the column. This should be expressed as a [SQL function](https://duckdb.org/docs/stable/sql/functions/overview.html). If a `transform` is provided, no `source` should be provided.
 

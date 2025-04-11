@@ -4,7 +4,7 @@ title: tailpipe connect
 
 # tailpipe connect
 
-Return a connection string for a database, with a schema determined by the provided parameters.
+Return a connection string for a database with a schema determined by the provided parameters.
 
 ## Usage
 ```bash

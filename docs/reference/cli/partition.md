@@ -30,7 +30,7 @@ List all partitions.
 | Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output format: json, text (default)
+|  `--output`    |  Output format: `json`, `plain`, `pretty` (default) 
 
 ### Examples
 
@@ -52,7 +52,7 @@ Show details for a partition.
 Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output format: json, text (default)
+|  `--output`    |  Output format: `json`, `plain`, `pretty` (default) 
 
 
 ### Examples
@@ -82,7 +82,7 @@ Delete a partition.
 
 
 <!--
-|  `--to`        |  Delete days older than than a relative or absolute date.
+|  `--to`        |  Delete days older than a relative or absolute date.
 -->
 
 ### Examples

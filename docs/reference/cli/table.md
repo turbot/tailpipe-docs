@@ -23,6 +23,13 @@ tailpipe table_name show [args]
 ## tailpipe table list
 List all tables.
 
+### Arguments
+
+| Flag | Description
+|-|-
+|  `--help`      |  Show help.
+|  `--output`    | Output format: `json`, `plain`, `pretty` (default) 
+
 ### Examples
 
 List tables.
@@ -39,6 +46,13 @@ tailpipe table list --output json
 
 ## tailpipe table show
 Show details for a table.
+
+### Arguments
+
+| Flag | Description
+|-|-
+|  `--help`      |  Show help.
+|  `--output`    | Output format: `json`, `plain`, `pretty` (default) 
 
 ### Examples
 

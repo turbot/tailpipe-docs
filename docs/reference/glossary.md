@@ -14,11 +14,11 @@ A collection may result in storage of multiple Parquet files for a given day. Ta
 
 ## Benchmark
 
-A benchmark bundles a set of detections, and/or sub-benchmarks, into a single unit.
+A benchmark bundles a set of detections and/or sub-benchmarks into a single unit.
 
-## Common Fields
+## Common Columns
 
-In addition to populating a log-specific schema, a Tailpipe plugin can (where appropriate) map log-specific fields to common columns like `TpDate`, `TpIps`, or `TpUsernames`. That enables joins across multiple Tailpipe tables, so you can for example write a single query to look for a known malicious IP address in logs from different sources.
+In addition to populating a log-specific schema, a Tailpipe plugin can (where appropriate) map log-specific fields to common columns like `TpDate`, `TpIps`, or `TpUsernames`. That enables joins across multiple Tailpipe tables, so you can, for example, write a single query to look for a known malicious IP address in logs from different sources.
 
 ## Connection
 
@@ -30,15 +30,15 @@ A detection is a Tailpipe query, optionally bundled into a benchmark, that runs 
 
 ## DuckDB
 
-Tailpipe uses DuckDB, an embeddable column-oriented database. DuckDB reads the Parquet files created by `tailpipe collect`, and enables queries against that data.
+Tailpipe uses DuckDB, an embeddable column-oriented database. DuckDB reads the Parquet files created by `tailpipe collect` and enables queries against that data.
 
 ## Hive
 
-A tree of Parquet files in the Tailpipe workspace (by default,`~/.tailpipe/data/default`). The `tailpipe.db` in `~/.tailpipe/data/default` (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`), are thin wrappers that materialize views over the Parquet data.
+A tree of Parquet files in the Tailpipe workspace (by default,`~/.tailpipe/data/default`). The `tailpipe.db` in `~/.tailpipe/data/default` (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`) are thin wrappers that materialize views over the Parquet data.
 
 ## Index
 
-A partition may be subdivided by one or more plugin-defined indexes. A partition of an AWS table, for example, will be indexed by one or more AWS account ids. You can use the index to filter a query, e.g. `select count(*) from aws_cloudtrail_log where account_id = '123456789'`.  
+A partition may be subdivided by one or more plugin-defined indexes. A partition of an AWS table, for example, will be indexed by one or more AWS account IDs. You can use the index to filter a query, e.g. `select count(*) from aws_cloudtrail_log where account_id = '123456789'`.  
 
 ## Mod
 

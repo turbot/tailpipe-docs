@@ -8,7 +8,7 @@ sidebar_label: TAILPIPE_WORKSPACE
 
 Sets the Tailpipe [workspace](/docs/reference/config-files/workspace). 
 
-A Tailpipe `workspace` is a "profile" that allows you to define a unified environment that the Tailpipe client can interact with. 
+A Tailpipe `workspace` is a "profile" that allows you to define a unified environment with which the Tailpipe client can interact.
 
 ## Usage 
 Use the `my_workspace` workspace:

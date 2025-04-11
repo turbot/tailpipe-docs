@@ -11,11 +11,11 @@ Query a Tailpipe table.
 tailpipe query [sql] [flags]
 ```
 
-Execute SQL queries interactively, or by a query argument.
+Execute SQL queries interactively or by a query argument.
 
 To open the interactive query shell, run `tailpipe query` with no arguments.  The query shell provides a way to explore your data and run multiple queries. 
 
-If a query string is passed on the command line then it will be run immediately and the command will exit.  Alternatively, you may specify one or more files containing SQL statements.  You can run multiple SQL files by passing a glob or a space-separated list of file names.
+If a query string is passed on the command line, then it will be run immediately, and the command will exit.  Alternatively, you may specify one or more files containing SQL statements.  You can run multiple SQL files by passing a glob or a space-separated list of file names.
 
 ## Usage
 Run Tailpipe [interactive query shell](/docs/query/query-shell):
@@ -34,13 +34,13 @@ tailpipe query {query} [flags]
 | Argument  | Description  
 |--|--
 | `--from string`                | Specify the start time
-| `--header string`              | Specify whether to include column headers in csv and table output (default true`)|
+| `--header string`              | Specify whether to include column headers in csv and table output (default `true`)
 | `--help`                       | Help for `tailpipe query`
 | `--index strings`              | Specify the index(es) to use
-| `--output output`               | One of: table, csv, json, line (default table)
+| `--output output`              | One of: `table`, `csv`, `json`, `line` (default `table`)
 | `--partition strings`          | Specify the partition(s) to use
-| `--separator string`          |  Separator string for csv output (default ",")
-| `--to string`                | Specify the end time
+| `--separator string`           |  Separator string for csv output (default ",")
+| `--to string`                  | Specify the end time
 
 
 ## Examples

@@ -4,7 +4,7 @@ title:  partition
 
 # partition
 
-The [partition](/docs/manage/partition) block defines the set of log rows, in a plugin-defined Tailpipe table, that come from a specified [source](/docs/manage/source). A given Tailpipe table, like `aws_cloudtrail_log`, can include multiple partitions. Partitions are defined in HCL and are required for [collection](/docs/collect/collect).  
+A [partition](/docs/manage/partition) represents data gathered from a [source](/docs/manage/source). A given Tailpipe table, like `aws_cloudtrail_log`, can include multiple partitions. Partitions are defined in HCL and are required for [collection](/docs/collect/collect).  
 
 
 ```hcl
@@ -20,7 +20,7 @@ partition "aws_cloudtrail_log" "test" {
 
 The partition has two labels:
 
-1. The [table](/docs/manage/table) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a [custom table](manage/table#custom-tables). The table name implies the shape of resulting Parquet file, and also makes assumptions about the source data format.  For example, the `aws_cloudtrail_log` table is defined in the AWS plugin. The shape of that table — the structure of the data in the destination Parquet file, which corresponds to table columns — is defined in the AWS plugin.
+1. The [table](#tables) name. The table name is meaningful and must match a table name for an installed [plugin](/docs/collect/plugins) or a custom [table](/docs/reference/config-files/table). 
 
 2. A partition name.  The partition name must be unique for all partitions in a given table (though different tables may use the same partition names).  
 
@@ -37,7 +37,7 @@ The partition has two labels:
 
 ## source
 
-A partition acquires data from a source. The `source` block enables to to specify the type and location of the source data, as well as the [`connection`](reference/config-files/connection) to use to connect to it.
+A partition acquires data from a source. The `source` block specifies the type and location of the source data, as well as the [`connection`](reference/config-files/connection) to use to connect to it.
 
 
 ```hcl
@@ -54,21 +54,20 @@ The block label denotes the source type - `aws_s3_bucket`, `file`, etc.  The sou
 
 
 ### Source Arguments
-The `source` argument vary by source type.  The Tailpipe Hub provides [extended documentation and examples](https://hub.tailpipe.io/plugins/turbot/aws/sources/aws_s3_bucket) for plugin sources.  
+The `source` arguments vary by source type.  The Tailpipe Hub provides [extended documentation and examples](https://hub.tailpipe.io/plugins/turbot/aws/sources/aws_s3_bucket) for plugin sources.  
 
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
 | `connection` |  [connection](connection) reference | Varies by source type | The [connection](reference/connection) to use to connect to the source.  This is required for most sources except `file`.   
 | `file_layout`| String  | Optional  | The Grok pattern that [defines the log file structure](#file_layout).  `file_layout` is optional if not provided all files at the path(s) from paths will be collected. 
-| `format`     | [format](format) reference | Optional  |  The format of the source data. This must refer to either a `format` block defined in the config, or a format preset defined by a plugin.  If no `format` is specified, the default for the table will be used.
+| `format`     | [format](reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. If no `format` is specified, the default for the table will be used.
 | `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the `file_layout`.  This is optional, and the [standard patterns](https://github.com/elastic/go-grok?tab=readme-ov-file#default-set-of-patterns) are available out-of-the-box.
-
 
 
 
 #### format
 
-While the arguments to `source` vary by type, every `source` supports specifying a `format` for the source.  This must refer to either a `format` block defined in the config, or a format preset defined by a plugin.  If no `format` is specified, the default for the table will be used.  
+While the arguments to `source` vary by type, every `source` supports specifying a `format` for the source.  This must refer to either a `format` block or a format preset defined by a plugin.  If no `format` is specified, the default for the table will be used.  
 
 ```hcl
 table "my_custom_table" {
@@ -92,9 +91,9 @@ partition "my_custom_table" "my_partition_name" {
 
 #### file_layout
 
-The arguments to the `source` vary by type, many source types may include the `file_layout` argument.  The `file_layout` specifies a [Grok](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html#_grok_basics) pattern that defines the log file directory structure.  The `file_layout` is usually optional; the plugin will provide a default that works for the most common case. 
+The arguments to the `source` vary by type, but many source types include the `file_layout` argument.  The `file_layout` specifies a [Grok](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html#_grok_basics) pattern that defines the log file directory structure.  The `file_layout` is usually optional; the plugin will provide a default that works for the most common case. 
 
-The `file_layout` is not merely used to locate log files, but also to describe any fields that appear in the path that are meaningful to the collection process.  Log files are often stored in a predictable, meaningful path structure that can be used to identify the log file dates, accounts, etc.  Date and time fields are particularly important, as Tailpipe uses them to maintain collection state so that it can resume collection from its previous checkpoint.  When setting `file_layout`, make sure you identify any date or time fields (`year`, `month`, `day`, `hour`, `minute`, `second`) that appear in the path, for example:
+The `file_layout` is not merely used to locate log files but also to describe any fields that appear in the path that are meaningful to the collection process.  Log files are often stored in a predictable, meaningful path structure that can be used to identify the log file dates, accounts, etc.  Date and time fields are particularly important, as Tailpipe uses them to maintain collection state so that it can resume collection from its previous checkpoint.  When setting `file_layout`, make sure you identify any date or time fields (`year`, `month`, `day`, `hour`, `minute`, `second`) that appear in the path, for example:
 
 ```hcl
 partition "aws_cloudtrail_log" "my_logs_custom_path" {
@@ -131,7 +130,7 @@ source "file" {
 |--------------|----------|-----------|-----------------
 | `paths`      | String   | Required  | The path to the files to collect.
 | `file_layout` | String  | Optional  | The Grok pattern that [defines the log file structure](#file_layout).  `file_layout` is optional if not provided all files at the path(s) from paths will be collected.
-| `format`     | [format](reference/format) reference | Optional  |  The format of the source data. This must refer to either a `format` block defined in the config, or a format preset defined by a plugin.  If no `format` is specified, the default for the table will be used.
+| `format`     | [format](reference/format) reference | Optional  | The default format of the source data. This must refer to either a `format` block or a format preset defined by a plugin. If no `format` is specified, the default for the table will be used.
 | `patterns`   | Map      | Optional  | A map of custom Grok patterns that can be referenced in the `file_layout`.  This is optional, and the [standard patterns](https://github.com/elastic/go-grok?tab=readme-ov-file#default-set-of-patterns) are available out-of-the-box.
 
 <!--

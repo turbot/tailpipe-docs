@@ -4,7 +4,7 @@ title: tailpipe plugin
 
 # tailpipe plugin
 
-Tailpipe plugin management. Plugins extend tailpipe to work with many different services and providers. Find plugins using the public registry at [hub.tailpipe.io](https://hub.tailpipe.io).
+Tailpipe plugin management. Plugins extend Tailpipe to work with many different services and providers. Find plugins using the public registry at [hub.tailpipe.io](https://hub.tailpipe.io).
 
 
 ## Usage
@@ -28,7 +28,7 @@ tailpipe plugin [command]
 |--|--
 | `--all`            | Applies only to `plugin update`, updates ALL installed plugins. 
 | `--progress`       | Enable or disable progress information. By default, progress information is shown - set `--progress=false` to hide the progress bar. Applies only to `plugin install` and `plugin update`. 
-| `--skip-config`    | Applies only to `plugin install`, skip creating the default config file for plugin. 
+| `--skip-config`    | Skip creating the default config file for plugin. Applies only to `plugin install`, 
 
 
 ## Examples
@@ -48,7 +48,7 @@ Install the latest version of a plugin matching a semver constraint:
 tailpipe plugin install aws@^0.2
 ```
 
-Note: if your semver constraint contain special characters you may need to quote it:
+Note: if your semver constraint contains special characters, you may need to quote it:
 ```bash
 tailpipe plugin install "aws@>=0.2"
 ```

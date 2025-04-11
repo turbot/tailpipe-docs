@@ -18,8 +18,7 @@ workspace "development" {
 
 You can use workspaces to keep independent sets of data. Each workspace maintains its own [data files](/docs/collect/configure#hive-partitioning) written to `$TAILPIPE_INSTALL_DIR/data/{workspace name}` (e.g. `~/.tailpipe/data/default`).
 
-Tailpipe workspaces allow you to define multiple named configurations and easily switch between them using the `--workspace` argument or `TAILPIPE_WORKSPACE` 
-environment variable. 
+Tailpipe workspaces allow you to define multiple named configurations and easily switch between them using the `--workspace` argument or `TAILPIPE_WORKSPACE` environment variable. 
 
 ```bash
 tailpipe collect --workspace development

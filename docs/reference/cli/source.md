@@ -31,7 +31,7 @@ List all sources.
 | Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output source: json, text (default)
+|  `--output`    | Output format: `json`, `plain`, `pretty` (default) 
 
 ### Examples
 
@@ -53,19 +53,19 @@ Show details for a source.
 Flag | Description
 |-|-
 |  `--help`      |  Show help.
-|  `--output`    |  Output format: json, plain, pretty (default)
+|  `--output`    |  Output format: `json`, `plain`, `pretty` (default) 
 
 
 ### Examples
 
 
-Show source type details in text source.
+Show source type details.
 
 ```bash
 tailpipe source show aws_s3_bucket
 ```
 
-Show details in JSON source.
+Show source type details in JSON.
 
 ```bash
 tailpipe source show aws_s3_bucket --output json

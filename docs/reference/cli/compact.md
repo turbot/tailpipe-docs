@@ -16,7 +16,6 @@ Compact multiple Parquet files per day to one per day.
 | Flag | Description
 |-|-
 |  `--help`          |  Help for compact
-|  `--output`        |  One of: json, text (default text)
 
 
 ## Examples
