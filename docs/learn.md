@@ -79,9 +79,9 @@ The partition also includes a `source` that uses the `connection` that we create
 tailpipe source list
 ```
 ```
-NAME             DESCRIPTION
-aws_s3_bucket
-file
+NAME             PLUGIN                                        DESCRIPTION
+aws_s3_bucket    hub.tailpipe.io/plugins/turbot/aws@latest     
+file             hub.tailpipe.io/plugins/turbot/core@latest   
 ```
 
 The Tailpipe Hub provides [documentation and examples](https://hub.tailpipe.io/plugins/turbot/aws/sources/aws_s3_bucket) of how to configure the source.

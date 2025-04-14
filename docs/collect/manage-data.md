@@ -48,7 +48,7 @@ tailpipe table show aws_cloudtrail_log
 
 The output includes the name and description, a list of all columns in the table, the file count and size, and a list of partitions that comprise the table.
 
-```bash
+```
 Name:        aws_cloudtrail_log
 Description: AWS CloudTrail logs capture API activity and user actions within your AWS account.
 Columns:     
@@ -114,7 +114,7 @@ tailpipe partition list
 ```
 
 The list command will list all the partitions, including the name, the plugin name, the total size, the number of files, and the row count.
-```bash
+```
 NAME                       PLUGIN                                       LOCAL SIZE    FILES    ROWS
 aws_cloudtrail_log.prod    hub.tailpipe.io/plugins/turbot/aws@latest    23 MB         8        100,397
 steampipe_plugin.local     core                                         359 kB        1        15,386
@@ -130,8 +130,7 @@ You can view details of a single partition with the `show` command:
 ```bash
 tailpipe partition show aws_cloudtrail_log.prod 
 ```
-
-```bash
+```
 Name:        aws_cloudtrail_log.prod
 Plugin:      hub.tailpipe.io/plugins/turbot/aws@latest
 Local Size:  23 MB
@@ -231,25 +230,43 @@ You can list the available formats and format types in your installation:
 ```bash
 tailpipe format list
 ```
-
-<!--  TO DO - Update with latest output from next RC
-The output displays ....
-```bash
 ```
--->
+TYPE                NAME                LOCATION                                        DESCRIPTION
+delimited           -                   hub.tailpipe.io/plugins/turbot/core@latest      This is a format type, it can be used for defining instances of formats.
+delimited           default             hub.tailpipe.io/plugins/turbot/core@latest      Default Delimited format
+grok                -                   hub.tailpipe.io/plugins/turbot/core@latest      This is a format type, it can be used for defining instances of formats.
+grok                custom_log          /Users/jsmyth/.tailpipe/config/aws.tpc          
+grok                steampipe_plugin    /Users/jsmyth/.tailpipe/config/steampipe.tpc    
+jsonl               -                   hub.tailpipe.io/plugins/turbot/core@latest      This is a format type, it can be used for defining instances of formats.
+jsonl               default             hub.tailpipe.io/plugins/turbot/core@latest      Default JSONL format
+nginx_access_log    -                   hub.tailpipe.io/plugins/turbot/nginx@latest     This is a format type, it can be used for defining instances of formats.
+nginx_access_log    combined            hub.tailpipe.io/plugins/turbot/nginx@latest     Predefined Nginx combined log format.
+regex               -                   hub.tailpipe.io/plugins/turbot/core@latest      This is a format type, it can be used for defining instances of formats.
+```
 
-You can also view the details of a single format or format type:
+You can also view the details of a single format type:
 ```bash
-tailpipe format show  nginx_access_log.combined
+tailpipe format show nginx_access_log
+```
+```
+Type:        nginx_access_log
+Location:    hub.tailpipe.io/plugins/turbot/nginx@latest
+Description: This is a format type, it can be used for defining instances of formats.
 ```
 
 
-<!--  TO DO - Update with latest output from next RC
-
-The output displays ....
+or format:
 ```bash
+tailpipe format show nginx_access_log.combined
 ```
--->
+```
+Type:        nginx_access_log
+Name:        combined
+Location:    hub.tailpipe.io/plugins/turbot/nginx@latest
+Description: Predefined Nginx combined log format.
+Regex:       ^(?P<remote_addr>[^ ]*) - (?P<remote_user>[^ ]*) \[(?P<time_local>[^\]]*)\] "(?P<request_method>\S+)(?: +(?P<request_uri>[^ ]+))?(?: +(?P<server_protocol>\S+))?" (?P<status>[^ ]*) (?P<body_bytes_sent>[^ ]*) "(?P<http_referer>.*?)" "(?P<http_user_agent>.*?)"
+Layout:      $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"
+```
 
 ## Viewing Source Types
 
@@ -258,29 +275,20 @@ A partition acquires data from a [source](/docs/reference/config-files/partition
 ```bash
 tailpipe source list
 ```
-
-<!--  TO DO - Update with latest output from next RC
-
-The output displays the source types that are installed:
-```bash
-NAME             DESCRIPTION
-aws_s3_bucket    
-file    
 ```
--->
+NAME             PLUGIN                                        DESCRIPTION
+aws_s3_bucket    hub.tailpipe.io/plugins/turbot/aws@latest     
+file             hub.tailpipe.io/plugins/turbot/core@latest   
+```
 
 You can also view the details of a single source type:
 ```bash
-tailpipe source list
+tailpipe source show aws_s3_bucket
 ```
-
-
-<!--  TO DO - Update with latest output from next RC
-
-```bash
+```
 Name:        aws_s3_bucket
+Plugin:      hub.tailpipe.io/plugins/turbot/aws@latest
 ```
--->
 
 
 ## Connecting from Other Tools
