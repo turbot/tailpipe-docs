@@ -132,10 +132,8 @@ Completed: 2m55s
 
 Tailpipe will download the files from the source, decompress and parse them, and add the data to the Tailpipe database in the [standard hive file structure](/docs/collect/configure#hive-partitioning).
 
-<!--
-![](/learn/collection.png)
--->
-
+> [!NOTE]
+> By default, Tailpipe will only collect the last 7 days during the initial collection. You can override this behavior by passing [the `--from` argument](/docs/reference/cli/collect), e.g. `tailpipe collect aws_cloudtrail_log.prod --from T-180d`
 
 ## Query your logs
 
