@@ -4,7 +4,7 @@ title: Run Collection
 
 # Run Collection
 
-The [`tailpipe collect`command ](/docs/reference/cli/collect) runs a [plugin](/docs/collect/plugins) that reads from a [source](/docs/collect/configure#sources) and writes to the [hive](/docs/collect/configure#hive-partitioning). Every time you run `tailpipe collect`, Tailpipe refreshes its views over all collected Parquet files. Those views are the tables you query with `tailpipe query`.
+The [`tailpipe collect` command](/docs/reference/cli/collect) runs a [plugin](/docs/collect/plugins) that reads from a [source](/docs/collect/configure#sources) and writes to the [hive](/docs/collect/configure#hive-partitioning). Every time you run `tailpipe collect`, Tailpipe refreshes its views over all collected Parquet files. Those views are the tables you query with `tailpipe query`.
 
 Examples:
 
@@ -41,7 +41,7 @@ Queries can slice the data by partition using the `tp_partition` field.
 
 ### Initial collection
 
-Often, the source data to be ingested is large, and the first ingestion would take quite a long time. To improve the first-run experience for collection, Tailpipe attempts to collect in reverse chronological order. In other words, it starts with the current day and moves backward.  By default, Tailpipe will only collect the last 7 days during the initial collection.  You can override that on the command line, e.g.:
+Often, the source data to be ingested is large, and the first ingestion would take quite a long time. To improve the first-run experience for collection, Tailpipe will only collect the last 7 days during the initial collection.  You can override that on the command line, e.g.:
 
 ```bash
 tailpipe collect aws_cloudtrail_log.test --from T-180d
@@ -52,8 +52,3 @@ tailpipe collect aws_cloudtrail_log.test --from 2024-01-01
 ```
 
 Subsequent collection runs occur chronologically, resuming from the last collection by default, so there are no time gaps while the data is being collected.
-
-<!--
-- The data is available for querying even while partition collection is still occurring.
--->
-

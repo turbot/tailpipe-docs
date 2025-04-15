@@ -4,7 +4,12 @@ title: tailpipe collect
 
 # tailpipe collect
 
-Run a **collection**.
+[Run collection](/docs/collect/collect).
+
+
+To improve the first-run experience for collection, Tailpipe will only collect the last 7 days during the [initial collection](/docs/collect/collect#initial-collection) (though you can override this behavior woth the `--from` argument).  Subsequent collection runs occur chronologically, resuming from the last collection by default, so there are no time gaps while the data is being collected.
+
+
 
 ## Usage
 ```bash
