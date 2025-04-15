@@ -6,7 +6,7 @@ title: Glossary
 
 ## Collection
 
-A collection is a tree of Parquet files in the standard hive format. It is created by a plugin when you run the `tailpipe collect` command. 
+A collection is a tree of Parquet files in the standard hive format. It is created by a plugin when you run the `tailpipe collect` command.  "Collection" also refers to the [process of collecting logs](/docs/collect/collect). 
 
 ## Compaction
 
@@ -31,6 +31,12 @@ A detection is a Tailpipe query, optionally bundled into a benchmark, that runs 
 ## DuckDB
 
 Tailpipe uses DuckDB, an embeddable column-oriented database. DuckDB reads the Parquet files created by `tailpipe collect` and enables queries against that data.
+
+## Format
+A [format](/docs/reference/config-files/format) describe the layout of the source data so that it can be collected into a table.
+
+## Format Type
+A [format type](/docs/reference/config-files/format#format-types) defines the parsing mechanism which should be used for a format (`regex`, `grok`, `jsonl`, etc). The properties of the format are specific to the format type.
 
 ## Hive
 
