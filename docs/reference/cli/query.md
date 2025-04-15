@@ -80,6 +80,7 @@ Query a specific index:
 tailpipe query "select count(*) from aws_cloudtrail_log --index 605491513981
 ```
 
+<!--
 Run a query and save a [snapshot](/docs/query/snapshots):
 ```bash
 tailpipe query --snapshot "select * from aws_cloudtrail_log"
@@ -89,7 +90,7 @@ Run a query and share a snapshot:
 ```bash
 tailpipe query --share "select * from aws_cloudtrail_log"
 ```
-
+-->
 Run the SQL command in the `my_queries/my_query.sql` file:
 ```bash
 tailpipe query my_queries/my_query.sql
