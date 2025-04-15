@@ -16,6 +16,8 @@ $ tailpipe plugin install aws
 
 This will download the latest `aws` plugin from the Hub registry.
 
+<!--  this has not been tested....
+
 ## Installing a Specific Version
 
 To install a specific version, simply specify the version tag after the plugin name, separated by `@` or `:`
@@ -78,7 +80,6 @@ $ tailpipe plugin install aws@~2.1
 $ tailpipe plugin install aws@2.1.x
 ```
 
-<!--  this has not been tested....
 
 ## Installing from Another Registry
 
@@ -102,6 +103,8 @@ hub.tailpipe.io/plugins/turbot/gcp@latest       0.1.0      gcp_audit_log.dev, gc
 
 ## Updating Plugins
 
+<!--
+
 To update a plugin to the latest version for a given stream, you can use the  `tailpipe plugin update` command:
 
 ```bash
@@ -110,6 +113,13 @@ tailpipe plugin update plugin_name[@stream]
 
 The syntax and semantics are identical to the install command -  `tailpipe plugin update aws` will get the latest aws plugin, `tailpipe plugin update aws@1` will get the latest in the 1.x major stream, etc.
 
+-->
+
+To update a plugin to the latest version, you can use the  `tailpipe plugin update` command:
+
+```bash
+tailpipe plugin update plugin_name
+```
 
 To update **all** plugins to the latest in the installed stream:
 ```bash

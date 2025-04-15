@@ -38,6 +38,7 @@ Install or update a plugin:
 tailpipe plugin install aws
 ```
 
+<!--
 Install a specific version of a plugin:
 ```bash
 tailpipe plugin install aws@0.2.0
@@ -52,6 +53,7 @@ Note: if your semver constraint contains special characters, you may need to quo
 ```bash
 tailpipe plugin install "aws@>=0.2"
 ```
+-->
 
 Install all missing plugins specified in configuration files. Do not download their default configuration files:
 
@@ -73,12 +75,12 @@ Update all plugins to the latest in the installed stream:
 ```bash
 tailpipe plugin update --all
 ```
-
+<!--
 Update the aws plugin to the latest version meeting the constraint:
 ```bash
 tailpipe plugin update aws@^0.2
 ```
-
+-->
 Update all plugins to the latest and hide the progress bar:
 ```bash
 tailpipe plugin update --all --progress=false
