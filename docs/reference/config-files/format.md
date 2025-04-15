@@ -104,9 +104,16 @@ The `delimited` format is used for parsing CSV, TSV, and other delimited file fo
 format "delimited" "custom_csv" {
   delimiter = ","
   header    = true
-  null_str  = "-"
 }
 ```
+
+| Argument            | Type     | Optional? | Description
+|---------------------|----------|-----------|-----------------
+| `delimiter`         | String   | Optional |  The character that separates columns
+| `header`            | Boolean  | Optional |  Whether the file contains a header row
+
+
+<!--
 
 | Argument            | Type     | Optional? | Description
 |---------------------|----------|-----------|-----------------
@@ -130,6 +137,8 @@ format "delimited" "custom_csv" {
 | `timestamp_format`  | String   | Optional |  Format for parsing timestamps
 
 
+-->
+
 #### JSONL Format
 The `jsonl` (JSON Lines) format is used to parse JSON data where each line is a valid JSON object.
 
@@ -143,3 +152,6 @@ format "jsonl" "custom_jsonl" {
 | Argument     | Type     | Optional? | Description
 |--------------|----------|-----------|-----------------
 | `description`| String   | Optional  | A description of the format
+
+> [!TIP]
+> Since the `jsonl` format type has no arguments other than the description, you may want to use the default format (`format.jsonl.default`) instead of defining your own.
