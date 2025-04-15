@@ -30,7 +30,29 @@ The [hive directory structure](/docs/collect/configure#hive-partitioning) enable
 
 ## Use common columns
 
-Tailpipe plugins map a subset of log-specific fields to [common columns](/docs/reference/config-files/table#common-columns). Use them to correlate across tables, for example, to join `aws_cloudtrail_log` and `aws_alb_access_log` on the `tp_ip` field (IP address).
+Tailpipe plugins map a subset of log-specific fields to [common columns](/docs/reference/config-files/table#common-columns). Use them to search, join, or correlate across tables, for example, to search `aws_cloudtrail_log` and `aws_clb_access_log` for specific IP ranges.
+
+```sql
+with logs as (
+  select
+    tp_timestamp,
+    tp_table,
+    tp_partition,
+    tp_source_ip,
+    tp_source_location
+  from
+    aws_clb_access_log
+  union all select
+    tp_timestamp,
+    tp_table,
+    tp_partition,
+    tp_source_ip,
+    tp_source_location
+  from
+    aws_cloudtrail_log
+)
+select * from logs where try_cast(tp_source_ip as inet) <<= '13.58.0.0/15'::inet
+```
 
 ## Use JSON functions vs operators
 
