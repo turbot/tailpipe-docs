@@ -81,7 +81,7 @@ tp_table=aws_cloudtrail_log
 
 ## Sources
 
-A partition acquires data from one or more [sources](/docs/reference/config-files/partition#source).  Often, a source will connect to a resource via a [connection](#connections), which specifies the credentials and account scope. 
+A partition acquires data from a [source](/docs/reference/config-files/partition#source).  Often, a source will connect to a resource via a [connection](#connections), which specifies the credentials and account scope.
 
 ```hcl
 partition "aws_cloudtrail_log" "test" {
@@ -110,7 +110,7 @@ The source is responsible for:
 
 ## Connections
 
-**Connections** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe. 
+**[Connections](/docs/reference/config-files/connection)** provide *credentials* and *configuration options* to connect to external services.  Tailpipe connections are similar to connections in Steampipe and Flowpipe.
 
 ```hcl
 connection "aws" "aws_01" {
@@ -128,4 +128,4 @@ connection "gcp" "gcp_my_other_project" {
 }
 ```
 
-A default connection (e.g. `connection.aws.default`) always exists; it can be overridden in a `.tpc` file. Each plugin has its own default credential resolution. Tailpipe defines a [connection type](/docs/reference/config-files/connection) for each plugin.
+Connection types are defined in plugins. Each type creates a [default connection](/docs/reference/config-files/connection#default-connections) (e.g., `connection.aws.default`), which can be overridden in a `.tpc` file. Each plugin has its own default credential resolution.

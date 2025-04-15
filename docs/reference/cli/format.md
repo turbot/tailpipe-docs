@@ -19,7 +19,6 @@ tailpipe format show format_type.format_name [args]
 |-|-
 | [list](#tailpipe-format-list) | List all formats.
 | [show](#tailpipe-format-show)  | Show details of a format.
-| [delete](#tailpipe-format-delete) | Delete a format.
 
 
 ## tailpipe format list

@@ -62,7 +62,7 @@ from
   aws_cloudtrail_log;
 ```
 
-In this case, DuckDB's precedence rules require you to parenthesize the `->>` expression. To avoid confusion, we often prefer functions over operators in Tailpipe mods.
+In this case, DuckDB's precedence rules require you to parenthesize the `->>` expression.
 
 The `resource` column of `aws_cloudtrail_log` is a JSON array of objects. You use 0-based indexing to access elements of an array. To access the first element:
 

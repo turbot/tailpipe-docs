@@ -204,7 +204,7 @@ tailpipe partition delete aws_cloudtrail_log.prod --from=T-10M  # (10 minutes ag
 By default, Tailpipe compacts files when you run `tailpipe collect`.  You can disable this if you want to:
 
 ```bash
-tailpipe collect --compact
+tailpipe collect --compact=false
 ```
 
 You can then manually compact files with the `tailpipe compact` command.  You can compact everything:

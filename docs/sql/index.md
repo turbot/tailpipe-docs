@@ -13,7 +13,7 @@ Like most popular databases, DuckDB supports standard SQL syntax. If you know SQ
 You can **query all the columns** in a table:
 
 ```sql
-select * from aws_cloudtrail_log limit 1000;
+select * from aws_cloudtrail_log;
 ```
 
 But you may want to limit the number of rows when tables are large:
@@ -129,7 +129,7 @@ order by
 or find **min** and **max**:
 ```sql
 select
-  min(tp_date),method,
+  min(tp_date),
   max(tp_date)
 from
   aws_cloudtrail_log

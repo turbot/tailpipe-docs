@@ -16,9 +16,9 @@ Return a connection string for a database with a schema determined by the provid
 | Flag | Description
 |-|-
 | `--from string`    |  Specify the start time
-|  `--help`          |  Help for connect
-| `--index strings`      |  Specify the index(es) to use
-|  `--output`        |  One of: json, text (default text)
+| `--help`           |  Help for connect
+| `--index strings`  |  Specify the index(es) to use
+| `--output`         |  Output format: `json`, `plain`, `pretty` (default)
 | `--partition strings`  |  Specify the partition(s) to use
 | `--to string`      |  Specify the end time
 
