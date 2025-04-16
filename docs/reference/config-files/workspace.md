@@ -3,58 +3,43 @@ title:  workspace
 ---
 # workspace 
 
-
-A Tailpipe `workspace` is a "profile" that allows you to define options for running Tailpipe.  
+A Tailpipe `workspace` is a "profile" that provides a distinct filesystem location for your collected logs and allows you to define options for running Tailpipe.  
 
 ```hcl
+workspace "default" {
+  log_level     = "info"
+}
 
-workspace "local_01" {
-  memory_max_mb = 2048
+workspace "development" {
+  log_level     = "debug"
+  update_check  = false
 }
 ```
 
-Tailpipe workspaces allow you to define multiple named configurations and easily switch between them using the `--workspace` argument or `TAILPIPE_WORKSPACE` 
-environment variable. 
+You can use workspaces to keep independent sets of data. Each workspace maintains its own [data files](/docs/collect/configure#hive-partitioning) written to `$TAILPIPE_INSTALL_DIR/data/{workspace name}` (e.g. `~/.tailpipe/data/default`).
+
+Tailpipe workspaces allow you to define multiple named configurations and easily switch between them using the `--workspace` argument or `TAILPIPE_WORKSPACE` environment variable. 
 
 ```bash
-tailpipe server --workspace my_tailpipe
+tailpipe collect --workspace development
+tailpipe query --workspace development
 ```
-
-To learn more, see **[Managing Workspaces →](/docs/manage/workspace)**
-
 
 ## Arguments
 
 | Argument            |    Default  | Description
-|---------------------|-----------------------------------------------|-----------------------------------------
-| `log_level`         | off                          | Set the logging output level
-| `memory_max_mb`     | `1024`                       | Set a memory soft limit for the tailpipe process. Set to 0 to disable the memory limit. This can also be set via the TAILPIPE_MEMORY_MAX_MB environment variable.
-| `update_check`      | `true`                       | Enable or disable automatic update checking.
+|---------------------|-------------|-----------------------------------------
+| `log_level`         | off         | Set the logging output level
+| `update_check`      | `true`      | Enable or disable automatic update checking.
 
 
-Workspaces are defined using the `workspace` block in one or more Tailpipe config files.  Tailpipe will load ALL configuration files (`*.tpc`) from every directory in the [configuration search path](/docs/reference/env-vars/tailpipe_config_path), with decreasing precedence. The set of workspaces is the union of all workspaces defined in these directories.  
+Workspaces are defined using the `workspace` block in one or more Tailpipe config files.  You can define them in any configuration file (`*.tpc`) from your config directory (`~/.tailpipe/config` by default), but by convention, they are usually written to `~/.tailpipe/config/workspaces.tpc`.
 
 The workspace named `default` is special; If a workspace named `default` exists, it will be used whenever the `--workspace` argument is not passed to Tailpipe.  Creating a `default` workspace in `~/.tailpipe/config/workspaces.tpc` provides a way to set all defaults.
 
+Note that the HCL arguments correspond to environment variables:
 
-Note that the HCL argument names are the same as the equivalent CLI argument names,
-except using an underscore in place of a dash:
-
-| Workspace Argument | Environment Variable    | Argument             
-|--------------------|-------------------------|----------------------
-| `log_level`        | `TAILPIPE_LOG_LEVEL`    |
-| `memory_max_mb`    | `TAILPIPE_MEMORY_MAX_MB`|
-| `update_check`     | `TAILPIPE_UPDATE_CHECK` | 
-
-## Examples
-
-
-```hcl
-
-workspace "local_01" {
-}
-
-workspace "local_02" {
-}
-
-```
+| Workspace Argument | Environment Variable             
+|--------------------|-------------------------
+| `log_level`        | [`TAILPIPE_LOG_LEVEL`](/docs/reference/env-vars/tailpipe_log_level)
+| `update_check`     | [`TAILPIPE_UPDATE_CHECK`](/docs/reference/env-vars/tailpipe_update_check)

@@ -14,7 +14,7 @@ You can speed up a query by using a `where` or `join` clause to restrict the num
 select count(*) from aws_cloudtrail_log where partition = 'prod'
 ```
 
-*Index*. When a partition defines more than one index, you can filter to include  all files belonging to that index.
+*Index*. When a partition defines more than one index, you can filter to include all files belonging to that index.
 
 ```sql
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789
@@ -26,16 +26,38 @@ select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
 ```
 
-The [hive directory structure](/docs/manage/hive) enables you to exclude large numbers of Parquet files.
+The [hive directory structure](/docs/collect/configure#hive-partitioning) enables you to exclude large numbers of Parquet files.
 
-## Use common fields
+## Use common columns
 
-Tailpipe plugins map a subset of log-specific fields to [common fields](/docs/manage/table#common-fields). Use them to correlate across tables, for example to join `aws_cloudtrail_log` and `aws_alb_access_log` on the `tp_ip` field (IP address).
+Tailpipe plugins map a subset of log-specific fields to [common columns](/docs/reference/config-files/table#common-columns). Use them to search, join, or correlate across tables, for example, to search `aws_cloudtrail_log` and `aws_clb_access_log` for specific IP ranges.
+
+```sql
+with logs as (
+  select
+    tp_timestamp,
+    tp_table,
+    tp_partition,
+    tp_source_ip,
+    tp_source_location
+  from
+    aws_clb_access_log
+  union all select
+    tp_timestamp,
+    tp_table,
+    tp_partition,
+    tp_source_ip,
+    tp_source_location
+  from
+    aws_cloudtrail_log
+)
+select * from logs where try_cast(tp_source_ip as inet) <<= '13.58.0.0/15'::inet
+```
 
 ## Use JSON functions vs operators
 
-In DuckDB, AND and OR have a higher precedence than `->` and `->>` (and other keywords), so they’re evaluated first.
-So this query will result in an error: *Conversion Error: Failed to cast value to numerical: …*.
+In DuckDB, `AND` and `OR` have higher precedence than `->` and `->>` (and other keywords), so they’re evaluated first.
+As a result, this query will result in an error: *Conversion Error: Failed to cast value to numerical: …*.
 
 ```sql
 select
@@ -55,7 +77,7 @@ You can work around the problem by parenthesizing the JSON expression.
   and ( request_parameters ->> 'groupName' ) ilike '%admin%'
 ```
 
-But you may prefer to avoid the problem by using a JSON function.
+However, you may prefer to avoid the problem by using a JSON function.
 
 ```sql
 select

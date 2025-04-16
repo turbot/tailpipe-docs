@@ -4,7 +4,12 @@ title: tailpipe collect
 
 # tailpipe collect
 
-Run a **collection**.
+[Run collection](/docs/collect/collect).
+
+
+To improve the first-run experience for collection, Tailpipe will only collect the last 7 days during the [initial collection](/docs/collect/collect#initial-collection) (though you can override this behavior woth the `--from` argument).  Subsequent collection runs occur chronologically, resuming from the last collection by default, so there are no time gaps while the data is being collected.
+
+
 
 ## Usage
 ```bash
@@ -18,29 +23,8 @@ Run a **collection**.
 |  `--compact`       | Compact the Parquet files after collection (default true)
 |  `--from string`   | Collect days newer than a relative or absolute date.
 |  `--help`          |  Help for collect
+| `--progress`       | Show active progress of collection, set to `false` to disable (default `true`)
 
-### Global Flags
-
-<table>
-  <tr> 
-    <th> Flag </th> 
-    <th> Description </th> 
-  </tr>
-
-  <tr> 
-    <td nowrap="true"> `--config-path`</td> 
-    <td>  
-    Sets the search path for <a href = "/docs/reference/config-files">configuration files</a>. This argument accepts a colon-separated list of directories.  All  configuration files (`*.tpc`) will be loaded from each path, with decreasing precedence.  The default is `.:$TAILPIPE_INSTALL_DIR/config` (`.:~/.tailpipe/config`).  This allows you to manage your <a href="/docs/reference/config-files/workspace"> workspaces </a> and <a href="/docs/reference/config-files/connection">connections</a> centrally in the `~/.tailpipe/config` directory, but override them in the working directory / mod location if desired.
-    </td> 
-  </tr>
-
-
-  <tr> 
-    <td nowrap="true"> `--workspace	`  </td> 
-    <td>  Sets the Tailpipe workspace profile. If not specified, the default workspace will be used if it exists. See <a href="/docs/reference/config-files/workspace">workspace</a> for details. </td> 
-  </tr>
-
-</table>
 
 
 ## Examples
@@ -69,14 +53,22 @@ Collect all partitions in the `aws_cloudtrail_log` table for the last 45 days.
 tailpipe collect aws_cloudtrail_log --from T-45d
 ```
 
+<!--
 Collect all partitions in the `aws_cloudtrail_log` between January and June.
 
 ```bash
 tailpipe collect aws_cloudtrail_log --from 1/1/2024 --to 6/30/2024
 ```
+-->
 
 Collect all partitions in the `aws_cloudtrail_log` table and output JSON.
 
 ```bash
 tailpipe collect aws_cloudtrail_log --output json
+```
+
+Collect everything, don't display progress.
+
+```bash
+tailpipe collect --progress=false
 ```

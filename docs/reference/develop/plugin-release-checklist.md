@@ -5,7 +5,7 @@ sidebar_label: Plugin Release Checklist
 
 # Plugin Release Checklist
 
-All plugins are currently hosted on the [Tailpipe Hub](https://hub.tailpipe.io). If you want to contribute one -- and we hope you do! -- here are the most common things we ask contributors to check to prepare for the plugin's release. Feel free to tick the boxes as you go through the list!
+All plugins are currently hosted on the [Tailpipe Hub](https://hub.tailpipe.io). If you want to contribute one — and we hope you do! — here are the most common things we ask contributors to check to prepare for the plugin's release. Feel free to tick the boxes as you go through the list!
 
 - [Basic Configuration](#basic-configuration)
 - [Configuration File](#configuration-file)
@@ -20,7 +20,7 @@ All plugins are currently hosted on the [Tailpipe Hub](https://hub.tailpipe.io).
 
 <input type="checkbox"/> <b>Repository name</b>
 
-The repository name should use the format `tailpipe-plugin-<pluginName>`, e.g., `tailpipe-plugin-aws`, `tailpipe-plugin-azure`, `tailpipe-plugin-github`. The plugin name should be one word, so there are always 3 parts in the repository name.
+The repository name should use the format `tailpipe-plugin-<pluginName>`, e.g., `tailpipe-plugin-aws`, `tailpipe-plugin-azure`, `tailpipe-plugin-github`. The plugin name should be one word, so there are always three parts in the repository name.
 
 <input type="checkbox"/> <b>Repository topics</b>
 
@@ -49,7 +49,7 @@ A `CHANGELOG.md` is included and contains release notes for the upcoming version
 
 <input type="checkbox"/> <b>License</b>
 
-The plugin uses 2 licenses:
+The plugin uses two licenses:
 - Most of the plugin uses the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - Except for the docs which use the [CC BY-NC-ND License 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en)
 
@@ -69,7 +69,7 @@ When there are commonly used CLI credentials, like `.aws/credentials`, the plugi
 
 <input type="checkbox"/> <b>Expiry</b>
 
-When credentials expire, and the API's SDK does not automatically refresh them, the plugin alerts the user and tells them how to refresh.
+When credentials expire and the API's SDK does not automatically refresh them, the plugin alerts the user and tells them how to refresh.
 
 <input type="checkbox"/> <b>Environment variables</b>
 
@@ -89,20 +89,20 @@ Column names should use the lower snake case form of the log property. For insta
 
 <input type="checkbox"/> <b>Descriptions</b>
 
-Every table and column has a description. These are consistent across tables. The default `tp_*` column descriptions should be overridden if there's additional log specific information in the respective `tp_*` column.
+Every table and column has a description. These are consistent across tables. The default `tp_*` column descriptions should be overridden if there's additional log-specific information in the respective `tp_*` column.
 
 ## Table and Column Design
 
 <input type="checkbox"/> <b>Row enrichment</b>
 
-The table enriches the row with the following required [common fields](https://tailpipe.io/docs/manage/table#common-fields):
+The table enriches the row with the following required [common columns](/docs/reference/config-files/table#common-columns):
 - `tp_date` - The date the event was originally generated.
-- `tp_id` - A unique identifier for the row. In Turbot plugins, typically set to an [xid](https://github.com/rs/xid).
+- `tp_id` - A unique identifier for the row. In Turbot plugins, it is typically set to an [xid](https://github.com/rs/xid).
 - `tp_index` - The index used to partition the data, e.g., AWS account ID, GitHub organization, hostname.
 - `tp_ingest_timestamp` - The timestamp when the event was ingested into the system.
 - `tp_timestamp` -  The timestamp when the event was originally generated.
 
-Additional common fields, like `tp_ips` and `tp_source_location` should be added based on what is available in the log type.
+Additional common columns, like `tp_ips` and `tp_source_location`, should be added based on what is available in the log type.
 
 <input type="checkbox"/> <b>Default file layout</b>
 
@@ -195,7 +195,7 @@ Each source document shows 3-5 configuration examples that users can copy, modif
 
 <input type="checkbox"/> <b>Arguments</b>
 
-All source arguments should be listed along with their types and descriptions, and if they're required.
+All source arguments should be listed along with their types, descriptions, and if they're required.
 
 <input type="checkbox"/> <b>Table defaults</b>
 
@@ -217,8 +217,8 @@ Each plugin has an icon shown on the Hub. Please request an icon through the [Tu
 
 <input type="checkbox"/> <b>Ease of first use</b>
 
-The plugin really nails easy setup, there's a short path to a first successful query, and it runs quickly.
+The plugin really nails easy setup; there's a short path to a first successful query, and it runs quickly.
 
 <input type="checkbox"/> <b>Pre-mortem</b>
 
-You've considered, and addressed, reasons why this plugin could fail to delight its community.
+You've considered and addressed reasons why this plugin could fail to delight its community.

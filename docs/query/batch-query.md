@@ -4,9 +4,9 @@ title: Batch Queries
 
 # Batch Queries
 
-Tailpipe queries can provide valuable insight into your logs, and the interactive client is a powerful tool for ad hoc queries and exploration.  Often, however, you will write a query that you will want to re-run in the future, either manually or perhaps as a cron job.  Tailpipe allows you to save your query to a file, and pass the file into the `tailpipe query` command.
+Tailpipe queries can provide valuable insight into your logs, and the interactive client is a powerful tool for ad hoc queries and exploration.  Often, however, you will write a query that you will want to re-run in the future, either manually or perhaps as a cron job.  Tailpipe allows you to save your query to a file and pass the file into the `tailpipe query` command.
 
-For example, lets create a query to find S3 buckets where versioning is not enabled.  Paste the following snippet into a file named `cloudtrail_event.sql`:
+For example, let's create a query to find S3 buckets where versioning is not enabled.  Paste the following snippet into a file named `cloudtrail_event.sql`:
 
 ```sql
 select
@@ -18,19 +18,19 @@ where
   aws_region = 'us-east-1'
 ```
 
-We can now run the query by passing the file name to `tailpipe query`
+We can now run the query by passing the file name to `tailpipe query`:
 ```bash
 tailpipe query cloudtrail_event.sql
 ```
 
-You can even run multiple sql files by passing a glob or a space-separated list of file names to the command:
+You can even run multiple SQL files by passing a glob or a space-separated list of file names to the command:
 ```bash
 tailpipe query *.sql
 ```
 
 ## Query output formats
 By default, the output format is `table`, which provides a tabular, human-readable view:
-```
+```bash
 +-----------------------+-------------------+
 |        aws_region     |  event_type       |
 +-----------------------+-------------------+
@@ -40,9 +40,9 @@ By default, the output format is `table`, which provides a tabular, human-readab
 +-----------------------+-------------------+
 ```
   
-You can use the `--output` argument to output in a different format.  To print your output to json, specify `--output json`:
+You can use the `--output` argument to output in a different format.  To print your output to JSON, specify `--output json`:
 
-```
+```bash
 $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output json
 [
  {
@@ -58,25 +58,25 @@ $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --outpu
 
 ```
 
-To print your output to csv, specify `--output csv`:
+To print your output to CSV, specify `--output csv`:
 
-```
+```bash
 $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv
 aws_region,event_type
 us-east-1,AWSApiCall
 us-east-1,AWSServiceEvent
 ```
 
-Redirecting the output to CSV is common way to export data for use in other tools, such as Excel:
+Redirecting the output to CSV is a common way to export data for use in other tools, such as Excel:
 
-```
+```bash
 tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv > cloudtrail_events.csv
 ```
 
 
 To use a different delimiter, you can specify the `--separator` argument.  For example, to print to a pipe-separated format:
 
-```
+```bash
 $ tailpipe query "select aws_region, event_type from aws_cloudtrail_log" --output csv --separator '|'
 aws_region|event_type
 us-east-1|AWSApiCall

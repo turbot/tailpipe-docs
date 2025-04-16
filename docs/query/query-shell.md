@@ -22,17 +22,17 @@ $ tailpipe query --from T-45d
 
 Or to a range:
 
-```
+```bash
 $ tailpipe query --from 2024-12-01 --to 2025-01-01
 ```
 
 Or to a specific index in a partition:
 
-```
+```bash
 $ tailpipe query --partition aws_cloudtrail_log.prod --index 123456789
 ```
 
-You can exit the query shell by pressing `Ctrl+d` on a blank line, or using the `.exit` command.
+You can exit the query shell by pressing `Ctrl+d` on a blank line or using the `.exit` command.
 
 
 ### Autocomplete
@@ -40,11 +40,11 @@ The query shell includes an autocomplete feature that will suggest words as you 
 
 ![](/shell/metacommands.png)
 
-As you continue to type, the autocomplete will continue to narrow down the list of metacommands to only those that match. You can cycle forward through the list with the `Tab` key, or backward with `Shift+Tab`. 
+As you continue to type, the autocomplete will continue to narrow down the list of metacommands to only those that match. You can cycle forward through the list with the `Tab` key or backward with `Shift+Tab`. 
 
 
 ### History
-The query shell supports command history, allowing you to retrieve, run, and edit previous commands.  The command history works like typical unix shell command history, and persists across query sessions.  When on a new line, you can cycle back through the history with the `Up Arrow` or `Ctrl+p` and forward with `Down Arrow` or `Ctrl+n`.
+The query shell supports command history, allowing you to retrieve, run, and edit previous commands.  The command history works like typical unix shell command history and persists across query sessions.  When on a new line, you can cycle back through the history with the `Up Arrow` or `Ctrl+p` and forward with `Down Arrow` or `Ctrl+n`.
 
 
 ### Key bindings
@@ -65,7 +65,7 @@ The query shell supports standard emacs-style key bindings:
 
 ## Exploring Tables & Columns
 
-Tailpipe **tables** provide an interface for querying log data using standard SQL.  Tailpipe tables do not actually *store* data, they query the DuckDB views created over Parquet files collected by `tailpipe collect`. The details are hidden from you though - *you just query them like any other table!*
+Tailpipe **tables** provide an interface for querying log data using standard SQL.  Tailpipe tables do not actually *store* data; they query the DuckDB views created over Parquet files collected by `tailpipe collect`. The details are hidden from you, though - *you just query them like any other table!*
 
 In the query shell, use `.inspect` to view tables. 
 

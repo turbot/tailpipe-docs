@@ -4,6 +4,8 @@ title: Configuration Files
 
 # Configuration Files
 
-Configuration resources like [partitions](/docs/reference/config-files/connection), [workspaces](/docs/reference/config-files/workspace) and [connections](/docs/reference/config-files/connection) are defined using HCL in one or more Tailpipe config (`.tpc`) files.  
+Configuration resources like [partitions](/docs/reference/config-files/connection), [workspaces](/docs/reference/config-files/workspace), and [connections](/docs/reference/config-files/connection) are defined using HCL in one or more Tailpipe config (`.tpc`) files.  
 
-Tailpipe will load ALL configuration files (`*.tpc`) from every directory in the [configuration search path](/docs/reference/env-vars/tailpipe_config_path), with decreasing precedence.  By default, the configuration search path includes the current directory followed by the `config` directory in the [TAILPIPE_INSTALL_DIR](/docs/reference/env-vars/tailpipe_install_dir): `.:$TAILPIPE_INSTALL_DIR/config`.  This allows you to manage your partitions, workspaces, and connections centrally in the `~/.tailpipe/config` directory, but override them in the working directory if desired.
+Tailpipe will read *all* files with a `.tpc` extension from the `config` directory in your  [TAILPIPE_INSTALL_DIR](/docs/reference/env-vars/tailpipe_install_dir) (`~/.tailpipe/config` by default), so you are free to arrange your config files as you please.  A common convention, however, is to create a file per plugin for all the resources that pertain to it.  [Workspaces](/docs/reference/config-files/connection) are usually defined in a separate `workspaces.tpc` file.
+
+You can override the configuration file location for a command with the [`--config-path` global argument](/docs/reference/cli#global-flags).

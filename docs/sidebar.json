@@ -25,26 +25,33 @@
     "items": [
       "query/query-shell",
       "query/batch-query",
-      "query/visualization",
-      "query/snapshots"
+      "query/visualization"
+    ]
+  },
+
+  {
+    "type": "category",
+    "id": "collect-data",
+    "link": "collect",
+    "items": [
+      "collect/plugins",
+      "collect/configure",
+      "collect/collect",
+      "collect/manage-data",
+      "collect/custom-tables"
     ]
   },
   {
     "type": "category",
-    "id": "manage-tailpipe",
-    "link": "manage",
+    "id": "pipes-ecosystem",
+    "link": "pipes-ecosystem",
     "items": [
-      "manage/collection",
-      "manage/connection",
-      "manage/hive",
-      "manage/source",
-      "manage/table",
-      "manage/partition",
-      "manage/plugin",
-      "manage/workspace"
+      "pipes-ecosystem/powerpipe",
+      "pipes-ecosystem/steampipe",
+      "pipes-ecosystem/flowpipe",
+      "pipes-ecosystem/pipes"
     ]
   },
-
   {
     "type": "category",
     "id": "reference",
@@ -58,10 +65,12 @@
           "reference/cli/collect",
           "reference/cli/compact",
           "reference/cli/connect",
+          "reference/cli/format",
           "reference/cli/help",
           "reference/cli/partition",
           "reference/cli/plugin",
           "reference/cli/query",
+          "reference/cli/source",
           "reference/cli/table"
         ]
       },
@@ -72,9 +81,6 @@
         "items": [
           "reference/env-vars/tailpipe_install_dir",
           "reference/env-vars/tailpipe_log_level",
-          "reference/env-vars/tailpipe_memory_max_mb",
-          "reference/env-vars/tailpipe_plugin_memory_max_mb",
-          "reference/env-vars/tailpipe_query_timeout",
           "reference/env-vars/tailpipe_update_check",
           "reference/env-vars/tailpipe_workspace"
         ]
@@ -86,7 +92,9 @@
         "link": "reference/config-files",
         "items": [
           "reference/config-files/connection",
+          "reference/config-files/format",
           "reference/config-files/partition",
+          "reference/config-files/table",
           "reference/config-files/workspace"
         ]
       },
@@ -98,17 +106,6 @@
         "items": ["reference/develop/plugin-release-checklist"]
       },
       "reference/glossary"
-    ]
-  },
-  {
-    "type": "category",
-    "id": "pipes-ecosystem",
-    "link": "pipes-ecosystem",
-    "items": [
-      "pipes-ecosystem/powerpipe",
-      "pipes-ecosystem/steampipe",
-      "pipes-ecosystem/flowpipe",
-      "pipes-ecosystem/pipes"
     ]
   }
 ]
