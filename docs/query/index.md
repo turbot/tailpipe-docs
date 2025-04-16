@@ -34,3 +34,9 @@ tailpipe query "select count(*) from aws_cloudtrail_log"
 
 
 
+## AI Tools (MCP)
+
+The [Tailpipe MCP server](query/mcp) transforms how you interact with your cloud and security data.  It brings the power of conversational AI to your security and cloud logs, allowing you to extract critical insights using plain English — no complex SQL required!
+
+The MCP is packaged separately and runs as an integration in your AI tool, such as [Claude Desktop](https://claude.ai/download) or [Cursor](https://www.cursor.com/).
+
