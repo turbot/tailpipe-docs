@@ -4,7 +4,7 @@ title: Querying STRUCT
 
 # Querying STRUCT Columns
 
-Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: STRUCT or JSON. Learn about STRUCT idioms here; see [Querying JSON Columns](/docs/sql/querying-json) for JSON idioms.
+Logs can contain complex data represented as JSON. Tailpipe plugins store such objects as one of two native DuckDB types: [STRUCT](https://duckdb.org/docs/stable/sql/data_types/struct.html#retrieving-from-structs) or [JSON](https://duckdb.org/docs/stable/data/json/overview.html#retrieving-json-data). Learn about STRUCT idioms here; see [Querying JSON Columns](/docs/sql/querying-json) for JSON idioms.
 
 When all instances of the object have a regular shape, a plugin uses DuckDB's STRUCT type. The `user_identity` column of the `aws_cloudtrail_log` table is a STRUCT column, as you can verify using the `typeof` function.
 
@@ -23,8 +23,8 @@ DuckDB doesn't have a `struct_keys` function analogous to `json_keys`, but you c
 
 ```sql
 select
-  json_keys(json(user_identity)) 
-from 
+  json_keys(json(user_identity))
+from
   aws_cloudtrail_log
 limit 1;
 ```
@@ -34,7 +34,7 @@ The `user_identity` column includes an `invoked_by` field that you can extract u
 ```sql
 select
   user_identity.invoked_by
-from 
+from
   aws_cloudtrail_log;
 ```
 
@@ -54,8 +54,49 @@ The `user_identity` column includes a nested STRUCT, `session_context`. You can 
 ```sql
 select
   user_identity.session_context.attributes.mfa_authenticated
-from 
+from
   aws_cloudtrail_log;
 ```
 
+You can also [unnest](https://duckdb.org/docs/stable/sql/query_syntax/unnest) items in a nested STRUCT to make them easier to work with:
 
+```json
+{
+  "messageType": "ClientQuery",
+  "requestData": {
+    "fullRcode": 0,
+    "question": [
+      {
+        "class": "IN",
+        "domainName": "some.fqdn.",
+        "questionType": "A",
+        "questionTypeId": 1
+      },
+      {
+        "class": "IN",
+        "domainName": "another.fqdn.",
+        "questionType": "AAAA",
+        "questionTypeId": 28
+      }
+    ]
+  },
+  "timestamp": "2025-02-24T11:40:10.193092152Z"
+}
+```
+
+```sql
+with questions as (
+  select
+    unnest(requestData.question) as q
+  from
+    my_dns
+  where
+    messageType = 'ClientQuery'
+)
+select
+  q.questionType as question_type
+from
+  questions
+where
+  q.domainName = 'some.fqdn.';
+```
