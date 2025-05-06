@@ -74,7 +74,15 @@ order by
 You can work around the problem by parenthesizing the JSON expression.
 
 ```sql
-  and ( request_parameters ->> 'groupName' ) ilike '%admin%'
+select
+  *
+from
+  aws_cloudtrail_log
+where
+  event_name = 'AddUserToGroup'
+  and (request_parameters ->> 'groupName') ilike '%admin%'
+order by
+  event_time desc;
 ```
 
 However, you may prefer to avoid the problem by using a JSON function.
@@ -90,6 +98,3 @@ where
 order by
   event_time desc;
 ```
-
-
-
