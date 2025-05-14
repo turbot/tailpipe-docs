@@ -111,7 +111,7 @@
             "label": "AI Tools",
             "link": "reference/develop/ai-tools/overview",
             "items": [
-              "reference/develop/ai-tools/overview"
+              "reference/develop/ai-tools/add-detection"
             ]
           },
           "reference/develop/plugin-release-checklist"
