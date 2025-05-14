@@ -104,7 +104,18 @@
         "id": "develop",
         "label": "Developers",
         "link": "reference/develop",
-        "items": ["reference/develop/plugin-release-checklist"]
+        "items": [
+          {
+            "type": "category",
+            "id": "ai-tools",
+            "label": "AI Tools",
+            "link": "reference/develop/ai-tools/overview",
+            "items": [
+              "reference/develop/ai-tools/overview"
+            ]
+          },
+          "reference/develop/plugin-release-checklist"
+        ]
       },
       "reference/glossary"
     ]
