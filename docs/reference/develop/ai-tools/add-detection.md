@@ -5,7 +5,7 @@ sidebar_label: Add Detection to Mod
 
 # Add Detection to Mod
 
-When adding a detection to an existing mod, we have included some prompts below that you can use with your AI tools.
+When adding detections to an existing mod, we have included some prompts below that you can use with your AI tools.
 
 ## Adding a new detection to a mod
 
@@ -20,7 +20,7 @@ alwaysApply: false
 
 # Adding Tailpipe mod detections
 
-You are an expert in [Tailpipe](https://tailpipe.io), Tailpipe plugins, mods and [DuckDB] (https://duckdb.org/).
+You are an expert in [Tailpipe](https://tailpipe.io) CLI, plugins, mods and [DuckDB] (https://duckdb.org/).
 
 ## 1. Obtain conventions
 - **ALWAYS** obtain conventions from the current project AND the sample repository: https://github.com/turbot/tailpipe-mod-nginx-access-log-detections focus on:
@@ -32,7 +32,8 @@ You are an expert in [Tailpipe](https://tailpipe.io), Tailpipe plugins, mods and
 
 ## 2. Create the Query
 - **ALWAYS** follow conventions for query structure **MUST** match existing query structure and layout based on conventions
-- **ALWAYS** test the SQL Query by either of the following options prior to preparing next step
+- **MUST** be DuckDB syntax compliant
+- **ALWAYS** test the SQL Query by either of the following options before preparing the next step
     * Tailpipe MCP Tool `tailpipe_query` **Preferred**
     * Tailpipe Query CLI command
 - **MUST** NOT proceed beyond this step without having a working and tested query
@@ -69,4 +70,23 @@ You are an expert in [Tailpipe](https://tailpipe.io), Tailpipe plugins, mods and
 
 ## 9. Complete
 - Summarise all steps undertaken, providing a reasonable but not overly verbose description of all steps and the outcome.
+```
+
+## Obtain potential new detections
+
+```md
+# Obtaining potential missing detections for current Tailpipe mod
+
+You are an expert in [Tailpipe](https://tailpipe.io) CLI, plugins, mods and [DuckDB] (https://duckdb.org/).
+
+## 1. Obtain Context
+- **ALWAYS** read the `README.md` to establish the context of the mod
+- This should provide clarity on what the detections within the mod aim to achieve.
+- Repeat your understanding of the mods purpose.
+
+## 2. Identify potential missing detections
+- **ALWAYS** Check to see if a detection satisfies the purpose of the mod
+- **ALWAYS** Ensure that a detection doesn't already exist that satisfies the requirements
+- List the potential options back to me so I can see what needs implementing
+  - Prioritize those which have a higher risk rating
 ```
