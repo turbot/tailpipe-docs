@@ -31,9 +31,9 @@ tailpipe query --workspace development
 |---------------------|-------------|-----------------------------------------
 | `log_level`         | off         | Set the logging output level
 | `update_check`      | `true`      | Enable or disable automatic update checking.
-| `memory_max_mb`     | `unlimited`     | Caps CLI memory usage and determines worker count.
-| `plugin_max_memory_mb` | `unlimited`  | Sets soft memory cap per plugin.
-| `max_temp_dir_mb`   | `unlimited`    | Limits JSONL temp file size on disk.
+| `memory_max_mb`     | `0` (unlimited) | Caps CLI memory usage and determines worker count.
+| `plugin_max_memory_mb` | `0` (unlimited)  | Sets soft memory cap per plugin.
+| `max_temp_dir_mb`   | `0` (unlimited)  | Limits JSONL temp file size on disk.
 
 
 Workspaces are defined using the `workspace` block in one or more Tailpipe config files.  You can define them in any configuration file (`*.tpc`) from your config directory (`~/.tailpipe/config` by default), but by convention, they are usually written to `~/.tailpipe/config/workspaces.tpc`.

@@ -17,6 +17,6 @@ Note that plugins may also support environment variables, but these are plugin-s
 | [TAILPIPE_LOG_LEVEL](/docs/reference/env-vars/tailpipe_log)  | `warn` | Set the logging output level.
 | [TAILPIPE_UPDATE_CHECK](/docs/reference/env-vars/tailpipe_update_check)| `true` | Enable/disable automatic update checking.
 | [TAILPIPE_WORKSPACE](/docs/reference/env-vars/tailpipe_workspace)  | `default` | Set the Tailpipe workspace.
-| [TAILPIPE_MEMORY_MAX_MB](/docs/reference/env-vars/tailpipe_memory_max_mb) | `unlimited` | Caps CLI memory usage and determines worker count.
-| [TAILPIPE_PLUGIN_MEMORY_MAX_MB](/docs/reference/env-vars/tailpipe_plugin_memory_max_mb) | `unlimited` |  Sets soft memory cap per plugin.
-| [TAILPIPE_TEMP_DIR_MAX_MB](/docs/reference/env-vars/tailpipe_temp_dir_max_mb) | `unlimited` | Limits JSONL temp file size on disk.
+| [TAILPIPE_MEMORY_MAX_MB](/docs/reference/env-vars/tailpipe_memory_max_mb) | `0` (unlimited) | Caps CLI memory usage and determines worker count.
+| [TAILPIPE_PLUGIN_MEMORY_MAX_MB](/docs/reference/env-vars/tailpipe_plugin_memory_max_mb) | `0` (unlimited) |  Sets soft memory cap per plugin.
+| [TAILPIPE_TEMP_DIR_MAX_MB](/docs/reference/env-vars/tailpipe_temp_dir_max_mb) | `0` (unlimited) | Limits JSONL temp file size on disk.

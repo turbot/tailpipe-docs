@@ -12,8 +12,3 @@ Set the memory soft limit to 2GB:
 ```bash
 export TAILPIPE_MEMORY_MAX_MB=2048
 ```
-
-Disable the memory soft limit:
-```bash
-export TAILPIPE_MEMORY_MAX_MB=0
-```
