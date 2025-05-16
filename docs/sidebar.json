@@ -106,6 +106,7 @@
         "link": "reference/develop",
         "items": [
           "reference/develop/plugin-release-checklist",
+          "reference/develop/table-docs-standards",
           "reference/develop/coding-standards"
         ]
       },
