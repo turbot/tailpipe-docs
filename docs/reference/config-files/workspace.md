@@ -31,6 +31,9 @@ tailpipe query --workspace development
 |---------------------|-------------|-----------------------------------------
 | `log_level`         | off         | Set the logging output level
 | `update_check`      | `true`      | Enable or disable automatic update checking.
+| `memory_max_mb`     | `32000`     | Caps CLI memory usage and determines worker count.
+| `plugin_max_memory_mb` | `32000`  | Sets soft memory cap per plugin.
+| `max_temp_dir_mb`   | `256000`    | Limits JSONL temp file size on disk.
 
 
 Workspaces are defined using the `workspace` block in one or more Tailpipe config files.  You can define them in any configuration file (`*.tpc`) from your config directory (`~/.tailpipe/config` by default), but by convention, they are usually written to `~/.tailpipe/config/workspaces.tpc`.
@@ -43,3 +46,6 @@ Note that the HCL arguments correspond to environment variables:
 |--------------------|-------------------------
 | `log_level`        | [`TAILPIPE_LOG_LEVEL`](/docs/reference/env-vars/tailpipe_log_level)
 | `update_check`     | [`TAILPIPE_UPDATE_CHECK`](/docs/reference/env-vars/tailpipe_update_check)
+| `memory_max_mb`    | [`TAILPIPE_MEMORY_MAX_MB`](/docs/reference/env-vars/tailpipe_memory_max_mb)
+| `plugin_max_memory_mb` | [`TAILPIPE_PLUGIN_MEMORY_MAX_MB`](/docs/reference/env-vars/tailpipe_plugin_memory_max_mb)
+| `max_temp_dir_mb`  | [`TAILPIPE_TEMP_DIR_MAX_MB`](/docs/reference/env-vars/tailpipe_temp_dir_max_mb)
