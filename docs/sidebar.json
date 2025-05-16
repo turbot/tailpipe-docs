@@ -104,7 +104,10 @@
         "id": "develop",
         "label": "Developers",
         "link": "reference/develop",
-        "items": ["reference/develop/plugin-release-checklist"]
+        "items": [
+          "reference/develop/plugin-release-checklist",
+          "reference/develop/coding-standards"
+        ]
       },
       "reference/glossary"
     ]
