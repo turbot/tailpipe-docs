@@ -111,7 +111,8 @@
             "label": "Writing Plugins",
             "link": "develop/writing-plugins/overview",
             "items": [
-              "develop/writing-plugins/the-basics"
+              "develop/writing-plugins/the-basics",
+              "develop/writing-plugins/implementing-tables"
             ]
           },
           "reference/develop/plugin-release-checklist",
