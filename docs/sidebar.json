@@ -107,6 +107,7 @@
         "items": [
           "reference/develop/plugin-release-checklist",
           "reference/develop/table-docs-standards",
+          "reference/develop/writing-example-queries",
           "reference/develop/coding-standards"
         ]
       },
