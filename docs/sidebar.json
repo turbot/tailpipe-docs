@@ -105,6 +105,15 @@
         "label": "Developers",
         "link": "reference/develop",
         "items": [
+          {
+            "type": "category",
+            "id": "writing-plugins",
+            "label": "Writing Plugins",
+            "link": "develop/writing-plugins/overview",
+            "items": [
+              "develop/writing-plugins/the-basics"
+            ]
+          },
           "reference/develop/plugin-release-checklist",
           "reference/develop/table-docs-standards",
           "reference/develop/writing-example-queries",
