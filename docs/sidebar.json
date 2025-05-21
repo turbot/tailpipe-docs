@@ -99,29 +99,29 @@
           "reference/config-files/workspace"
         ]
       },
+      "reference/glossary"
+    ]
+  },
+  {
+    "type": "category",
+    "id": "develop",
+    "label": "Developers",
+    "link": "develop",
+    "items": [
       {
         "type": "category",
-        "id": "develop",
-        "label": "Developers",
-        "link": "reference/develop",
+        "id": "writing-plugins",
+        "label": "Writing Plugins",
+        "link": "develop/writing-plugins/overview",
         "items": [
-          {
-            "type": "category",
-            "id": "writing-plugins",
-            "label": "Writing Plugins",
-            "link": "develop/writing-plugins/overview",
-            "items": [
-              "develop/writing-plugins/the-basics",
-              "develop/writing-plugins/implementing-tables"
-            ]
-          },
-          "reference/develop/plugin-release-checklist",
-          "reference/develop/table-docs-standards",
-          "reference/develop/writing-example-queries",
-          "reference/develop/coding-standards"
+          "develop/writing-plugins/the-basics",
+          "develop/writing-plugins/implementing-tables"
         ]
       },
-      "reference/glossary"
+      "develop/plugin-release-checklist",
+      "develop/table-docs-standards",
+      "develop/writing-example-queries",
+      "develop/coding-standards"
     ]
   }
 ]
