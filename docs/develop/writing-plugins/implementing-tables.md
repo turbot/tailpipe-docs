@@ -52,6 +52,7 @@ To implement a static table, you'll need to:
    - `EnrichRow()`: Processes each row, adding standard fields and extracting relevant information
 
 3. **Create a mapper**: Implement a mapper that transforms source data into your table's row struct. The mapper should handle the source input type and map to your schema struct.
+   - If multiple sources are supported, you can create multiple mappers for different source types.
 
 4. **Register your table**: In your plugin's main package (typically in a file like `plugin.go`), register your table using the `RegisterTable` function:
 
@@ -76,7 +77,7 @@ To implement a pre-defined custom table, you'll need to:
 
 3. **Implement format-specific parsing logic**: Create a format implementation that can parse your log format into the table schema. This might involve regex patterns or other parsing techniques.
 
-4. **Create mappers for different format variations**: Implement mappers that can handle different variations of your log format and extract the relevant fields.
+4. **Ensure you map fields via EnrichRow**: The `EnrichRow` function on your table should provide mapping logic, although mapping of format matches to columns can primarily be done by returning `return c.CustomTableImpl.EnrichRow(row, sourceEnrichmentFields)`.
 
 5. **Register your table and formatters**: In your plugin's main package (typically in a file like `plugin.go`), register your table and formatters:
 

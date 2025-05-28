@@ -32,10 +32,16 @@ Along with the following directories
   - `{model_name}/{model_name}_table.go` - Contains the table definition
   - `{model_name}/{model_name}_mapper.go` - Contains any mappers required by the table (if needed)
   - `{model_name}/{model_name}_extractor.go` - Contains extractors for the table (if needed)
+  - If a table requires a custom format (like the `custom_log` example in the repo structure), include:
+    - `{model_name}/{model_name}_table_format.go` - Format handling for the custom log
+    - `{model_name}/{model_name}_table_format_presets.go` - Preset formats for the custom log
 - `sources` (optional): Contains subdirectories for each source type, where each subdirectory includes:
   - `{source_name}/{source_name}_source.go` - Contains the source implementation
   - `{source_name}/{source_name}_source_config.go` - Contains the source configuration
-- `docs` (required): Containing documentation, especially table docs.
+- `docs` (required): Containing documentation, especially table docs:
+  - `docs/index.md` - Main plugin documentation
+  - `docs/tables/{table_name}/index.md` - Main documentation for each table
+  - `docs/tables/{table_name}/queries.md` - Example queries for each table
 
 ### Example: Repo Structure
 
@@ -50,8 +56,15 @@ tailpipe-plugin-example
 ├── docs
 │   ├── index.md
 │   └── tables
-│       ├── access_log.md
-│       └── audit_log.md
+│       ├── access_log
+│       │   ├── index.md
+│       │   └── queries.md
+│       ├── access_log
+│       │   ├── index.md
+│       │   └── queries.md
+│       └── custom_log
+│           ├── index.md
+│           └── queries.md
 ├── example
 │   ├── plugin.go
 │   └── plugin_test.go
@@ -67,10 +80,14 @@ tailpipe-plugin-example
     │   ├── access_log.go
     │   ├── access_log_extractor.go
     │   └── access_log_table.go
-    └── audit_log
-        ├── audit_log.go
-        ├── audit_log_mapper.go
-        └── audit_log_table.go
+    ├── audit_log
+    │   ├── audit_log.go
+    │   ├── audit_log_mapper.go
+    │   └── audit_log_table.go
+    └── custom_log
+        ├── custom_log_table.go
+        ├── custom_log_table_format.go
+        └── custom_log_table_format_presets.go
 ```
 
 ## File Naming Conventions
@@ -84,6 +101,8 @@ When creating files for your plugin, follow these naming conventions:
   - `{model_name}_table.go` - Table definition file
   - `{model_name}_mapper.go` - Mapper file (if needed)
   - `{model_name}_extractor.go` - Extractor file (if needed)
+    - `{model_name}_table_format.go` - Format handling for the custom log (if needed)
+    - `{model_name}_table_format_presets.go` - Preset formats for the custom log (if needed)
 - **Source Files**:
   - `{source_name}_source.go` - Source implementation
   - `{source_name}_source_config.go` - Source configuration

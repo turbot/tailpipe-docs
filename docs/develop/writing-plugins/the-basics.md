@@ -118,7 +118,7 @@ func NewPlugin() (_ plugin.TailpipePlugin, err error) {
 
 The credentials configuration defines how users connect to your plugin's data source. It's typically defined in a file like `config/example_connection.go`.
 
-> Note: Not all sources require creedentials. If your source doesn't require credentials, you can omit defining a connection.
+> Note: Not all sources require credentials. If your source doesn't require credentials, you can omit defining a connection.
 
 ```go
 package config
@@ -152,13 +152,15 @@ func (c *ExampleConnection) Identifier() string {
 
 Tables define the structure of your data and how it's presented to users. Each table typically consists of three components:
 
-1. **Row struct**: Defines the schema of your table
-2. **Table implementation**: Defines table metadata and behavior
-3. **Mapper**: Maps data from your source to the row struct
+1. **Row struct**: Defines the schema of a static table, custom tables define their own schema.
+2. **Table implementation**: Defines table metadata and behavior.
+3. **Mapper**: Maps data from your source to the row struct / table schema.
 
 ### Table Schema (Row Struct)
 
 The row struct defines the schema of your table. It's typically defined in a file like `tables/log/log.go`.
+
+> Note: It should embed `schema.CommonFields` to include standard fields required by Tailpipe.
 
 ```go
 package log
@@ -414,4 +416,4 @@ This guide covered the basic components of a Tailpipe plugin:
 
 By understanding these components, you can create your own Tailpipe plugin to integrate with any data source.
 
-For more detailed information and examples, refer to the [Tailpipe Plugin SDK](https://github.com/turbot/tailpipe-plugin-sdk) and existing plugins like [tailpipe-plugin-pipes](https://github.com/turbot/tailpipe-plugin-pipes) and [tailpipe-plugin-aws](https://github.com/turbot/tailpipe-plugin-aws).
+For more detailed information and examples, refer to the [Tailpipe Plugin SDK](https://github.com/turbot/tailpipe-plugin-sdk) and existing plugins like [tailpipe-plugin-pipes](https://github.com/turbot/tailpipe-plugin-pipes), [tailpipe-plugin-aws](https://github.com/turbot/tailpipe-plugin-aws) or for examples on advanced topics like pre-defined custom tables [tailpipe-plugin-nginx](https://github.com/turbot/tailipe-plugin-nginx).
