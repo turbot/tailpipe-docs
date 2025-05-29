@@ -10,4 +10,4 @@ When all else fails, read the manual...
 - **[Command line reference →](/docs/reference/cli)**
 - **[Config File reference →](/docs/reference/config-files)**
 - **[Environment Variables reference →](/docs/reference/env-vars)**
-- **[Documentation for Plugin Developers →](/docs/reference/develop)**
+- **[Documentation for Plugin Developers →](/docs/develop)**
