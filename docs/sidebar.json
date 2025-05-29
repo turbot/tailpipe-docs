@@ -110,6 +110,13 @@
     "items": [
       {
         "type": "category",
+        "id": "ai-tools",
+        "label": "AI Tools",
+        "link": "develop/ai-tools/overview",
+        "items": []
+      },
+      {
+        "type": "category",
         "id": "writing-plugins",
         "label": "Writing Plugins",
         "link": "develop/writing-plugins/overview",
