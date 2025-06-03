@@ -7,15 +7,6 @@ sidebar_label: Plugin Release Checklist
 
 All plugins are currently hosted on the [Tailpipe Hub](https://hub.tailpipe.io). If you want to contribute one — and we hope you do! — here are the most common things we ask contributors to check to prepare for the plugin's release. Feel free to tick the boxes as you go through the list!
 
-- [Basic Configuration](#basic-configuration)
-- [Configuration File](#configuration-file)
-- [Credentials](#credentials)
-- [Table and Column Names](#table-and-column-names)
-- [Table and Column Descriptions](#table-and-column-descriptions)
-- [Table and Column Design](#table-and-column-design)
-- [Documentation](#documentation)
-- [Final Review](#final-review)
-
 ## Basic Configuration
 
 <input type="checkbox"/> <b>Repository name</b>

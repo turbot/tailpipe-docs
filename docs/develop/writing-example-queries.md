@@ -3,11 +3,7 @@ title: Writing Example Queries
 sidebar_label: Writing Example Queries
 ---
 # Writing Example Queries
-- [Sample Guidelines](#sample-guidelines)
-- [Basic Examples](#basic-examples)
-- [Advanced Examples](#advanced-examples)
 
-## Sample Guidelines
 To help you get started on creating useful example queries for Tailpipe log tables, we've compiled a
 list of potential topics that can be used as guidelines and includes some
 basic and advanced examples of these from existing tables.

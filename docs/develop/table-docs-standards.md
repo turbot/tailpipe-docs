@@ -5,22 +5,6 @@ sidebar_label: Table Documentation Standards
 
 # Table Documentation Standards
 
-- [Overview](#overview)
-- [Documentation Structure](#documentation-structure)
-- [index.md Guidelines](#indexmd-guidelines)
-  - [Front Matter](#front-matter)
-  - [Table Description](#table-description)
-  - [Configuration Section](#configuration-section)
-  - [Collection Section](#collection-section)
-  - [Query Section](#query-section)
-  - [Example Configurations Section](#example-configurations-section)
-  - [Source Defaults Section](#source-defaults-section)
-- [queries.md Guidelines](#queriesmd-guidelines)
-  - [Query Categories](#query-categories)
-  - [Query Format](#query-format)
-  - [Query Style Conventions](#query-style-conventions)
-- [DuckDB Compliance](#duckdb-compliance)
-
 ## Overview
 
 Creating table documentation is an important part of developing tables for Tailpipe. Each table should have comprehensive documentation that helps users understand the table's purpose, how to configure and collect data, and how to query the data effectively.
