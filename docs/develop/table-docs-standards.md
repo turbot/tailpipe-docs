@@ -5,8 +5,6 @@ sidebar_label: Table Documentation Standards
 
 # Table Documentation Standards
 
-## Overview
-
 Creating table documentation is an important part of developing tables for Tailpipe. Each table should have comprehensive documentation that helps users understand the table's purpose, how to configure and collect data, and how to query the data effectively.
 
 In Tailpipe, table documentation is split into two files within a table-specific directory:
