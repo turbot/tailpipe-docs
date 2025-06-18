@@ -75,24 +75,20 @@ Your goal is to configure log sources for <log_type> to validate your table impl
 1. Configure appropriate source in ~/.tailpipe/config/aws.tpc:
 
   For S3 logs:
-  ```
   partition "aws_<log_type>" "s3_logs" {
     source "aws_s3_bucket" {
       connection = connection.aws.test_account
       bucket     = "test-logs-bucket"
     }
   }
-  ```
 
   For CloudWatch logs:
-  ```
   partition "aws_<log_type>" "cloudwatch_logs" {
     source "aws_cloudwatch_log_group" {
       connection = connection.aws.test_account
       log_group_name = "/aws/my-log-group"
     }
   }
-  ```
 
 2. Ensure test logs are available in your configured source with sufficient data variety to test all table columns and features.
 ```
