@@ -89,7 +89,6 @@ Every table and column has a description. These are consistent across tables. Th
 The table enriches the row with the following required [common columns](/docs/reference/config-files/table#common-columns):
 - `tp_date` - The date the event was originally generated.
 - `tp_id` - A unique identifier for the row. In Turbot plugins, it is typically set to an [xid](https://github.com/rs/xid).
-- `tp_index` - The index used to partition the data, e.g., AWS account ID, GitHub organization, hostname.
 - `tp_ingest_timestamp` - The timestamp when the event was ingested into the system.
 - `tp_timestamp` -  The timestamp when the event was originally generated.
 

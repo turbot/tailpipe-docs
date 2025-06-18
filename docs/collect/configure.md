@@ -53,14 +53,14 @@ Tailpipe uses [hive partitioning](https://duckdb.org/docs/data/partitioning/hive
 
   - The data is written to Parquet files in the workspace directory, with a prescribed directory and filename structure.  Each partition is written to a separate directory.
 
-  - For [custom tables](/docs/collect/custom-tables), you can define a `tp_index` column on which to index.  For tables implemented by plugins, the index is not *user*-definable. Be aware that defining a `tp_index` does not always increase performance and may, in fact, decrease it as it can result in many small parquet files.   
+  - The `tp_index` is used to partition the data and defaults to `"default"` if not specified. You can configure the `tp_index` in your partition config to specify a different value or expression for the partition index. Be aware that defining a `tp_index` does not always increase performance and may, in fact, decrease it as it can result in many small parquet files.   
 
-The standard partitioning/hive structure enables efficient queries that only need to read subsets of the hive filtered by index or date.  Because the data is laid out into partitions,  performance is optimized when the partition appears in a `where` or `join` clause.  The index provides a way to segment the data to optimize lookup performance in a way that is *optimal for the specific plugin*.  For example, AWS tables index on account ID, Azure tables on subscription, and GCP on project ID. 
+The standard partitioning/hive structure enables efficient queries that only need to read subsets of the hive filtered by index or date.  Because the data is laid out into partitions,  performance is optimized when the partition appears in a `where` or `join` clause.  The index provides a way to segment the data to optimize lookup performance in a way that is *optimal for your specific use case*.  For example, you might index on account ID for AWS tables, subscription for Azure tables, or project ID for GCP tables. 
 
 ```bash
 tp_table=aws_cloudtrail_log
 └── tp_partition=prod
-    └── tp_index=605491513981
+    └── tp_index=default
         ├── tp_date=2024-12-31
         │   └── data_20250106140713_740378_0.parquet
         ├── tp_date=2025-01-01

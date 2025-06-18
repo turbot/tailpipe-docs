@@ -93,4 +93,4 @@ partition "aws_cloudtrail_log" "cloudtrail_all" {
 
 ## What partition indexes are available for a table?
 
-That depends on how the plugin author has defined the common `tp_index` field. For AWS tables, it's the `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (but `tp_partition` will always be the same). 
+The `tp_index` value depends on how you have configured it in your partition config. By default, `tp_index` is set to `"default"`, but you can configure it to use any value or expression that makes sense for your data. For AWS tables, you might set it to `account_id`. In the dual-partition case above, you could carve the logs by `account_id` using the common `tp_partition` field (but `tp_index` will always be the same). In the single-partition case above, you could carve the logs by `account_id` using `tp_index` (but `tp_partition` will always be the same). 
