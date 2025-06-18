@@ -27,7 +27,7 @@ While AI often works well with simple requests like "Create a table for [log_typ
 
 First, create the new table and its documentation, using existing tables and docs as reference.
 
-```
+```md
 Your goal is to create a new Tailpipe table and documentation for <log_type>.
 
 1. Review existing tables and their documentation in the plugin to understand:
@@ -104,10 +104,7 @@ Next, collect and query the logs to test that the table implementation works cor
 ```md
 Your goal is to thoroughly test your <log_type> table implementation by validating data collection and querying.
 
-1. Collect logs from your configured source:
-  ```
-  tailpipe collect aws_<log_type>
-  ```
+1. Collect logs from your configured source using `tailpipe collect aws_<log_type>` command.
 
 2. Validate the implementation:
   - Execute `select * from aws_<log_type>` to verify all columns have correct data
