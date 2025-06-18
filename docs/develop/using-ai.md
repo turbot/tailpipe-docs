@@ -27,27 +27,26 @@ While AI often works well with simple requests like "Create a table for [log_typ
 
 First, create the new table and its documentation, using existing tables and docs as reference.
 
-```md
+```
 Your goal is to create a new Tailpipe table and documentation for <log_type>.
 
 1. Review existing tables and their documentation in the plugin to understand:
-   - Table structure patterns
-   - Source configurations (S3, CloudWatch, etc.)
-   - Standard field enrichment
-   - Naming conventions
+  - Table structure patterns and naming conventions
+  - Source configurations (S3, CloudWatch, etc.)
+  - Standard field enrichment patterns
+  - Column structures and data types
 
-2. Implement the table with:
-   - Proper source metadata configuration
-   - Row enrichment logic
-   - Standard fields (tp_id, tp_timestamp, etc.)
-   - Log-specific fields
-   - Extractor implementation for parsing logs
+2. Create the table implementation with:
+  - Proper source metadata configuration
+  - Row enrichment logic for standard and log-specific fields
+  - Extractor implementation for parsing logs
+  - Registration in the plugin
 
-3. Create documentation including:
-   - Table overview and description
-   - Configuration examples for each source type
-   - Example queries for common use cases
-   - Schema reference
+3. Create documentation at `docs/tables/<table_name>.md` including:
+  - Table overview and description
+  - Configuration examples for each source type
+  - Example queries with expected results
+  - Complete schema reference
 ```
 
 ### Build Plugin
@@ -57,51 +56,45 @@ Next, build the plugin with your changes and verify your new table is properly r
 ```md
 Your goal is to build the plugin and verify that your new <log_type> table is properly registered and functional.
 
-1. Build the plugin:
-   ```sh
-   make
-   ```
+1. Build the plugin using `make` command.
 
-2. Verify the table is registered:
-   ```sh
-   tailpipe plugin list
-   ```
+2. Verify the table is registered using `tailpipe plugin list`.
 
-3. Check the table schema:
-   ```sh
-   tailpipe query
-   > .inspect aws_<log_type>
-   ```
+3. Check the table schema and structure using the Tailpipe MCP server
+
+4. Test basic querying functionality with `tailpipe query "select * from aws_<log_type> limit 1"`.
 ```
 
-### Configure Log Sources
+### Configure Test Sources
+
+To test the table's functionality, you'll need log sources to query. Configure appropriate sources based on your table's requirements.
 
 ```md
-Your goal is to configure log sources for <log_type> to validate your Tailpipe table implementation.
+Your goal is to configure log sources for <log_type> to validate your table implementation.
 
-1. Create configuration in ~/.tailpipe/config/aws.tpc with appropriate source type:
+1. Configure appropriate source in ~/.tailpipe/config/aws.tpc:
 
-   For S3:
-   ```hcl
-   partition "aws_<log_type>" "s3_logs" {
-     source "aws_s3_bucket" {
-       connection = connection.aws.test_account
-       bucket     = "test-logs-bucket"
-     }
-   }
-   ```
+  For S3 logs:
+  ```
+  partition "aws_<log_type>" "s3_logs" {
+    source "aws_s3_bucket" {
+      connection = connection.aws.test_account
+      bucket     = "test-logs-bucket"
+    }
+  }
+  ```
 
-   For CloudWatch:
-   ```hcl
-   partition "aws_<log_type>" "cloudwatch_logs" {
-     source "aws_cloudwatch_log_group" {
-       connection = connection.aws.test_account
-       log_group_name = "/aws/my-log-group"
-     }
-   }
-   ```
+  For CloudWatch logs:
+  ```
+  partition "aws_<log_type>" "cloudwatch_logs" {
+    source "aws_cloudwatch_log_group" {
+      connection = connection.aws.test_account
+      log_group_name = "/aws/my-log-group"
+    }
+  }
+  ```
 
-2. Ensure sample logs are available in your configured source
+2. Ensure test logs are available in your configured source with sufficient data variety to test all table columns and features.
 ```
 
 ### Validate Data Collection
@@ -111,29 +104,21 @@ Next, collect and query the logs to test that the table implementation works cor
 ```md
 Your goal is to thoroughly test your <log_type> table implementation by validating data collection and querying.
 
-1. Collect logs from the configured source:
-   ```sh
-   tailpipe collect aws_<log_type>
-   ```
+1. Collect logs from your configured source:
+  ```
+  tailpipe collect aws_<log_type>
+  ```
 
-2. Validate data collection:
-   - Check collection status and statistics
-   - Verify log parsing and enrichment
-   - Confirm partition organization
+2. Validate the implementation:
+  - Execute `select * from aws_<log_type>` to verify all columns have correct data
+  - Test each example query from the documentation
+  - Verify field types and enrichment logic
+  - Test filtering and aggregation capabilities
 
-3. Test queries:
-   ```sh
-   tailpipe query
-   ```
-   - Execute each example query from documentation
-   - Verify field types and values
-   - Test filtering and aggregation
-   - Validate enriched fields
-
-4. Document test results:
-   - Collection statistics
-   - Query results
-   - Any parsing or enrichment issues
+3. Document your test results including:
+  - Collection statistics
+  - Query results
+  - Any parsing or enrichment issues found
 ```
 
 ### Cleanup Test Resources
@@ -141,15 +126,12 @@ Your goal is to thoroughly test your <log_type> table implementation by validati
 After testing is completed, clean up test resources and data.
 
 ```md
-Your goal is to clean up all test resources and data created for <log_type> validation.
+Your goal is to clean up all test resources created for <log_type> validation.
 
-1. Remove test data:
-   - Delete test log files from S3
-   - Clean up test log streams from CloudWatch
-   - Remove any other test artifacts
+1. Remove all test data from your configured sources:
+  - Delete test log files from S3 buckets
+  - Clean up test log streams from CloudWatch
+  - Remove any other test artifacts created
 
-2. Verify cleanup:
-   - Check source locations are clean
-   - Confirm all test resources are removed
-   - Document any persistent resources that should be retained
+2. Verify that all test resources have been successfully removed using the same tools used to create them.
 ```
