@@ -111,7 +111,7 @@ Tailpipe supports most of the [DuckDB general-purpose data types](https://duckdb
 
 Tailpipe tables include a set of common columns.  These mappings enable queries that correlate values across different logs. If you have collected both Cloudtrail and ALB logs, for example, you could query for `tp_ips` to find IP addresses in the `aws_cloudtrail_log` and `aws_alb_access_log` tables using the same syntax.
 
-When creating a custom table, `tp_timestamp` is the only required column; ***you must define a `tp_timestamp` column***.  This is because Tailpipe uses the timestamp to [organize the data files](/docs/collect/configure#hive-partitioning).  The `tp_index` is also used in the hive partitioning scheme.  By default, `tp_index` is set to `"default"`, but you can configure it in your partition config to specify a column name as the partition index.
+When creating a custom table, `tp_timestamp` is the only required column; ***you must define a `tp_timestamp` column***.  This is because Tailpipe uses the timestamp to [organize the data files](/docs/collect/configure#hive-partitioning).  The `tp_index` is also used in the hive partitioning scheme.  By default, `tp_index` is set to `"default"`, but you can configure it in your partition config to specify a column whose value should be used as the partition index.
 
 Some of the common columns (`tp_date`,`tp_id`,`tp_ingest_timestamp`,`tp_partition`,`tp_table`) are automatically set by the plugins - You do not need to create them.  Others are optional (but encouraged).  If you do not set an optional common column, all values will be `null`.
 

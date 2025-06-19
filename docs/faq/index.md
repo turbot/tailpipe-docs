@@ -93,4 +93,4 @@ partition "aws_cloudtrail_log" "cloudtrail_all" {
 
 ## What partition indexes are available for a table?
 
-The `tp_index` value depends on how you have configured it in your partition config. By default, `tp_index` is set to `"default"`, but you can configure it to specify a column name as the partition index that makes sense for your data. For AWS tables, you might set it to `account_id`.
+The `tp_index` value depends on how you have configured it in your partition config. By default, `tp_index` is set to `"default"`, but you can configure it to specify a column whose value should be used as the partition index, as makes sense for the data. For AWS tables, you might set it to `account_id`.

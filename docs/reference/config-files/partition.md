@@ -32,7 +32,7 @@ The partition has two labels:
 |----------|--------|-----------|-----------------
 | `source` | Block  | Required  | a [source](#source) from which to collect data.
 | `filter` | String | Optional  | A SQL `where` clause condition to filter log entries. Supports expressions using table columns.
-| `tp_index` | String | Optional  | The column name to use as the partition index. Defaults to `"default"` if not specified. This is used in the [hive partitioning](/docs/collect/configure#hive-partitioning) scheme.
+| `tp_index` | String | Optional  | The column whose value should be used as tp_index. Defaults to `"default"` if not specified. This is used in the [hive partitioning](/docs/collect/configure#hive-partitioning) scheme.
 
 
 
