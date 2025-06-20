@@ -16,7 +16,7 @@ Compact multiple Parquet files per day to one per day.
 | Flag | Description
 |-|-
 |  `--help`          |  Help for compact
-|  `--reindex`       |  Update the `tp_index` field to the currently configured value
+|  `--reindex`       |  Reorganize data using the currently configured `tp_index` structure. Any data collected using a different `tp_index` value will be rewritten to new files [partitioned](/docs/reference/config-files/partition) using the current `tp_index`.
 
 
 ## Examples

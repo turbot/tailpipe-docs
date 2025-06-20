@@ -66,7 +66,7 @@ You may also use one or more [`column` definitions](/docs/reference/config-files
 In our example, the source format does not define a field named `tp_timestamp`.  Since ***`tp_timestamp` is a required column***,  we will add a `tp_timestamp` column and map the `timestamp` from the source.  Also, the source includes a `plugin_timestamp`, but it is parsed as a number because it is epoch milliseconds.  We will transform it to a timestamp data type.
 
 > [!NOTE]
-> You cannot set the `tp_index` mapping in the table definition. The `tp_index` can only be configured through the partition config, where it defaults to `"default"` if not specified.
+> You cannot set the `tp_index` mapping in the table definition. The `tp_index` can only be configured through the [partition config](/docs/reference/config-files/partition), where it defaults to `"default"` if not specified.
 
 ```hcl
 table "steampipe_plugin" {
