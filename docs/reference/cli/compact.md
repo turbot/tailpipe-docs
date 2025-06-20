@@ -16,6 +16,7 @@ Compact multiple Parquet files per day to one per day.
 | Flag | Description
 |-|-
 |  `--help`          |  Help for compact
+|  `--reindex`       |  Update the `tp_index` field to the currently configured value
 
 
 ## Examples
