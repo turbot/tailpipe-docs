@@ -32,6 +32,7 @@ The partition has two labels:
 |----------|--------|-----------|-----------------
 | `source` | Block  | Required  | a [source](#source) from which to collect data.
 | `filter` | String | Optional  | A SQL `where` clause condition to filter log entries. Supports expressions using table columns.
+| `tp_index` | String | Optional  | The column whose value should be used as tp_index. Defaults to `"default"` if not specified. This is used in the [hive partitioning](/docs/collect/configure#hive-partitioning) scheme.
 
 
 
@@ -174,6 +175,20 @@ partition "aws_cloudtrail_log" "s3_bucket_us_east_1" {
     connection  = connection.aws.account_a
     bucket      = "aws-cloudtrail-logs-account-a"
     file_layout = `AWSLogs/(%{DATA:org_id}/)?%{NUMBER:account_id}/CloudTrail/us-east-1/%{DATA}.json.gz`  
+  }
+}
+```
+
+You can configure the `tp_index` to use a specific column as the partition index:
+
+```hcl
+partition "aws_cloudtrail_log" "account_specific" {
+  tp_index = "account_id"
+  
+  source "aws_s3_bucket" {
+    connection  = connection.aws.account_a
+    bucket      = "aws-cloudtrail-logs-account-a"
+    file_layout = `AWSLogs/%{NUMBER:account_id}/CloudTrail/%{DATA}.json.gz`  
   }
 }
 ```

@@ -16,6 +16,7 @@ Compact multiple Parquet files per day to one per day.
 | Flag | Description
 |-|-
 |  `--help`          |  Help for compact
+|  `--reindex`       |  Reorganize data using the currently configured `tp_index` structure. Any data collected using a different `tp_index` value will be rewritten to new files [partitioned](/docs/collect/configure#hive-partitioning) using the current `tp_index`.
 
 
 ## Examples
