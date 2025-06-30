@@ -92,7 +92,7 @@ Your goal is to create test log data for <log_type> that will be stored in <sour
 
 After the logs are generated, you can now collect them. You can collect the logs using the agent, but we recommend running the `tailpipe collect` command in a separate terminal, as collection can take a while.
 
-Please see [`tailpipe collect`](https://tailpipe.io/docs/reference/cli/collect) for examples.
+Please see [tailpipe collect](https://tailpipe.io/docs/reference/cli/collect) for examples.
 
 ### Validate Column Data
 
