@@ -65,7 +65,7 @@ Your goal is to build the plugin using the exact commands below and verify that 
 5. If the MCP server is not available, verify table registration manually with `tailpipe query "select column_name, data_type from information_schema.columns where table_name = '<table_name>' order by ordinal_position"`, then test basic querying with `tailpipe query "select * from <table_name>"`.
 ```
 
-### Create Test Sources
+### Create Test Logs
 
 To test the table's functionality, you'll need log data to query. You can either use existing logs or create new resources to generate logs. 
 
