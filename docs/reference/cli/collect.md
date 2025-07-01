@@ -7,7 +7,7 @@ title: tailpipe collect
 [Run collection](/docs/collect/collect).
 
 
-To improve the first-run experience for collection, Tailpipe will only collect the last 7 days during the [initial collection](/docs/collect/collect#initial-collection) (though you can override this behavior woth the `--from` argument).  Subsequent collection runs occur chronologically, resuming from the last collection by default, so there are no time gaps while the data is being collected.
+To improve the first-run experience for collection, Tailpipe will only collect the last 7 days during the [initial collection](/docs/collect/collect#initial-collection) (though you can override this behavior with the `--from` and `--to` arguments).  Subsequent collection runs occur chronologically, resuming from the last collection by default, so there are no time gaps while the data is being collected.
 
 
 
@@ -23,7 +23,9 @@ To improve the first-run experience for collection, Tailpipe will only collect t
 |  `--compact`       | Compact the Parquet files after collection (default true)
 |  `--from string`   | Collect days newer than a relative or absolute date.
 |  `--help`          |  Help for collect
+| `--overwrite`      | Overwrite existing data for the specified time range
 | `--progress`       | Show active progress of collection, set to `false` to disable (default `true`)
+| `--to string`      | Collect days older than a relative or absolute date (use with `--from` for time ranges)
 
 
 
@@ -53,13 +55,17 @@ Collect all partitions in the `aws_cloudtrail_log` table for the last 45 days.
 tailpipe collect aws_cloudtrail_log --from T-45d
 ```
 
-<!--
 Collect all partitions in the `aws_cloudtrail_log` between January and June.
 
 ```bash
 tailpipe collect aws_cloudtrail_log --from 1/1/2024 --to 6/30/2024
 ```
--->
+
+Collect and overwrite existing data for a specific time range.
+
+```bash
+tailpipe collect aws_cloudtrail_log --from 1/1/2024 --to 6/30/2024 --overwrite
+```
 
 Collect all partitions in the `aws_cloudtrail_log` table and output JSON.
 
