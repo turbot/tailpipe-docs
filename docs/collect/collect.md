@@ -26,6 +26,18 @@ Collect a specific partition.
 tailpipe collect aws_cloudtrail_log.dev
 ```
 
+Collect a specific time range.
+
+```bash
+tailpipe collect aws_cloudtrail_log.test --from 2024-01-01 --to 2024-01-31
+```
+
+Collect and overwrite existing data for a time range.
+
+```bash
+tailpipe collect aws_cloudtrail_log.test --from 2024-01-01 --to 2024-01-31 --overwrite
+```
+
 See [collect](/docs/reference/cli/collect) for more examples.
 
 
@@ -50,5 +62,7 @@ tailpipe collect aws_cloudtrail_log.test --from T-180d
 ```bash
 tailpipe collect aws_cloudtrail_log.test --from 2024-01-01
 ```
+
+When using the `--from` flag, existing partition data is preserved by default. This means that data will not be recollected for time ranges that have already been collected. To recollect data for a time range, use the `--overwrite` flag.
 
 Subsequent collection runs occur chronologically, resuming from the last collection by default, so there are no time gaps while the data is being collected.
