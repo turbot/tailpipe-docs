@@ -36,9 +36,11 @@ tailpipe connect --from 2025-01-01
 ```
 
 > [!NOTE]
-> You could use this connection string with DuckDB:
+> You can use this connection string with DuckDB to directly query the Tailpipe database. DuckDB version 1.1.3 or later is required to properly query tables containing JSON columns without throwing errors.
 > 
+> ```bash
 > duckdb /home/jon/.tailpipe/data/default/tailpipe_20241212134120.db
+> ```
 
 Connect with no filter, show output as json:
 
