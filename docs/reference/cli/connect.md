@@ -4,7 +4,12 @@ title: tailpipe connect
 
 # tailpipe connect
 
-Return a connection string for a database with a schema determined by the provided parameters.
+Return the path of SQL script to initialise DuckDB to use the tailpipe database.
+
+The generated SQL script contains:
+- DuckDB extension installations (sqlite, ducklake)
+- Database attachment configuration
+- View definitions with optional filters
 
 ## Usage
 ```bash
@@ -32,15 +37,15 @@ tailpipe connect --from 2025-01-01
 ```
 
 ```bash
-/home/jon/.tailpipe/data/default/tailpipe_20250115140447.db
+/Users/pskrbasu/.tailpipe/data/default/tailpipe_init_20250918204456.sql
 ```
 
 > [!NOTE]
-> You can use this connection string with DuckDB to directly query the Tailpipe database.
+> You can use this sql script with DuckDB to directly query the Tailpipe database.
 To ensure compatibility with tables that include JSON columns, make sure you’re using DuckDB version 1.1.3 or later.
 > 
 > ```bash
-> duckdb /home/jon/.tailpipe/data/default/tailpipe_20241212134120.db
+>  duckdb -init /Users/pskrbasu/.tailpipe/data/default/tailpipe_init_20250918204456.sql
 > ```
 
 Connect with no filter, show output as json:
@@ -50,6 +55,6 @@ tailpipe connect --output json
 ```
 
 ```bash
-{"database_filepath":"/Users/jonudell/.tailpipe/data/default/tailpipe_20250129204416.db"}
+{"init_script_path":"/Users/pskrbasu/.tailpipe/data/default/tailpipe_init_20250918204828.sql"}
 ```
 
