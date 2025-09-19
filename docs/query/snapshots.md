@@ -16,7 +16,7 @@ To upload snapshots to Turbot Pipes, you must either [log in via the `powerpipe 
 To take a snapshot and save it to [Turbot Pipes](https://turbot.com/pipes/docs), simply add the `--snapshot` flag to your command.  
 
 ```bash
-powerpipe query run "select * from aws_cloudtrail_log order by tp_date desc limit 1000" --snapshot
+powerpipe query run "select * from aws_cloudtrail_log order by tp_timestamp desc limit 1000" --snapshot
 ```
 
 ```bash
@@ -34,13 +34,13 @@ powerpipe benchmark run cloudtrail_log_detections --share
 You can set a snapshot title in Turbot Pipes with the `--snapshot-title` argument.
 
 ```bash
-powerpipe query run "select * from aws_cloudtrail_log order by tp_date desc limit 1000" --share --snapshot-title "Recent Cloudtrail log lines"
+powerpipe query run "select * from aws_cloudtrail_log order by tp_timestamp desc limit 1000" --share --snapshot-title "Recent Cloudtrail log lines"
 ```
 
 If you wish to save the snapshot to a different workspace, such as an org workspace, you can use the `--snapshot-location` argument with `--share` or `--snapshot`:
 
 ```bash
-powerpipe query run "select * from aws_cloudtrail_log order by tp_date desc limit 1000" --share --snapshot-location my-org/my-workspace
+powerpipe query run "select * from aws_cloudtrail_log order by tp_timestamp desc limit 1000" --share --snapshot-location my-org/my-workspace
 
 ```
 

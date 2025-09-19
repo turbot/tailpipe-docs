@@ -12,7 +12,7 @@ You can find requests **from a specific IP address**:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type
 from

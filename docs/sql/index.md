@@ -27,7 +27,7 @@ You can **filter** rows where columns only have a specific value:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type
 from
@@ -41,7 +41,7 @@ or a **range** of values:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type
 from
@@ -55,7 +55,7 @@ or match a **pattern**:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type,
   event_name
@@ -70,7 +70,7 @@ You can **filter on multiple columns**, joined by `and` or `or`:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type,
   event_name
@@ -78,7 +78,7 @@ from
   aws_cloudtrail_log
 where
   event_name = 'UpdateTrail'
-  and tp_date > date '2024-11-06';
+  and tp_timestamp > date '2024-11-06';
 ```
 
 You can **sort** your results:
@@ -86,7 +86,7 @@ You can **sort** your results:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type,
   event_name
@@ -101,7 +101,7 @@ You can **sort on multiple columns, ascending or descending**:
 ```sql
 select
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type,
   event_name
@@ -109,7 +109,7 @@ from
   aws_cloudtrail_log
 order by
   aws_region asc,
-  tp_date desc;
+  tp_timestamp desc;
 ```
 
 You can group and use standard aggregate functions. You can **count** results:
@@ -147,7 +147,7 @@ or exclude **all but one matching row**:
 ```sql
 select distinct on (event_type)
   tp_partition,
-  tp_date,
+  tp_timestamp,
   aws_region,
   event_type,
   event_name
