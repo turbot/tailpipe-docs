@@ -42,7 +42,7 @@ tailpipe connect --from 2025-01-01
 
 > [!NOTE]
 > You can use this sql script with DuckDB to directly query the Tailpipe database.
-To ensure compatibility with tables that include JSON columns, make sure you’re using DuckDB version 1.1.3 or later.
+To ensure compatibility with DuckLake features, make sure you’re using DuckDB version 1.4.0 or later.
 > 
 > ```bash
 >  duckdb -init /Users/pskrbasu/.tailpipe/data/default/tailpipe_init_20250918204456.sql

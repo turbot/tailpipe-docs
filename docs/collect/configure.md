@@ -17,7 +17,7 @@ If your logs are not in a standard format or are not currently supported by a pl
 
 Tailpipe creates DuckLake tables based on the data and metadata that it discovers in the [workspace](#workspaces), along with the filter rules.
 
-When you run `tailpipe query` or `tailpipe connect` with any filter arguments that you specify (`--from`,`--to`,`--index`,`--partition`), Tailpipe finds all the tables in the workspace according to the [hive directory layout](/docs/collect/configure#hive-partitioning) and adds a filtered view over the tables.
+When you run `tailpipe query` or `tailpipe connect` with any filter arguments that you specify (`--from`,`--to`,`--index`,`--partition`), Tailpipe finds all the tables in the workspace according to the [hive directory layout](/docs/collect/configure#hive-partitioning) and filters the view of the table.
 
 You can see what tables are available with the `tailpipe table list` command. 
 
