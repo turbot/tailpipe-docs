@@ -15,11 +15,11 @@ Tailpipe [plugins](/docs/collect/plugins) define tables for common log sources a
 
 If your logs are not in a standard format or are not currently supported by a plugin, you can create [custom tables](/docs/collect/custom-tables) to collect data from arbitrary log files and other sources.
 
-Tables are implemented as DuckDB views over the Parquet files.  Tailpipe creates tables (that is, creates views in the `tailpipe.db` database) based on the data and metadata that it discovers in the [workspace](#workspaces), along with the filter rules.
+Tailpipe creates DuckLake tables based on the data and metadata that it discovers in the [workspace](#workspaces), along with the filter rules.
 
-When you run `tailpipe query` or `tailpipe connect`, Tailpipe finds all the tables in the workspace according to the [hive directory layout](/docs/collect/configure#hive-partitioning) and adds a view for the table.  The view definitions will include qualifiers that implement any filter arguments that you specify (`--from`,`--to`,`--index`,`--partition`).
+When you run `tailpipe query` or `tailpipe connect` with any filter arguments that you specify (`--from`,`--to`,`--index`,`--partition`), Tailpipe finds all the tables in the workspace according to the [hive directory layout](/docs/collect/configure#hive-partitioning) and filters the view of the table.
 
-You can see what tables are available with the `tailpipe plugin list` command. 
+You can see what tables are available with the `tailpipe table list` command. 
 
 ## Partitions
 A partition represents data gathered from a [source](/docs/collect/configure#sources). Partitions are defined [in HCL](/docs/reference/config-files/partition) and are required for [collection](/docs/collect/collect).  
@@ -61,20 +61,22 @@ The standard partitioning/hive structure enables efficient queries that only nee
 tp_table=aws_cloudtrail_log
 └── tp_partition=prod
     └── tp_index=default
-        ├── tp_date=2024-12-31
-        │   └── data_20250106140713_740378_0.parquet
-        ├── tp_date=2025-01-01
-        │   └── data_20250106140713_740378_0.parquet
-        ├── tp_date=2025-01-02
-        │   └── snap_20250106140823_952067.parquet
-        ├── tp_date=2025-01-03
-        │   └── snap_20250106140824_011599.parquet
-        ├── tp_date=2025-01-04
-        │   └── data_20250106140752_829722_0.parquet
-        ├── tp_date=2025-01-05
-        │   └── snap_20250106140824_073116.parquet
-        └── tp_date=2025-01-06
-            └── snap_20250106140824_131637.parquet
+        └── year=2024
+            ├── month=7
+            │   └── ducklake-01995d38-7f1e-7867-b7f1-8f523d546353.parquet
+            │   └── ducklake-01995d38-7f75-77ce-a0ec-5972d4d6c7ae.parquet
+            │   └── ducklake-01995d38-7fd2-7365-997d-65a6ad005e83.parquet
+            │   └── ducklake-01995d38-80e5-7185-b15e-5ee808222b73.parquet
+            ├── month=8
+            │   └── ducklake-01995d38-7f1e-7867-b7f1-8f523d546353.parquet
+            │   └── ducklake-01995d38-7f75-77ce-a0ec-5972d4d6c7ae.parquet
+            │   └── ducklake-01995d38-7fd2-7365-997d-65a6ad005e83.parquet
+            │   └── ducklake-01995d38-80e5-7185-b15e-5ee808222b73.parquet
+            ├── month=9
+            │   └── ducklake-01995d38-7f1e-7867-b7f1-8f523d546353.parquet
+            │   └── ducklake-01995d38-7f75-77ce-a0ec-5972d4d6c7ae.parquet
+            │   └── ducklake-01995d38-7fd2-7365-997d-65a6ad005e83.parquet
+            │   └── ducklake-01995d38-80e5-7185-b15e-5ee808222b73.parquet
 ```
 
 

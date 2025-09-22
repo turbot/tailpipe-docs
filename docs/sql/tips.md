@@ -20,10 +20,10 @@ select count(*) from aws_cloudtrail_log where partition = 'prod'
 select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789
 ```
 
-*Date*. Each file contains log data for one day. You can filter to include only files for that day.
+*Timestamp*. Filter by timestamp, to efficiently get all matching files.
 
 ```sql
-select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_date = '2024-12-01'
+select count(*) from aws_cloudtrail_log where partition = 'prod' and index = 123456789 and tp_timestamp > date '2024-12-01'
 ```
 
 The [hive directory structure](/docs/collect/configure#hive-partitioning) enables you to exclude large numbers of Parquet files.

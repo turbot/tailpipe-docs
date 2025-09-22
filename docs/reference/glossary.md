@@ -30,7 +30,7 @@ A detection is a Tailpipe query, optionally bundled into a benchmark, that runs 
 
 ## DuckDB
 
-Tailpipe uses DuckDB, an embeddable column-oriented database. DuckDB reads the Parquet files created by `tailpipe collect` and enables queries against that data.
+Tailpipe uses DuckDB for fast local analytics over Parquet data. DuckLake maintains a lightweight metadata catalog (`metadata.sqlite`) that references the Parquet files collected by Tailpipe, so you query with standard DuckDB SQL while benefiting from partition pruning and a lakehouse-style layout.
 
 ## Format
 A [format](/docs/reference/config-files/format) describe the layout of the source data so that it can be collected into a table.
@@ -40,7 +40,7 @@ A [format type](/docs/reference/config-files/format#format-types) defines the pa
 
 ## Hive
 
-A tree of Parquet files in the Tailpipe workspace (by default,`~/.tailpipe/data/default`). The `tailpipe.db` in `~/.tailpipe/data/default` (and derivatives created by `tailpipe connect`, e.g. `tailpipe_20241212152506.db`) are thin wrappers that materialize views over the Parquet data.
+A tree of Parquet files in the Tailpipe workspace (by default, `~/.tailpipe/data/default`), organized with hive-style partition keys (for example, `tp_table=.../tp_partition=.../tp_index=.../year=YYYY/month=mm`). DuckLake’s catalog (`metadata.sqlite`) points to these files to enable efficient SQL queries.
 
 ## Index
 

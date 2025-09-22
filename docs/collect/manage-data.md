@@ -292,16 +292,16 @@ Plugin:      hub.tailpipe.io/plugins/turbot/aws@latest
 
 
 ## Connecting from Other Tools
-You can connect to your Tailpipe database with the native DuckDB client or other tools and libraries that can connect to DuckDB.  To do so, you can generate a new db file for the connection using `tailpipe connect`:
+You can connect to your Tailpipe database with the native DuckDB client or other tools and libraries that can connect to DuckDB. To do so, you can generate a new SQL script to initialise DuckDB to use the tailpipe database using `tailpipe connect`:
 
 ```bash
 tailpipe connect
 ```
 
-A new DB file will be generated and returned:
+The path to a new SQL script will be returned:
 ```bash
 $ tailpipe connect
-/Users/jsmyth/.tailpipe/data/default/tailpipe_20250409151453.db
+/Users/pskrbasu/.tailpipe/data/default/tailpipe_init_20250918210704.sql
 ```
 
 If you've collected a lot of data and want to optimize your queries for a subset of it, you can pre-filter the database. You can restrict to the most recent 45 days:
