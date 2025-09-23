@@ -54,6 +54,11 @@ title: Tailpipe CLI
 |   **3** | `ExitCodeExecutionCancelled`          | The Tailpipe command was cancelled by user request
 |  **61** | `ExitCodeModInitFailed`               | Mod init failed
 |  **62** | `ExitCodeModInstallFailed`            | Mod install failed
+|  **71** | `ExitCodeConnectFailed`               | Connect failed
+|  **81** | `ExitCodeCompactFailed`               | Compact failed
+|  **91** | `ExitCodeOperationCancelled`          | Operation cancelled
+| **101** | `ExitCodeCollectionFailed`            | Collection failed
+| **111** | `ExitCodeOutputRenderingFailed`       | Output rendering failed
 | **250** | `ExitCodeInitializationFailed`        | Initialization failed
 | **251** | `ExitCodeBindPortUnavailable`         | Network port binding failed
 | **252** | `ExitCodeNoModFile`                   | The command requires a mod, but no mod file was found
