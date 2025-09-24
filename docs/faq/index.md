@@ -24,17 +24,20 @@ aws_cloudtrail_log  pipes_audit_log
 > [!NOTE]
 > To ensure compatibility with DuckLake features, make sure you’re using DuckDB version 1.4.0 or later.
 
+
+
+<!--
 ## Can I define more than one partition per table?
 
 Yes. In this example, the `aws_cloudtrail_log` table has two partitions, one for each of two AWS accounts.
 
 ```hcl
- connection "aws" "12345" {
+connection "aws" "12345" {
   profile = "SSO-12345"
   regions = ["*"]
 }
 
- connection "aws" "6789" {
+connection "aws" "6789" {
   profile = "SSO-6789"
   regions = ["*"]
 }
@@ -61,12 +64,12 @@ partition "aws_cloudtrail_log" "6789" {
 Yes. In this example, the `aws_cloudtrail_log` table has one partition that encompasses two AWS accounts.
 
 ```hcl
- connection "aws" "12345" {
+connection "aws" "12345" {
   profile = "SSO-12345"
   regions = ["*"]
 }
 
- connection "aws" "6789" {
+connection "aws" "6789" {
   profile = "SSO-6789"
   regions = ["*"]
 }
@@ -83,11 +86,13 @@ partition "aws_cloudtrail_log" "cloudtrail_all" {
     bucket     = "aws-cloudtrail-logs-6789-2755fe67"
     file_layout = "AWSLogs/%{NUMBER:account_id}/%{DATA}.json.gz"
   }
+}
 ```
 
 ## What partition indexes are available for a table?
 
 The `tp_index` value depends on how you have configured it in your [partition config](/docs/reference/config-files/partition). By default, `tp_index` is set to `"default"`, but you can configure it to specify a column whose value should be used as the partition index, as makes sense for the data. For AWS tables, you might set it to `account_id`.
+-->
 
 ## What Linux distributions and versions are officially supported by Tailpipe?
 
