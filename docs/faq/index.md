@@ -4,17 +4,6 @@ title:  FAQ
 
 # FAQ
 
-## Why does collection report fewer rows than expected?
-
-Tailpipe maintains collection state, so you'll only see new rows. 
-
-## How do I reset a table?
-
-If you want to reset and collect everything, you can use  `rm -rf ~/.tailpipe/internal/collection/default/*`. You might want to do this if you're building your own plugin and changing the schema.
-
->[!NOTE]
-> What's the story for published plugins that change schema?
-
 ## Can I use DuckDB to query my Tailpipe tables?
 
 Yes. Use `tailpipe connect` to get the path to a SQL script. For example:
