@@ -127,5 +127,11 @@
       },
       "reference/glossary"
     ]
+  },
+  {
+    "type": "category",
+    "id": "faq",
+    "link": "faq",
+    "items": []
   }
 ]
