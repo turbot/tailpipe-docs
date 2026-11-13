@@ -28,11 +28,19 @@ The repository website/homepage should link to the Hub site. The URL is composed
 
 <input type="checkbox"/> <b>Go version</b>
 
-The Go version in `go.mod` and any workflows is 1.23.
+The Go version in `go.mod` and any workflows is 1.24.
 
-<input type="checkbox"/> <b>.goreleaser.yml</b>
+<input type="checkbox"/> <b>Hub build</b>
 
-The `.goreleaser.yml` file uses the standard format, e.g., [AWS plugin .goreleaser.yml](https://github.com/turbot/tailpipe-plugin-aws/blob/main/.goreleaser.yml).
+The Hub builds the plugin's release binaries itself from the release tag, so a `.goreleaser.yml` isn't required. If the repository has one, the Hub doesn't use it, but you can keep it to publish your own GitHub releases.
+
+The plugin needs:
+- A `main` package at the repository root.
+- `go.mod` and `go.sum` that build as tagged. The Hub doesn't run `go mod tidy` and ignores any `vendor/` directory.
+- A `docs` directory with no symbolic links.
+- A release tag in `vX.Y.Z` format, e.g., `v0.1.0`. The Hub doesn't publish pre-release tags like `v0.1.0-beta`.
+
+To check the build locally, run `go build -mod=readonly -trimpath -o /dev/null .` from the repository root.
 
 <input type="checkbox"/> <b>CHANGELOG</b>
 
