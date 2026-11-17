@@ -74,7 +74,10 @@ jobs:
               : [
                   '### Preview',
                   '',
-                  'This branch name is too long for Vercel to give it a link we can work out.',
+                  clean === ''
+                    ? 'Vercel cannot give this branch name a link we can work out.'
+                    : 'This branch name is too long for Vercel to give it a link we can work out.',
+                  'Use the all-previews link below.',
                   '',
                   `<sub>${backup}</sub>`,
                 ].join('\n');
