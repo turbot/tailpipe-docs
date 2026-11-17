@@ -1,0 +1,87 @@
+name: Trigger the preview build in tailpipe.io
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches-ignore: 
+      - "main"
+
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - name: Create a token for the Turbot Web Builds app
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.WEB_BUILDS_APP_CLIENT_ID }}
+          private-key: ${{ secrets.WEB_BUILDS_APP_PRIVATE_KEY }}
+          owner: turbot
+          repositories: tailpipe.io
+
+      - name: Start the preview build in tailpipe.io
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          DOCS_REF_NAME: ${{ github.ref_name }}
+        run: |
+          default_branch="$(gh api repos/turbot/tailpipe.io --jq .default_branch)"
+          gh workflow run build-preview.yml -R turbot/tailpipe.io --ref "$default_branch" \
+            -f ref_name="$DOCS_REF_NAME"
+
+
+  comment-link:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # A fork's pushes start no preview build, so a link for one would be false.
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.head.repo.full_name == github.repository }}
+    steps:
+      - name: Add comment with preview link
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        with:
+          script: |
+            // tailpipe.io builds the branch docs/<PR branch> through Vercel's Git
+            // integration. Vercel names that preview
+            // tailpipe-io-git-docs-<branch, lower-cased, only a-z 0-9 and "-">-turbot,
+            // and shortens a host over 63 characters with a hash nobody can reproduce.
+            const clean = process.env.PR_HEAD_REF.toLowerCase().replace(/[^a-z0-9-]/g, '');
+            const host = `tailpipe-io-git-docs-${clean}-turbot`;
+            const hasLink = clean !== '' && host.length <= 63;
+
+            const backup = 'All tailpipe.io previews: https://github.com/turbot/tailpipe.io/deployments/Preview (Turbot people only)';
+
+            const body = hasLink
+              ? [
+                  '### Preview Available 🚀',
+                  '',
+                  `**Preview Link:** https://${host}.vercel.app`,
+                  '',
+                  'It can take a few minutes to build.',
+                  '',
+                  `<sub>${backup}</sub>`,
+                ].join('\n')
+              : [
+                  '### Preview',
+                  '',
+                  'This branch name is too long for Vercel to give it a link we can work out.',
+                  '',
+                  `<sub>${backup}</sub>`,
+                ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });
