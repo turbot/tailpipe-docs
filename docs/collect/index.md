@@ -8,11 +8,11 @@ Before you can query your logs with Tailpipe, you have to collect them.  Collect
 
 Tailpipe makes this process simple:
 - Install [plugins](/docs/collect/plugins) for the log types you will collect.
-- Define one or more [partitions](/docs/collect/define-partitions) to import data from one or more [sources](/docs/collect/define-partitions#sources) into parquet files that appear as rows in a table.
+- Define one or more [partitions](/docs/collect/configure#partitions) to import data from one or more [sources](/docs/collect/configure#sources) into parquet files that appear as rows in a table.
 - Run `tailpipe collect` to [collect your logs](/docs/collect/collect).
 
 ## Concepts
 
-When you [collect](/docs/collect/collect) logs from a source, e.g. an S3 bucket containing Cloudtrail logs, you invoke a [plugin](/docs/collect/plugins) that uses a [connection](/docs/collect/configure#connections) to ingest logs from a [source](/docs/collect/define-partitions#sources) into a database table.
+When you [collect](/docs/collect/collect) logs from a source, e.g. an S3 bucket containing Cloudtrail logs, you invoke a [plugin](/docs/collect/plugins) that uses a [connection](/docs/collect/configure#connections) to ingest logs from a [source](/docs/collect/configure#sources) into a database table.
 
-The unit of collection is the [partition](/docs/collect/define-partitions), and a table may comprise one one or more partitions. The collection process writes to a [hive-partitioned](/docs/collect/configure#hive-partitioning) hierarchy of folders and files, over which Tailpipe builds the database table that you query.
+The unit of collection is the [partition](/docs/collect/configure#partitions), and a table may comprise one one or more partitions. The collection process writes to a [hive-partitioned](/docs/collect/configure#hive-partitioning) hierarchy of folders and files, over which Tailpipe builds the database table that you query.
