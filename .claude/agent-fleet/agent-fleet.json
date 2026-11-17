@@ -1,3 +1,9 @@
 {
-  "secrets": {}
+  "secrets": {},
+  "chores": {
+    "dependencies": { "off": true },
+    "security-audit": { "off": true },
+    "secret-scan": { "off": true },
+    "dependabot-cant-fix": { "off": true }
+  }
 }
