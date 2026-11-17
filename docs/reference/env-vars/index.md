@@ -14,7 +14,7 @@ Note that plugins may also support environment variables, but these are plugin-s
 | Command | Default | Description
 |-|-|-
 | [TAILPIPE_INSTALL_DIR](/docs/reference/env-vars/tailpipe_install_dir)| `~/.tailpipe` | The directory in which the Tailpipe database, plugins, and supporting files can be found.
-| [TAILPIPE_LOG_LEVEL](/docs/reference/env-vars/tailpipe_log)  | `warn` | Set the logging output level.
+| [TAILPIPE_LOG_LEVEL](/docs/reference/env-vars/tailpipe_log_level)  | `warn` | Set the logging output level.
 | [TAILPIPE_UPDATE_CHECK](/docs/reference/env-vars/tailpipe_update_check)| `true` | Enable/disable automatic update checking.
 | [TAILPIPE_WORKSPACE](/docs/reference/env-vars/tailpipe_workspace)  | `default` | Set the Tailpipe workspace.
 | [TAILPIPE_MEMORY_MAX_MB](/docs/reference/env-vars/tailpipe_memory_max_mb) | `0` (unlimited) | Caps CLI memory usage and determines worker count.
