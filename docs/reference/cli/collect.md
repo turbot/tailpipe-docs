@@ -23,7 +23,7 @@ To improve the first-run experience for collection, Tailpipe will only collect t
 |  `--compact`       | Compact the Parquet files after collection (default true)
 |  `--from string`   | Collect days newer than a relative or absolute date.
 |  `--help`          |  Help for collect
-| `--overwrite`      | Overwrite existing data for the specified time range
+| `--overwrite`      | Recollect data already collected for the specified time range (default `false`)
 | `--progress`       | Show active progress of collection, set to `false` to disable (default `true`)
 | `--to string`      | Collect days older than a relative or absolute date (use with `--from` for time ranges)
 
