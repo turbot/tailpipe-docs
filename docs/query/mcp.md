@@ -4,7 +4,7 @@ title: AI Tools (MCP)
 
 # AI Tools (MCP)
 
-The [Tailpipe MCP server](https://github.com/turbot/tailpipe-mcp) (Model Control Protocol) transforms how you interact with your cloud and security data.  It brings the power of conversational AI to your security and cloud logs, allowing you to extract critical insights using plain English — no complex SQL required!
+The [Tailpipe MCP server](https://github.com/turbot/tailpipe-mcp) (Model Context Protocol) transforms how you interact with your cloud and security data.  It brings the power of conversational AI to your security and cloud logs, allowing you to extract critical insights using plain English — no complex SQL required!
 
 The Tailpipe [MCP](https://modelcontextprotocol.io/introduction) enables Large Language Models (LLMs) to query your Tailpipe data directly. This allows you to interact with your security and cloud logs using natural language, making data exploration and analysis more intuitive and accessible to a wider audience.
 
